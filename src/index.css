@@ -1,0 +1,63 @@
+.helpet-text{
+  color:#7e7e7e;
+}
+.file.has-name{
+  margin-top:30px;
+}
+.button.is-orange{
+  background: #ffffff;
+    border-color: #f78e1f;
+    color: #f78e1f;
+    border: solid 1px;
+}
+.button.is-orange:hover{
+  background: #e07002;
+  border-color: #f78e1f;
+  color: #fff;
+  border: solid 1px;
+}
+
+.button.is-larges{
+  font-size: 1.5rem;
+  padding: 0 50px;
+  display: block;
+  margin-top: 10px;
+}
+.button.button.is-orange.is-loading{
+  background: #f78f1e;
+}
+.content{
+  padding: 20px;
+  }
+  .navbar{
+  background-color: #f78f1e !important;
+  color: #ffffff
+  }
+  .navbar-brand{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 0 0 10px
+    }
+    a.navbar-item{
+    color: #ffffff !important;
+    }
+    a.navbar-item:hover, .navbar-item:hover{
+    color:#f78f1e !important;
+    background: #ffffff!important;
+    }
+    .navbar-menu.is-active{
+      background-color: #d46e17fa!important;
+    }
+    .navbar a{
+      color: #fff;
+    }
+    .file.is-orange .file-cta {
+      background-color:#f78f1e;
+      border-color: transparent;
+      color: #fff;
+  }
+  .file.is-orange:hover .file-cta, .file.is-primary.is-hovered .file-cta {
+    background-color: #e07002;
+    border-color: transparent;
+    color: #fff;
+}
