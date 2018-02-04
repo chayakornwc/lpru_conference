@@ -26,6 +26,7 @@ render() {
         if (users.isRejected) {
         return <div>{users.data}</div>
         }
+        const modal = this.state.modal ? 'is-active' : 'is-passisve';
     const userSearch = debounce(
              term => { 
                     this.handleSearch(term) }, 
@@ -53,15 +54,16 @@ render() {
                     buttonDelete={this.handleDelete}
                     />
 
-                    <div className="modal">
+                    <div className={"modal "+modal }>
                     <div className="modal-background"></div>
                     <div className="modal-card">
                         <header className="modal-card-head">
                         <p className="modal-card-title">Modal title</p>
                         <button className="delete" aria-label="close"></button>
                         </header>
-                        <section className="modal-card-body">
-                       </section>
+                            <section className="modal-card-body">
+                            <UserForm data={user.data}  userSave={userSave}   onSubmit={this.handleSubmit}   onToggle={this.toggle} />
+                        </section>
                         <footer className="modal-card-foot">
                         <button className="button is-success">Save changes</button>
                         <button className="button">Cancel</button>
@@ -72,13 +74,62 @@ render() {
 
                 </div>
                 )
-}
+        }
+
+        toggle = () => {
+            this.setState({
+            modal: !this.state.modal
+            })
+            }
+
+        handleSearch = (term) => {
+            this.props.dispatch(loadUsers(term))
+        }
+        handleNew = () => {
+            this.props.dispatch(resetStatus())
+            this.props.user.data = []
+            this.setState({ modalTitle: 'เพิ่ม' })
+            this.toggle();
+            }
+
+          handleEdit = (id) => {
+            this.props.dispatch(resetStatus())
+            this.setState({ modalTitle: 'แก้ไข' })
+            this.props.dispatch(getUser(id)).then(() => {
+            this.toggle()
+                })
+            }
+
+        handleSubmit = (values) => {
+            this.props.dispatch(saveUser(values)).then(() => {
+            if (!this.props.userSave.isRejected) {
+            this.toggle()
+            this.props.dispatch(loadUsers())
+                }
+                })
+            }
+            
+        handleDelete = (id) => {
+            confirmModalDialog({
+            show: true,
+            title: 'ยืนยันการลบ',
+            message: 'คุณต้องการลบข้อมูลนี้ใช่หรือไม่',
+            confirmLabel: 'ยืนยัน ลบทันที!!',
+            onConfirm: () => this.props.dispatch(deleteUser(id)).then(() => {
+            this.props.dispatch(loadUsers())
+                })
+                })
+                }
+                  
+        
 }
 function mapStateToProps(state){
-
-}
-function mapDispatchToProps(dispatch){
-  
-    
+    return{
+        users: state.userReducers.users,
+        user: state.userReducers.user,
+        userDelete: state.userReducers.userDelete,
+        userSave: state.userReducers.userSave
     }
-export default connect(mapStateToProps, mapDispatchToProps)(User)
+}
+
+export default connect(mapStateToProps)(User)
