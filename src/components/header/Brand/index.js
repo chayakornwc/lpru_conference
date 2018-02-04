@@ -6,7 +6,7 @@ class Brand extends Component {
         return (   
         <div className="navbar-brand">
         <Link to="/">
-        <h3>ANRES 2018 International conference</h3>
+        <h3>LPRU Information technology conference</h3>
         </Link>
             <button className={"button navbar-burger "+this.props.active} onClick={this.props.toggleClass}>
                 <span></span>

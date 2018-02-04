@@ -1,10 +1,10 @@
 module.exports = {
-    secret: null,
+    secret: '1234',
     dbOptions: {
         host: 'localhost',
         user: 'root',
         password: null,
         port: 3306,
-        database: 'anres_dbo'
+        database: 'lpru_conference'
     }
 }

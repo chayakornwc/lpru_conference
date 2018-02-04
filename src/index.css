@@ -1,3 +1,10 @@
+.md-auto{
+  margin: 0 auto;
+}
+.forest{
+  background: #e07002;
+  padding: 5rem;
+}
 .helpet-text{
   color:#7e7e7e;
 }

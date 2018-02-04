@@ -9,15 +9,30 @@ import { Provider } from 'react-redux'
 import promiseMiddleware from 'redux-promise-middleware'
 import thunk from 'redux-thunk'
 import reducers from './redux/reducers';
+import jwtDecode from 'jwt-decode';
 
 
 const store = createStore(
     reducers,
-    applyMiddleware(thunk, promiseMiddleware())
+    applyMiddleware(thunk)
     )
+
+const token = localStorage.getItem('token')
+    if (token) {
+        const decodeToken = jwtDecode(token)
+            store.dispatch({
+                type: 'AUTH_USER',
+                payload: decodeToken
+            })
+        }  else {
+            //ถ้าไม่มี token ให้ redirect ไปยังหน้า signin
+             browserHistory.push('signin')
+        }
+       
 
     ReactDOM.render(
     <Provider store={store}>
+    
     <Router 
     history={browserHistory} 
     routes={routes}/>

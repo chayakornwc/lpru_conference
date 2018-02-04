@@ -1,7 +1,7 @@
 
 
 var rn = require('random-number');
-
+var sha256 = require('sha256');
 var gen = rn.generator({
     min:  132115560
   , max:  999999999
@@ -11,36 +11,32 @@ var gen = rn.generator({
     exports.create = (req, res, next) => {
     var { body } = req
     let id =   gen();
+   // let password = sha256(req.password)
+   // console.log(password);
     console.log(id)
     var post = {
-    uid: id,
-    title: body.prefxtitle,
-    attend_type: body.attendas,
-    firstname: body.first_name,
-    lastname: body.last_name,
-    affiliation:body.affiliation,
-    address: body.city,
+    user_group:'บุคลากรภายนอก',
+    prefix: body.prefxtitle,
+    first_name: body.first_name,
+    last_name: body.last_name,
+    company:body.affiliation,
+    gender:body.gender,
+    address: body.address,
+    city:body.city,
+    district:body.district,
     province:body.province,
-    postal:body.postal,
-    region: body.country,
     email: body.email,
-    presentation_type: body.pst_type,
-    submission_type: body.submiss_type,
-    payment_type: body.payment_type,
-    payment_status: 'Waiting',
-    price: body.price,
-    created:null,
-    status:'wait',
-    path_std:body.filesname,
-    path_mou:body.mou_document
+    username:body.username,
+    password:sha256(body.password)
     }
-
+    console.log(post)
     req.getConnection(function (err, connection) {
     
-  
+       
     connection.query("insert into registration set ? ", post, (err, results) => {
     if (err) return next(err)
-    res.send(post);
+       console.log(results)
+       res.send(results)
     })
     
     });
@@ -49,13 +45,20 @@ var gen = rn.generator({
 
 
     exports.findAll =(req, res,next) =>{
-        req.getConnection((err, connection)=>{
-            if(err) return next(err)
-        })
-        var sql = "select * from registration  where (firstname like ? or lasname like ?)";
-        var params ="%" + req.query.term+"%"
-        getConnection.query(sql, [params, params], (err, result)=>{
+        connection.query("select username from registration where username=?", [post.username], function (err, results) {
             if (err) return next(err)
-            res.send(result)
-        })
-    }
+            if (results.length > 0) {
+                res.send({ status: 201, message: 'Username is Duplicate' })
+            } else {
+                req.getConnection((err, connection)=>{
+                    if(err) return next(err)
+                })
+                var sql = "select * from   where (firstname like ? or lasname like ?)";
+                var params ="%" + req.query.term+"%"
+                getConnection.query(sql, [params, params], (err, result)=>{
+                    if (err) return next(err)
+                    res.send(result)
+                })
+        }
+    })
+}

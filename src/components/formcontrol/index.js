@@ -9,7 +9,7 @@ import Radio, { RadioGroup } from 'material-ui/Radio';
 import { FormLabel, FormControl, FormControlLabel, FormHelperText } from 'material-ui/Form';
 import { connect } from 'react-redux';
 import axios from 'axios';
-
+ const alertify = require('alertify.js');
 const styles = theme => ({
   container: {
     display:'block',
@@ -67,9 +67,10 @@ class TextFields extends React.Component {
    super(props);
     this.state = {
       first_name: null,
-      prefxtitle: null,
+      prefxtitle: '',
       last_name:null,
       affiliation: null,
+      address:null,
       city:null,
       gender:null,
       province: null,
@@ -86,7 +87,7 @@ class TextFields extends React.Component {
       confirm_password:null
     };
   
-    
+
  }
  
  handleSubmit = (event)=>{
@@ -98,16 +99,29 @@ class TextFields extends React.Component {
     prefxtitle:this.state.prefxtitle,
     last_name:this.state.last_name,
     affiliation:this.state.affiliation,
+    address: this.state.address,
     city:this.state.city,
     gender:this.state.gender,
     province:this.state.province,
     postal:this.state.postal,
-    country:this.state.country,
     email:this.state.email,
     district:this.state.district,
-    username:this.state.username
+    username:this.state.username,
+    password:this.state.password
   }
-
+  axios({
+    method:'post',
+    url: 'http://localhost:3009/registers',
+    data:data,
+  }).then(response =>{
+    this.setState({isLoad:false});
+    alertify.success("ดำเนินการสร้างบัญชีผู้ใช้ เรียบร้อยแล้ว โปรดดำเนินการขั้นต่อไป!");
+  }).catch(err =>{
+    this.setState({isLoad:false});
+    alertify.error("การสร้างบัญชีผู้ใช้ ้มเหลว อาจจะเกิดจากการเชื่อมต่อขัดข้อง โปรดลองใหม่อีกครั้ง!");
+  })
+    
+  
 
 
  }
@@ -123,6 +137,8 @@ class TextFields extends React.Component {
     this.setState({
       [name]: event.target.value,
     });   
+
+
     
    
     //end of swich case
@@ -139,13 +155,12 @@ class TextFields extends React.Component {
     
     const { classes, dataForm } = this.props;
     const isLoad = (this.state.isLoad ? 'is-loading': '')
-    return (
+    return ( 
       <form className={classes.container}  onSubmit={this.handleSubmit}  autoComplete="off">
-       <TextField
-          required
-          id="select-prefxtitle"
+           <TextField
+          id="select-data"
           select
-          label="คำนำหน้า"
+          label="กรุณาเลือกคำนำหน้า"
           className={classes.textField}
           value={this.state.prefxtitle}
           onChange={this.handleChange('prefxtitle')}
@@ -154,13 +169,14 @@ class TextFields extends React.Component {
               className: classes.menu,
             },
           }}
-          helperText="กรุณาเลือก"
+          helperText="เลือกคำนำหน้าของคุณ"
           margin="normal"
         >
         
+        
           {prefxtitle.map(option => (
             <MenuItem   key={option.value} value={option.value}>
-              {option.label}
+              {option.value}
             </MenuItem>
           ))}
         </TextField>
@@ -206,6 +222,16 @@ class TextFields extends React.Component {
           value={this.state.affiliation}
           onChange={this.handleChange('affiliation')}
           margin="normal"
+        />
+         <TextField
+          required
+          id="address"
+          label="ที่อยู่ปัจจุบัน"
+          value={this.state.address}
+          onChange={this.handleChange('address')}
+          className={classes.textField}
+          margin="normal"
+          
         />
         <TextField
           required

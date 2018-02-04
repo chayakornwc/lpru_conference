@@ -1,0 +1,112 @@
+
+const jwt = require('jwt-simple')
+const config = require('../config')
+function tokenForUser(user) {
+const timestamp = new Date().getTime();
+return jwt.encode(
+{
+sub: user.id,
+user_group: user.user_group,
+name: user.name,
+username: user.username,
+iat: timestamp
+},
+config.secret
+)
+}
+exports.signin = (req, res, next) => {
+res.send({ token: tokenForUser(req.user) })
+}
+
+exports.findAll = (req, res,next) => {
+    req.getConnection((err, connection)=>{
+        if(err) return next(err)
+    
+    var sql = "select * from registration where (first_name like ? or username like ?)";
+    var params ="%" + req.query.term+"%"
+    connection.query(sql, [params, params], (err, results)=>{
+        if (err) return next(err)
+        res.send(results)
+        console.log(results);
+        })
+    })
+}
+// exports.findAll = (req, res, next) => {
+//     req.getConnection((err, connection) => {
+//         if (err) return next(err)
+//         var sql = "select * from registration where (first_name like ? or username like ?)";
+//         var params = "%" + req.query.term + "%"
+//         connection.query(sql, [params, params], (err, results) => {
+//             if (err) return next(err)
+//             res.send(results);
+//         })
+//     })
+//}
+
+
+    exports.findById = (req, res, next) => {
+    var id = parseInt(req.params.id)
+    req.getConnection((err, connection) => {
+    if (err) return next(err)
+    connection.query("select * from  registration where id=?", [id], (err, row) => {
+    if (err) return next(err)
+    res.send(row[0])
+    })
+    })
+    }
+
+    exports.create = (req, res, next) => {
+        var { body } = req
+        var post = {
+        user_group: body.user_group,   
+        prefix: body.prefxtitle,
+        first_name: body.first_name,
+        last_name: body.last_name,
+        major:body.major,
+        affiliation:body.affiliation,
+        company:body.company,
+        gender:body.gender,
+        address: body.address,
+        city:body.city,
+        district:body.district,
+        province:body.province,
+        email: body.email,
+        username:body.username,
+        password:sha256(body.password)
+            }
+
+            req.getConnection(function (err, connection) {
+            connection.query("select username from registration where username=?", [post.username], function (err, results) {
+            if (err) return next(err)
+            if (results.length > 0) {
+            res.send({ status: 201, message: 'Username is Duplicate' })
+            } else  {
+                    connection.query("insert into user set ? ", post, (err, results) => {
+                    if (err) return next(err)
+                    res.send(results)
+                    })
+                }
+            });
+        });
+    }
+exports.update = (req, res, next) =>{
+    var id =parseInt(req.params.id)
+    var {body} = req
+    var post = {
+        user_group: body.user_group,   
+        prefix: body.prefxtitle,
+        first_name: body.first_name,
+        last_name: body.last_name,
+        major:body.major,
+        affiliation:body.affiliation,
+        company:body.company,
+        gender:body.gender,
+        address: body.address,
+        city:body.city,
+        district:body.district,
+        province:body.province,
+        email: body.email,
+        username:body.username,
+        password:sha256(body.password)
+    }
+}
