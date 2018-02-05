@@ -8,8 +8,11 @@ import {
     deleteUser, resetStatus
     } from '../redux/actions/userActions'
 
-//import UserTable from '../components/Users/UserTable'
-//import UserForm from '../components/Users/UserForm'
+import { confirmModalDialog } from '../Utils/reactConfirmModalDialog';
+import SearchBar from '../Utils/searchBar';
+import UserTable from '../components/Users/UserTable';
+import UserForm from '../components/Users/UserForm';
+
 class User extends Component {
     constructor(props){
         super(props);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, ModalBody, ModalFooter } from 'reactstrap';
 import { Field, reduxForm } from 'redux-form';
-import renderField from '../../Utils/renderFields'
+import renderField from '../../Utils/renderFields';
 class UserForm extends Component {
     componentDidMount(){
         this.handleInitialize()
@@ -77,7 +77,23 @@ class UserForm extends Component {
     this.props.onSubmit(values);
     }
 }
+    function validate(values){
+        // const error={};
+        // if (!values.name) {
+        //     errors.name = 'จำเป็นต้องกรอกชื่อ-สกุล';
+        //     }
+        //     if (!values.username) {
+        //     errors.username = 'จำเป็นต้องกรอก Username !';
+        //     } else if (values.username.length < 3) {
+        //     errors.username = 'Username ต้องมากกว่า 3 ตัวอักษร !';
+        //     }
+        //     return errors;
+
+        }
+     const form = reduxForm({
+        form: 'UserForm',
+        validate
+        })  
 
 
-
-export default UserForm;
+export default form(UserForm);
