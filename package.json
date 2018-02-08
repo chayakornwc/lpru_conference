@@ -21,6 +21,7 @@
     "reactstrap": "^4.8.0",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
+    "redux-form": "^6.8.0",
     "redux-form-material-ui": "^4.3.3",
     "redux-promise-middleware": "^4.4.2",
     "redux-thunk": "^2.2.0"

@@ -13,8 +13,11 @@ class searchBar extends Component {
     }
     render(){
         return(
-            <div>
-                <input placeholder={this.props.placeholder} className="form-control"  value={this.state.term} onChange={e=> this.onInputChange(e.target.value)} />
+            <div className="field has-addons">
+                <div className="control">
+                    <input className="input" type="text" placeholder={this.props.placeholder} style={this.props.style}   value={this.state.term} onChange={e=> this.onInputChange(e.target.value)} />
+                </div>
+                <div className="control"><a className="button is-static"><span class="icon is-small"><i className="fas fa-search"></i></span><span></span></a></div>
             </div>
         )
     }

@@ -1,3 +1,13 @@
+.w-card{
+    background: #fff;
+    border: 1px solid #ada4ad;
+    padding: 1rem;
+    border-radius: 3px;
+}
+.table-responsive{
+  width: 100%
+  
+}
 .md-auto{
   margin: 0 auto;
 }
