@@ -10,9 +10,17 @@ const users = require('./controllers/Users');
 module.exports = function(app) {
 
     app.get('/', function(req, res){
-        res.send({message: 'lpru conference'})
+        res.send({message: 'lpru conference api'})
     })
      app.post('/signin',requireSignin, users.signin)
      app.get('/users',requireAuth,  users.findAll)
+
+
      app.post('/registers', registers.create) 
+
+    app.post('/users', requireAuth, users.create)
+    app.get('/users/:id', requireAuth, users.findById)
+    
+    app.put('/users/:id', requireAuth, users.update)
+    app.delete('/users/:id', requireAuth, users.delete)
 }

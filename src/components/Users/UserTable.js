@@ -28,7 +28,7 @@ class UserTable extends Component {
                                 <td className="text-center">
                                     {(e.user_group === 0) ? 'ทั่วไป' : 'ผู้ดูแลระบบ'}
                                 </td>
-                                <td>{e.name}</td>
+                                <td>{e.prefix} {e.first_name} {e.last_name}</td>
                                 <td>{e.username}</td>
                                 <td className="text-center">
                                     <button className="button is-warning is-small" onClick={() => buttonEdit(e.id)}>แก้ไข</button>{' '}

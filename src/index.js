@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import registerServiceWorker from './registerServiceWorker';
 import {Router,browserHistory} from 'react-router'
 import routes from './routes';
@@ -10,6 +11,7 @@ import promiseMiddleware from 'redux-promise-middleware'
 import thunk from 'redux-thunk'
 import reducers from './redux/reducers';
 import jwtDecode from 'jwt-decode';
+
 
 
 const store = createStore(

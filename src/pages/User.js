@@ -2,17 +2,31 @@ import React, { Component } from 'react';
 //import UserList from '../components/user/userlist';
 import {connect} from 'react-redux'
 import { debounce } from 'lodash';
-
+import ReactDOM from 'react-dom';
 import {
     loadUsers, getUser, saveUser,
     deleteUser, resetStatus
     } from '../redux/actions/userActions';
-import { Modal, ModalHeader } from 'reactstrap';
+//import { Modal, ModalHeader } from 'reactstrap';
 import { confirmModalDialog } from '../components/Utils/reactConfirmModalDialog';
+//import {modalDialog} from '../components/Utils/reactModalDialog';
+import Modal from 'react-modal';
 import SearchBar from '../components/Utils/searchBar';
 import UserTable from '../components/Users/UserTable';
 import UserForm from '../components/Users/UserForm';
+const ModalStyle = {
+    content : {
+      marginBottom:'0',  
+      maxWidth:'600px', 
+      margin:'0 auto',
+      background:'#fff',
+      marginTop:'100px',
+      padding:'1rem',
+      borderRadius:'1rem',
+      border:'solid 1px',
 
+    }
+  };
 class User extends Component {
     //มีการใช้ Modal ของ reactstrap ซึ่งจะต้องเก็บ State การแสดง modal ไว้
     state = {
@@ -22,9 +36,12 @@ class User extends Component {
 
     //สั่ง dispach ฟังก์ชัน loadUsers
     componentDidMount() {
+    
+        console.log('did mount');
         this.props.dispatch(loadUsers())
     }
 
+  
     render() {
         const { users, user, userSave } = this.props
         if (users.isRejected) {
@@ -34,14 +51,15 @@ class User extends Component {
 
         //debounce เป็นการหน่วงการส่งตัวอักษรเป็นฟังก์ชันของ lodash ทำเพื่อเรียกใช้การ filter ข้อมูล
         const userSearch = debounce(term => { this.handleSearch(term) }, 500);
-        const modalActive = this.state.modal  ? 'is-active' : 'is-passive';
-
+        const modalActive = this.state.modal  ? 'is-active' : '';
+      //  const active = this.state.modal ? 'is-active':'is-passive'; 
+       
         return (
          <div>
             <div className="notification">
                 <div className="container ">
                         <div className="tile tile is-8 is-vertical md-auto w-card">
-                            <h1 className="title">ผู้ใช้งาน ระบบสารสนเทศการอบรม</h1>
+                            <h1 className="title">ผู้ใช้งาน ระบบสารสนเทศการอบรม </h1>
                             <div className="empty">
                                 <div style={{marginLeft:'1rem'}} className="col-sm-6">
                                     {/* ส่ง props onSearchTermChange ให้ Component SearchBar เพื่อ filgter
@@ -62,23 +80,22 @@ class User extends Component {
                                 buttonEdit={this.handleEdit}
                                 buttonDelete={this.handleDelete}
                             />
-
+                                
                             {/* เป็น Component สำหรับแสดง Modal ของ reactstrap 
-                            ซึ่งเราต้องควบคุมการแสดงไว้ที่ไฟล์นี้ ถ้าทำแยกไฟล์จะควบคุมยากมากครับ */}
-                            <Modal  isOpen={this.state.modal} toggle={this.toggle}
-                                className={"modal "+modalActive} autoFocus={false}>
-                                <div className="modal-card">
-                                <header className="modal-card-head" toggle={this.toggle}><p className="modal-card-title">{this.state.modalTitle}ผู้ใช้งาน</p><button onClick={this.toggle} className="delete"></button></header>
-                                {/* เรียกใช้งาน Component UserForm และส่ง props ไปด้วย 4 ตัว */}
-                                <section className="modal-card-body">
-                                <UserForm
-                                    data={user.data}
-                                    userSave={userSave}
-                                    onSubmit={this.handleSubmit}
-                                    onToggle={this.toggle} />
-                                  </section>  
-                                </div>
-                            </Modal>
+                            ซึ่งเราต้องควบคุมการแสดงไว้ที่ไฟล์นี้ ถ้าทำแยกไฟล์จะควบคุมยาก */}
+                           <Modal isOpen={this.state.modal} toggle={this.toggle}
+                    className="modal-primary" autoFocus={false}
+                            style={ModalStyle}
+                    >
+                   
+                    {/* เรียกใช้งาน Component UserForm และส่ง props ไปด้วย 4 ตัว */}
+                    <UserForm
+                        header={this.state.modalTitle+ " ผู้ใช้งาน"}  
+                        data={user.data}
+                        userSave={userSave}
+                        onSubmit={this.handleSubmit}
+                        onToggle={this.toggle} />
+                </Modal>
                        </div> 
                 </div>
              </div>
@@ -88,9 +105,12 @@ class User extends Component {
 
     //ฟังก์ชันสั่งแสดง/ปิด modal
     toggle = () => {
+        
         this.setState({
             modal: !this.state.modal
         })
+        //console.log(this.props.user.data)
+     
     }
 
     //ฟังก์ชัน filter ข้อมูล
@@ -100,8 +120,8 @@ class User extends Component {
 
     //ฟังก์ชันสร้างข้อมูลใหม่โดยจะสั่งให้เปิด Modal
     handleNew = () => {
+      
         this.props.dispatch(resetStatus())
-
         this.props.user.data = []
         this.setState({ modalTitle: 'เพิ่ม' })
         this.toggle();
@@ -110,7 +130,6 @@ class User extends Component {
     //ฟังก์ชันแก้ไขข้อมูล และสั่งให้เปิด Modal โดยส่งข้อมูลไปแป๊ะให้กับฟอร์มด้วย
     handleEdit = (id) => {
         this.props.dispatch(resetStatus())
-
         this.setState({ modalTitle: 'แก้ไข' })
         this.props.dispatch(getUser(id)).then(() => {
             this.toggle()

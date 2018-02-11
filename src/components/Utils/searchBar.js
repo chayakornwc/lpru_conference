@@ -17,7 +17,7 @@ class searchBar extends Component {
                 <div className="control">
                     <input className="input" type="text" placeholder={this.props.placeholder} style={this.props.style}   value={this.state.term} onChange={e=> this.onInputChange(e.target.value)} />
                 </div>
-                <div className="control"><a className="button is-static"><span class="icon is-small"><i className="fas fa-search"></i></span><span></span></a></div>
+                <div className="control"><a className="button is-static"><span className="icon is-small"><i className="fas fa-search"></i></span><span></span></a></div>
             </div>
         )
     }

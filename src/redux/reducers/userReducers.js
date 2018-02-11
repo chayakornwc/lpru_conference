@@ -2,7 +2,7 @@
 //ซึ่งถ้าเราไม่กำหนด state  เริ่มต้นก็จะไม่มี object ชื่อ isRejected ให้เรียกใช้งาน
 const initialState = {
     users: { data: null, isLoading: true, isRejected: false },
-    user: { data: null, isLoading: true, isRejected: false },
+    user: { data: {id:null}, isLoading: true, isRejected: false },
     userDelete: { success: false, isLoading: true, isRejected: false },
     userSave: { data: null, isLoading: true, isRejected: false },
 }

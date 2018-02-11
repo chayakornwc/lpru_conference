@@ -4,8 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 
 import renderField from '../Utils/renderFields'
 
-class UserForm extends Component {
-
+class UserForm2 extends Component {
     componentDidMount() {
         //เรียกใช้ฟังก์ชันในการกำหนด value ให้กับ textbox และ control ต่างๆ
         this.handleInitialize()
@@ -16,9 +15,8 @@ class UserForm extends Component {
     //ต้องใช้ initialize ถ้าเป็น redux-form v.6 ต้องประกาศใช้ initialize แต่ v.7 เรียกใช้ได้เลย
     handleInitialize() {
         let initData = {
-            "user_group": "",
-            "first_name": '',
-            "last_name":'',
+            "user_type": "0",
+            "name": '',
             "username": '',
             "password": ''
         };
@@ -29,49 +27,59 @@ class UserForm extends Component {
         if (this.props.data.id) {
             initData = this.props.data
             //user_type ที่รับมาเป็น init แต่value ต้องแปลงเป็น string ก่อน
-            initData.user_group = this.props.data.user_group.toString()
+            
         }
         this.props.initialize(initData);
+        console.log(initData);
     }
+
     render() {
         //redux-form จะมี props ที่ชื่อ handleSubmit เพื่อใช้ submit ค่า
-        // this.handleInitialize();
-        const { handleSubmit, userSave, data} = this.props
-
-      
+        const { handleSubmit, userSave } = this.props
         return (
             <div>
-                <header className="modal-card-head">
-                    <p className="modal-card-title">{this.props.header}</p>
-                </header>
-                <div className="modal-body">
+                <ModalBody>
                     {/* ตรวจสอบว่ามี err หรือไม่ */}
-                    {userSave.isRejected && <div className="alert alert-danger">{userSave.data}{data.id}</div>}
+                    {userSave.isRejected && <div className="alert alert-danger">{userSave.data}</div>}
 
                     {/* รูปแบบการแสดงผลจัดตาม Bootstrap 4 */}
                     <div className="form-group row">
-                                   
-                        <div className="select">
-                        <Field name="user_group"  className="select" component="select">
-                            <option>ประเภทผู้ใช้</option>
-                            <option value="0">บุคลากรภายนอก</option>
-                            <option value="1">นักศึกษา</option>
-                            <option value="2">ผู้ดูแล</option>
-                        </Field>
-                       
-                        </div> 
-
+                        <label className="col-sm-3 col-form-label">ประเภทผู้ใช้</label>
+                        <div className="col-sm-9">
+                            <div className="form-check form-check-inline">
+                                <label className="form-check-label">
+                                    <Field
+                                        className="form-check-input"
+                                        name="user_type"
+                                        component="input"
+                                        type="radio"
+                                        value='0'
+                                    />{' '}
+                                    ทั่วไป
+                                    </label>
+                            </div>
+                            <div className="form-check form-check-inline">
+                                <label className="form-check-label">
+                                    <Field
+                                        className="form-check-input"
+                                        name="user_type"
+                                        component="input"
+                                        type="radio"
+                                        value="1"
+                                    />{' '}ผู้ดูแลระบบ
+                                    </label>
+                            </div>
+                        </div>
                     </div>
-                    <Field name="first_name" component={renderField}  type="text" label="ชื่อ" autoFocus />
-                    <Field name="last_name" component={renderField}  type="text" label="นามสกุล"  />
+                    <Field name="name" component={renderField} type="text" label="ชื่อ-สกุล" autoFocus />
                     <Field name="username" component={renderField} type="text" label="Username" />
                     <Field name="password" component={renderField} type="password" label="Password" />
-                </div>
+                </ModalBody>
 
-                <footer className="modal-card-foot">
-                    <Button className="button is-danger" color="primary" onClick={handleSubmit(this.onSubmit)}>บันทึก</Button>{' '}
-                    <Button className="button" onClick={this.toggle}>ยกเลิก</Button>
-                </footer  >
+                <ModalFooter>
+                    <Button color="primary" onClick={handleSubmit(this.onSubmit)}>บันทึก</Button>{' '}
+                    <Button color="secondary" onClick={this.toggle}>ยกเลิก</Button>
+                </ModalFooter>
             </div>
         )
     }
@@ -81,7 +89,7 @@ class UserForm extends Component {
         this.props.onToggle()
     }
 
-    //ฟังก์ชันส่งการค่าการ submit โดยส่งให้ฟังก์ชันชื่อ onSubmit ที่ได้จาก props
+    //ฟังก์ชันการส่งค่าการ submit โดยส่งให้ฟังก์ชันชื่อ onSubmit ที่ได้จาก props
     onSubmit = (values) => {
         this.props.onSubmit(values);
     }
@@ -110,5 +118,5 @@ const form = reduxForm({
 })
 
 //สังเกตุว่าไม่มีการใช้ connect เลยเพราะเราไม่ได้เป็นตัวจัดการ data โดยตรง
-//แต่ส่งสิ่งต่างๆผ่าน props ที่ได้จาก src/pages/User.js
-export default form(UserForm)
+//แต่ส่งสิ่งต่างผ่าน props ที่ได้จาก src/pages/User.js
+export default form(UserForm2)

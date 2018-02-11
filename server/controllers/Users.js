@@ -1,6 +1,7 @@
 
 const jwt = require('jwt-simple')
 const config = require('../config')
+
 function tokenForUser(user) {
 const timestamp = new Date().getTime();
 return jwt.encode(
@@ -27,7 +28,7 @@ exports.findAll = (req, res,next) => {
     connection.query(sql, [params, params], (err, results)=>{
         if (err) return next(err)
         res.send(results)
-        console.log(results);
+       // console.log('hll');
         })
     })
 }
@@ -49,7 +50,7 @@ exports.findAll = (req, res,next) => {
     req.getConnection((err, connection) => {
     if (err) return next(err)
     connection.query("select * from  registration where id=?", [id], (err, row) => {
-    if (err) return next(err)
+    if (err) return next(err)    
     res.send(row[0])
     })
     })
@@ -108,5 +109,12 @@ exports.update = (req, res, next) =>{
         email: body.email,
         username:body.username,
         password:sha256(body.password)
+    }
+}
+exports.delete = (req, res, next) =>{
+    var id = parseInt(req.params.id)
+    var {body} =req
+    var post = {
+        
     }
 }
