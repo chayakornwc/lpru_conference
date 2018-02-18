@@ -1,6 +1,7 @@
 
 const jwt = require('jwt-simple')
 const config = require('../config')
+var sha256 = require('sha256');
 
 function tokenForUser(user) {
 const timestamp = new Date().getTime();
@@ -60,7 +61,7 @@ exports.findAll = (req, res,next) => {
         var { body } = req
         var post = {
         user_group: body.user_group,   
-        prefix: body.prefxtitle,
+        prefix: body.prefix,
         first_name: body.first_name,
         last_name: body.last_name,
         major:body.major,
@@ -77,12 +78,12 @@ exports.findAll = (req, res,next) => {
             }
 
             req.getConnection(function (err, connection) {
-            connection.query("select username from registration where username=?", [post.username], function (err, results) {
+            connection.query("SELECT username FROM registration where username=?", [post.username], function (err, results) {
             if (err) return next(err)
             if (results.length > 0) {
             res.send({ status: 201, message: 'Username is Duplicate' })
             } else  {
-                    connection.query("insert into user set ? ", post, (err, results) => {
+                    connection.query("insert into registration set ? ", post, (err, results) => {
                     if (err) return next(err)
                     res.send(results)
                     })
@@ -90,12 +91,13 @@ exports.findAll = (req, res,next) => {
             });
         });
     }
+
 exports.update = (req, res, next) =>{
     var id =parseInt(req.params.id)
     var {body} = req
     var post = {
-        user_group: body.user_group,   
-        prefix: body.prefxtitle,
+        user_group: parseInt(body.user_group),   
+        prefix: body.prefix,
         first_name: body.first_name,
         last_name: body.last_name,
         major:body.major,
@@ -110,11 +112,35 @@ exports.update = (req, res, next) =>{
         username:body.username,
         password:sha256(body.password)
     }
+    req.getConnection(function(err, connection){
+        connection.query("SELECT * FROM registration WHERE username=?",[post.username], function(err, results){
+            if (err) return next(err)
+            var isUpdate = false;
+            if(results.length > 0){
+                if(results[0].id !== id){
+                    res.send({status:201, message:'ตรวจพบ username นี้ในระบบ'})
+                }else {
+                    isUpdate = true;
+                }
+            }else{
+               isUpdate = true;
+            }
+            if(isUpdate){ //ตรวจสอบ ว่าสามารถอัพเดทได้หรือไม่ แล้วทำการอัพเดท     
+                connection.query("UPDATE registration set ? where id=?", [post, id], function(err, results){
+                        if(err) return next(err)
+                        res.send(results)
+                })
+            }
+        })
+    })
 }
 exports.delete = (req, res, next) =>{
     var id = parseInt(req.params.id)
-    var {body} =req
-    var post = {
-        
-    }
+    req.getConnection(function(err, connection){
+        if(err) return next(err)
+        connection.query("DELETE FROM registration where id=?",[id], (err, results)=>{
+            if(err) return next(err)
+           res.send(results)
+        })
+    })
 }

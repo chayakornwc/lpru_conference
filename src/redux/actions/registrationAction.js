@@ -4,8 +4,8 @@ import { browserHistory } from 'react-router'
 const BASE_URL = config.BASE_URL;
 
 
-//ฟังก์ชันดึงข้อมูลสถานที่ทุกรายการโดยจะส่ง query ชื่อ term เข้าไปด้วยเพื่อน􀄞ำไป filter
-//ส􀄞ำหรับ es6 เราสามารถก􀄞ำหนดค่า default ของ parameter ได้ด้วยครับ
+//ฟังก์ชันดึงข้อมูลสถานที่ทุกรายการโดยจะส่ง query ชื่อ term เข้าไปด้วยเพื่อนำไป filter
+//สำหรับ es6 เราสามารถก􀄞ำหนดค่า default ของ parameter ได้ด้วยครับ
 export const loadLocations = (term = '') => {
 return (dispatch) => {
 //ก่อนดึงข้อมูลสั่ง dispatch ให้ reducer รู้ว่าก่อนเพื่อจะแสดง loading
@@ -27,6 +27,7 @@ dispatch({ type: 'LOAD_LOCATIONS_REJECTED', payload: err.message })
 })
 }
 }
+
 //ฟังก์ชันดึงข้อมูลสถานที่ตาม id ที่ส่ง
 export const getLocation = (id) => {
 return (dispatch) => {
@@ -92,7 +93,7 @@ dispatch({ type: 'DELETE_LOCATION_REJECTED', payload: err.message })
 }
 }
 
-//ฟังก์ชันส􀄞ำหรับ reset ค่า status เพื่อล้างข้อความ error ที่ค้างอยู่
+//ฟังก์ชันสำหรับ reset ค่า status เพื่อล้างข้อความ error ที่ค้างอยู่
 export const resetStatus = () => {
 return (dispatch) => {
 dispatch({ type: 'SAVE_LOCATION_SUCCESS' })

@@ -7,6 +7,7 @@ import {
     loadUsers, getUser, saveUser,
     deleteUser, resetStatus
     } from '../redux/actions/userActions';
+
 //import { Modal, ModalHeader } from 'reactstrap';
 import { confirmModalDialog } from '../components/Utils/reactConfirmModalDialog';
 //import {modalDialog} from '../components/Utils/reactModalDialog';
@@ -14,6 +15,7 @@ import Modal from 'react-modal';
 import SearchBar from '../components/Utils/searchBar';
 import UserTable from '../components/Users/UserTable';
 import UserForm from '../components/Users/UserForm';
+const alertify = require('alertify.js');
 const ModalStyle = {
     content : {
       marginBottom:'0',  
@@ -24,7 +26,10 @@ const ModalStyle = {
       padding:'1rem',
       borderRadius:'1rem',
       border:'solid 1px',
-
+      height:'800px',
+      overflowY:'scroll',
+      overflowX:'hidden'
+     
     }
   };
 class User extends Component {
@@ -48,12 +53,14 @@ class User extends Component {
             //ถ้ามี error
             return <div>{users.data}</div>
         }
+           
+        
 
         //debounce เป็นการหน่วงการส่งตัวอักษรเป็นฟังก์ชันของ lodash ทำเพื่อเรียกใช้การ filter ข้อมูล
         const userSearch = debounce(term => { this.handleSearch(term) }, 500);
         const modalActive = this.state.modal  ? 'is-active' : '';
       //  const active = this.state.modal ? 'is-active':'is-passive'; 
-       
+    
         return (
          <div>
             <div className="notification">
@@ -143,6 +150,7 @@ class User extends Component {
             if (!this.props.userSave.isRejected) {
                 this.toggle()
                 this.props.dispatch(loadUsers())
+                {alertify.success('บันทึกข้อมูลเรียบร้อยแล้ว')}
             }
         })
     }
@@ -156,6 +164,9 @@ class User extends Component {
             confirmLabel: 'ยืนยัน ลบทันที!!',
             onConfirm: () => this.props.dispatch(deleteUser(id)).then(() => {
                 this.props.dispatch(loadUsers())
+                if(!this.props.userDelete.isRejected){
+                    {alertify.success('ลบข้อมูลผู้ใช้เรียบร้อยแล้ว')}
+                }
             })
         })
     }

@@ -15,7 +15,7 @@ var gen = rn.generator({
    // console.log(password);
     console.log(id)
     var post = {
-    user_group:'บุคลากรภายนอก',
+    user_group:null,
     prefix: body.prefxtitle,
     first_name: body.first_name,
     last_name: body.last_name,

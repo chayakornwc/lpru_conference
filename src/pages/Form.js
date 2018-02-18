@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+const alertify = require('alertify.js');
 class Form extends Component {
     constructor(props){
         super(props);
@@ -27,7 +28,9 @@ class Form extends Component {
         
     }
     render() {
+        
         const {Email} = this.props;
+       
         return (
             <div>
         <div className="field">

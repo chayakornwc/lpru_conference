@@ -71,8 +71,9 @@ export const saveUser = (values) => {
             //โดยserver จะส่ง object ที่ชื่อว่า status และ message กลับมา
             if (results.data.status) {
                 dispatch({ type: 'SAVE_USER_REJECTED', payload: results.data.message })
+                
             } else {
-                dispatch({ type: 'SAVE_USER_SUCCESS' })
+                dispatch({ type: 'SAVE_USER_SUCCESS', payload:results }) 
             }
         }).catch(err => {
             //กรณี error
