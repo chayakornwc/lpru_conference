@@ -15,13 +15,13 @@ export default function (ComposedComponent) {
                                 }
                             }
                     }
-                componentWillUpdate(nextProps) {
+            componentWillUpdate(nextProps) {
                     if (nextProps.data) {
-                            if (nextProps.data.user_group <= 1) {
-                                this.context.router.push('/');
-                                            }
+                    if (nextProps.data.user_group <= 1) {
+                        this.context.router.push('/');
                                     }
                                 }
+                            }
 
             render() {
                 return <ComposedComponent {...this.props} />

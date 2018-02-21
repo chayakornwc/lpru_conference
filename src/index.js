@@ -8,7 +8,7 @@ import routes from './routes';
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import promiseMiddleware from 'redux-promise-middleware'
-import thunk from 'redux-thunk'
+import thunk from 'redux-thunk';
 import reducers from './redux/reducers';
 import jwtDecode from 'jwt-decode';
 
