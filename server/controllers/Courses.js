@@ -1,6 +1,7 @@
-import { connect } from "http2";
 
-const timestamp = new Date().getTime();
+const config = require('../config')
+const timestamp = new Date().toLocaleString();
+
 
 exports.findAll = (req, res,next) => {
     req.getConnection((err, connection)=>{
@@ -27,16 +28,32 @@ exports.findById = (req, res, next) =>{
 }
 exports.create = (req, res, next)=>{
     var  data = {
-        course_name: req.course_name,
-        course_log:req.remark,
-        timestamp:timestamp,
+        course_name: req.body.course_name,
+        course_nameEng:req.body.course_nameEng,
+        course_log:req.body.remark,
+        course_status:req.body.course_status,
+        time_stamp:timestamp,
     }   
+    console.log(data);
+   
     req.getConnection((err, connection)=>{
         if(err) return next(err)
-        connect.query("INSERT INTO course set ?", data, (err,result)=>{
-            if(err) return next(err)
-            res.send(result)
-        })
+        connection.query("SELECT * FROM course WHERE course_name=? OR course_nameEng=?",[data.course_name, data.course_nameEng], function(err, results){
+            var isSave = false;
+            console.log(results[0])
+            if(results.length >0 ){
+                res.send({status:201, message:'ตรวจพบ หลักสูตรนี้ ในระบบ'})
+            }else{
+                isSave  = true;
+            }
+            if(isSave){
+                connection.query("INSERT INTO course set ?", data, (err,result)=>{
+                    if(err) return next(err)
+                    res.send(result)
+                })
+            }
+        });
+       
     })    
 }
 exports.update = (req, res, next) =>{
@@ -47,12 +64,12 @@ exports.update = (req, res, next) =>{
         timestamp:timestamp,
     }
     req.getConnection(function(err, connection){
-        connection.query("SELECT * FROM course WHERE course_name=?",[post.course_name], function(err, results){
+        connection.query("SELECT * FROM course WHERE course_name=? OR course_nameEng=?",[data.course_name], function(err, results){
             if (err) return next(err)
             var isUpdate = false;
             if(results.length > 0){
                 if(results[0].id !== id){
-                    res.send({status:201, message:'ตรวจพบ หลักสูตรนี้ นในระบบ'})
+                    res.send({status:201, message:'ตรวจพบ หลักสูตรนี้ ในระบบ'})
                 }else {
                     isUpdate = true;
                 }

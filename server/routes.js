@@ -5,7 +5,7 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 
 const registers = require('./controllers/registers');
 const users = require('./controllers/Users');
-
+const courses = require('./controllers/Courses');
 
 module.exports = function(app) {
 
@@ -23,4 +23,8 @@ module.exports = function(app) {
     
     app.put('/users/:id', requireAuth, users.update)
     app.delete('/users/:id', requireAuth, users.delete)
+
+    app.get('/course', courses.findAll);
+    app.post('/course', courses.create);
+
 }
