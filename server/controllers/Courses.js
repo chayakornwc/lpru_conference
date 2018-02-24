@@ -7,7 +7,7 @@ exports.findAll = (req, res,next) => {
     req.getConnection((err, connection)=>{
         if(err) return next(err)
     
-    var sql = "SELECT * FROM course where (coursename like ? or course_id like ?)";
+    var sql = "SELECT * FROM course where (course_name like ? or course_id like ?)";
     var params ="%" + req.query.term+"%"
     connection.query(sql, [params, params], (err, results)=>{
         if (err) return next(err)
@@ -33,9 +33,7 @@ exports.create = (req, res, next)=>{
         course_log:req.body.remark,
         course_status:req.body.course_status,
         time_stamp:timestamp,
-    }   
-    console.log(data);
-   
+    }      
     req.getConnection((err, connection)=>{
         if(err) return next(err)
         connection.query("SELECT * FROM course WHERE course_name=? OR course_nameEng=?",[data.course_name, data.course_nameEng], function(err, results){
