@@ -1,5 +1,3 @@
-
-
 var rn = require('random-number');
 var sha256 = require('sha256');
 var gen = rn.generator({

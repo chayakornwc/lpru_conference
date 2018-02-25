@@ -1,6 +1,3 @@
-import { connect } from 'tls';
-
-
 const jwt = require('jwt-simple')
 const config = require('../config')
 var sha256 = require('sha256');
@@ -9,11 +6,11 @@ function tokenForUser(user) {
 const timestamp = new Date().getTime();
 return jwt.encode(
 {
-sub: user.id,
-user_group: user.user_group,
-name: user.name,
-username: user.username,
-iat: timestamp
+    sub: user.id,
+    user_group: user.user_group,
+    name: user.name,
+    username: user.username,
+    iat: timestamp
 },
 config.secret
 )
@@ -28,6 +25,7 @@ exports.findAll = (req, res,next) => {
     
     var sql = "select * from registration where (first_name like ? or username like ?)";
     var params ="%" + req.query.term+"%"
+    
     connection.query(sql, [params, params], (err, results)=>{
         if (err) return next(err)
         res.send(results)
@@ -95,7 +93,7 @@ exports.create = (req, res, next) => {
 exports.update = (req, res, next) =>{
     var id =parseInt(req.params.id)
     var {body} = req
-    var post = {
+    var data = {
         user_group: parseInt(body.user_group),   
         prefix: body.prefix,
         first_name: body.first_name,
@@ -113,7 +111,7 @@ exports.update = (req, res, next) =>{
         password:sha256(body.password)
     }
     req.getConnection(function(err, connection){
-        connection.query("SELECT * FROM registration WHERE username=?",[post.username], function(err, results){
+        connection.query("SELECT * FROM registration WHERE username=?",[data.username], function(err, results){
             if (err) return next(err)
             var isUpdate = false;
             if(results.length > 0){
@@ -126,7 +124,7 @@ exports.update = (req, res, next) =>{
                isUpdate = true;
             }
             if(isUpdate){ //ตรวจสอบ ว่าสามารถอัพเดทได้หรือไม่ แล้วทำการอัพเดท     
-                connection.query("UPDATE registration set ? where id=?", [post, id], function(err, results){
+                connection.query("UPDATE registration set ? where id=?", [data, id], function(err, results){
                         if(err) return next(err)
                         res.send(results)
                 })
