@@ -41,8 +41,6 @@ class User extends Component {
 
     //สั่ง dispach ฟังก์ชัน loadUsers
     componentDidMount() {
-    
-        console.log('did mount');
         this.props.dispatch(loadUsers())
     }
 
@@ -71,9 +69,7 @@ class User extends Component {
                                 <div style={{marginLeft:'1rem'}} className="col-sm-6">
                                     {/* ส่ง props onSearchTermChange ให้ Component SearchBar เพื่อ filgter
                                     โดยฝั่ง SearchBar จะนำไปใช้กับ event onChange */}
-                                    <SearchBar
-                                        onSearchTermChange={userSearch}
-                                        placeholder="ค้นหา...ชื่อ-สกุล Username" style={{width:'300px'}} />
+                                    <SearchBar onSearchTermChange={userSearch}  placeholder="ค้นหา...ชื่อ-สกุล Username" style={{width:'300px'}} />
                                 </div>
                             </div>
                             
@@ -90,10 +86,7 @@ class User extends Component {
                                 
                             {/* เป็น Component สำหรับแสดง Modal ของ reactstrap 
                             ซึ่งเราต้องควบคุมการแสดงไว้ที่ไฟล์นี้ ถ้าทำแยกไฟล์จะควบคุมยาก */}
-                           <Modal isOpen={this.state.modal} toggle={this.toggle}
-                    className="modal-primary" autoFocus={false}
-                            style={ModalStyle}
-                    >
+             <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-primary" autoFocus={false}  style={ModalStyle}>
                    
                     {/* เรียกใช้งาน Component UserForm และส่ง props ไปด้วย 4 ตัว */}
                     <UserForm
@@ -102,7 +95,7 @@ class User extends Component {
                         userSave={userSave}
                         onSubmit={this.handleSubmit}
                         onToggle={this.toggle} />
-                </Modal>
+                    </Modal>
                        </div> 
                 </div>
              </div>
