@@ -29,7 +29,6 @@ exports.update = (req,res,next)=>{
 }
 exports.create  = (req,res,next)=>{
     req.getConnection((err, connection)=>{
-        if(err) return next(err)
-
+        if(err) return next(err);
     })
 }
