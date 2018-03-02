@@ -4,9 +4,8 @@ const timestamp = new Date().toLocaleString();
 
 exports.findAll = (req, res,next) => {
     req.getConnection((err, connection)=>{
-        if(err) return next(err)
-    
-    var sql = "SELECT * FROM course WHERE course_name like ? or course_nameEng like ?";
+    if(err) return next(err)
+    var sql = "SELECT * FROM course WHERE course_name like ? OR course_nameEng like ?";
     var params ="%"+req.query.term+"%";
     connection.query(sql, [params, params], (err, results)=>{
         if (err) return next(err)
