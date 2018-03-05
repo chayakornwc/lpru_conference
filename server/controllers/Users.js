@@ -29,7 +29,7 @@ exports.findAll = (req, res,next) => {
     connection.query(sql, [params, params], (err, results)=>{
         if (err) return next(err)
         res.send(results)
-       // console.log('hll');
+      
         })
     })
 }
@@ -47,7 +47,8 @@ exports.findAll = (req, res,next) => {
 
 
 exports.findById = (req, res, next)=>{
-    var id = parseInt(req,params.id)
+   
+    var id = parseInt(req.params.id)
     req.getConnection((err, connection)=>{
         connection.query("select * from registration where id=?",[id], (err, row)=>{
             if (err) return next(err)

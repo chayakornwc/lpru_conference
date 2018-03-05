@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import { debounce } from 'lodash';
 import ReactDOM from 'react-dom';
-import {
-    loadUsers, getUser, saveUser,
+import { loadUsers, getUser, saveUser,
     deleteUser, resetStatus
     } from '../redux/actions/userActions';
 
@@ -86,15 +85,10 @@ class User extends Component {
                                 
                             {/* เป็น Component สำหรับแสดง Modal ของ reactstrap 
                             ซึ่งเราต้องควบคุมการแสดงไว้ที่ไฟล์นี้ ถ้าทำแยกไฟล์จะควบคุมยาก */}
-             <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-primary" autoFocus={false}  style={ModalStyle}>
+                        <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-primary" autoFocus={false}  style={ModalStyle}>
                    
                     {/* เรียกใช้งาน Component UserForm และส่ง props ไปด้วย 4 ตัว */}
-                    <UserForm
-                        header={this.state.modalTitle+ " ผู้ใช้งาน"}  
-                        data={user.data}
-                        userSave={userSave}
-                        onSubmit={this.handleSubmit}
-                        onToggle={this.toggle} />
+                    <UserForm  header={this.state.modalTitle+ " ผู้ใช้งาน"}   data={user.data} userSave={userSave} onSubmit={this.handleSubmit} onToggle={this.toggle} />
                     </Modal>
                        </div> 
                 </div>
@@ -147,7 +141,7 @@ class User extends Component {
             }
         })
     }
-
+    
     //ฟังก์ชันลบข้อมูล
     handleDelete = (id) => {
         confirmModalDialog({
@@ -174,4 +168,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(User)
+export default connect(mapStateToProps)(User)   

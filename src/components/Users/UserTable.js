@@ -2,11 +2,32 @@ import React, { Component } from 'react'
 import { Table, Button } from 'reactstrap';
 
 //แสดงรายชื่อข้อมูลผู้ใช้ แสดงแบบ HTML TABLE
+
 class UserTable extends Component {
+
+
     render() {
         //Destructuring ค่า props ที่ส่งมาจาก  src/pages/User.js  
         const { data, buttonNew, buttonEdit, buttonDelete } = this.props
     
+        
+            const affiliationName = (e)=>{
+                switch(e){
+                    case 26:
+                    return'เทคโนโลยีอุตสาหกรรม';
+                    case 24:
+                    return'วิทยาศาสตร์';
+                    case 23:
+                    return'มนุษยศาสตร์';
+                    case 24:
+                    return'วิทยาการจัดการ';
+                    case 81:
+                    return'คณะครุศาสตร์'
+                    default:
+                    return 'ไม่ระบุ';
+
+                }
+            }
 
         return (
             <table className="table is-striped table-responsive" striped bordered hover>
@@ -33,7 +54,7 @@ class UserTable extends Component {
                                 </td>
                                 <td>{e.prefix} {e.first_name} {e.last_name}</td>
                                 <td>{e.username}</td>
-                                <td>{e.affiliation}</td>
+                                <td>{affiliationName(e.affiliation)}</td>
                                 <td>{e.company}</td>
                                 <td className="text-center">
                                     <button className="button is-warning is-small" onClick={() => buttonEdit(e.id)}>แก้ไข</button>{' '}

@@ -64,7 +64,7 @@ class UserForm extends Component {
         //redux-form จะมี props ที่ชื่อ handleSubmit เพื่อใช้ submit ค่า
         // this.handleInitialize();
         const { handleSubmit, userSave, data} = this.props
-        console.log(data);
+       
        
        // {userSave.i}
         return (
