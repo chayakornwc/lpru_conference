@@ -8,7 +8,7 @@ exports.findAll = (req, res, next) => {
                  +" INNER JOIN  course_order ON  course_order.course_id = course.course_id"
                  +" WHERE (period.per_id LIKE ? OR (period.per_start =? AND period.per_end =?) OR course.course_name =?  OR course.course_nameEng =?) "; 
         var params = "%"+req.query.term+"%";
-       // console.log(connection.query(sql,[req.query.term, req.query.term, req.query.term, params, params]))                                                     
+                                                           
         connection.query(sql,[params, req.query.startdate, req.query.expdate, params, params], function(err, results){ 
              if (err) return next(err);
              res.send(results);
@@ -71,6 +71,10 @@ exports.create  = (req,res,next) => {
             if(err) return next(err);
             res.send(results);
         })
+<<<<<<< HEAD
+=======
+
+>>>>>>> 05d2531fa7e14a09ae79ef45efb9561615ebe72f
     })
 }
 exports.delete  = (req,res,next) => {
