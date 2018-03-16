@@ -66,15 +66,11 @@ exports.create  = (req,res,next) => {
         room_id:req.body.room_id
     }
     req.getConnection((err, connection)=>{
-<<<<<<< HEAD
-        if(err) return next(err);
-=======
         if(err) return next(err)
         connection.query("INSERT INTO period set ?",data, (err, results)=>{
             if(err) return next(err);
             res.send(results);
         })
->>>>>>> 34d5367862a1e43a4a3638c0680ae19f9bc5a061
     })
 }
 exports.delete  = (req,res,next) => {
