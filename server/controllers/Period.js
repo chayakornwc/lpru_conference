@@ -8,7 +8,7 @@ exports.findAll = (req, res, next) => {
                  +" INNER JOIN  course_order ON  course_order.course_id = course.course_id"
                  +" WHERE (period.per_id LIKE ? OR (period.per_start =? AND period.per_end =?) OR course.course_name =?  OR course.course_nameEng =?) "; 
         var params = "%"+req.query.term+"%";
-       // console.log(connection.query(sql,[req.query.term, req.query.term, req.query.term, params, params]))                                                     
+                                                           
         connection.query(sql,[params, req.query.startdate, req.query.expdate, params, params], function(err, results){ 
              if (err) return next(err);
              res.send(results);
@@ -66,15 +66,12 @@ exports.create  = (req,res,next) => {
         room_id:req.body.room_id
     }
     req.getConnection((err, connection)=>{
-<<<<<<< HEAD
-        if(err) return next(err);
-=======
         if(err) return next(err)
         connection.query("INSERT INTO period set ?",data, (err, results)=>{
             if(err) return next(err);
             res.send(results);
         })
->>>>>>> 34d5367862a1e43a4a3638c0680ae19f9bc5a061
+
     })
 }
 exports.delete  = (req,res,next) => {
