@@ -9,6 +9,7 @@ const courses = require('./controllers/Courses');
 const period = require('./controllers/Period');
 const courseOrder = require('./controllers/CourseOrders');
 const Examination = require('./controllers/Examination');
+const operationRoom = require('./controllers/OperationRoom');
 module.exports = function(app) {
 
     app.get('/', function(req, res){
@@ -49,4 +50,7 @@ module.exports = function(app) {
     
     app.get('/examination/:course_id/:exam_id', Examination.findById);
     app.post('/examination/:course_id', Examination.create);
+
+    app.get('/operation_room/', requireAuth, operationRoom.findAll);
+    app.get('/operation_room/:id', operationRoom.findById);
 }

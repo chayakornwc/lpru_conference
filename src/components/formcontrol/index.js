@@ -118,7 +118,7 @@ class TextFields extends React.Component {
     alertify.success("ดำเนินการสร้างบัญชีผู้ใช้ เรียบร้อยแล้ว โปรดดำเนินการขั้นต่อไป!");
   }).catch(err =>{
     this.setState({isLoad:false});
-    alertify.error("การสร้างบัญชีผู้ใช้ ้มเหลว อาจจะเกิดจากการเชื่อมต่อขัดข้อง โปรดลองใหม่อีกครั้ง!");
+    alertify.error("การส้างบัญชีผู้ใช้ล้มเหลว อาจจะเกิดจากการเชื่อมต่อขัดข้อง โปรดลองใหม่อีกครั้ง!");
   })
     
   
@@ -161,6 +161,7 @@ class TextFields extends React.Component {
           id="select-data"
           select
           label="กรุณาเลือกคำนำหน้า"
+          
           className={classes.textField}
           value={this.state.prefxtitle}
           onChange={this.handleChange('prefxtitle')}
