@@ -26,19 +26,19 @@ module.exports = function(app) {
     app.put('/users/:id', requireAuth, users.update)
     app.delete('/users/:id', requireAuth, users.delete)
 
-    app.get('/course', courses.findAll);
-    app.get('/course/:id', courses.findById);
-    app.post('/course', courses.create);
+    app.get('/course',  courses.findAll);
+    app.get('/course/:id',  courses.findById);
+    app.post('/course', requireAuth, courses.create);
     
-    app.put('/course/:id', courses.update);
-    app.delete('/course/:id', courses.delete);
+    app.put('/course/:id', requireAuth, courses.update);
+    app.delete('/course/:id', requireAuth, courses.delete);
 
-    app.get('/periods/', period.findAll);
+    app.get('/period/',  period.findAll);
     app.get('/period/:id', period.findById);
-    app.post('/period/', period.create);
+    app.post('/period/', requireAuth, period.create);
 
-    app.put('/period/:id', period.update);
-    app.delete('/period/:id', period.delete);
+    app.put('/period/:id', requireAuth, period.update);
+    app.delete('/period/:id', requireAuth, period.delete);
 
     app.get('/courseorder/', courseOrder.findAll);
     app.get('/courseorder/:id', courseOrder.findById)

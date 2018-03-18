@@ -4,16 +4,10 @@ const timestamp = new Date().toLocaleString();
 
 exports.findAll = (req, res,next) => {
     req.getConnection((err, connection)=>{
-<<<<<<< HEAD
-        if(err) return next(err)
-    
-    var sql = "SELECT * FROM course WHERE course_id =? course_name LIKE ? or course_nameEng LIKE ?";
-=======
     if(err) return next(err)
     var sql = "SELECT * FROM course WHERE course_name like ? OR course_nameEng like ?";
->>>>>>> ae2f9afd4684c9412b08b3eeb11697fb4ef08fd9
     var params ="%"+req.query.term+"%";
-    connection.query(sql, [req.query.term, params, params], (err, results)=>{
+    connection.query(sql, [params, params], (err, results)=>{
         if (err) return next(err)
         res.send(results)
         })
@@ -83,7 +77,7 @@ exports.update = (req, res, next) =>{
                 connection.query("UPDATE course SET ? WHERE course_id=?", [data, id], function(err, results){
                         if(err) return next(err)
                         if(results){
-                              res.send({status:200, message:'แก้ไขข้อมูลเรียนร้อยแล้ว'});
+                              res.send(results);
                         }else{
                             res.send({status:201, message:'เกิดข้อผิดพลาดกรุณาลองใหกม่อีกครั้ง'});
                         }

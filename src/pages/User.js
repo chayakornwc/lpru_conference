@@ -149,7 +149,7 @@ class User extends Component {
             title: 'ยืนยันการลบ',
             message: 'คุณต้องการลบข้อมูลผู้ใช้นี้ใช่หรือไม่',
             confirmLabel: 'ยืนยัน ลบทันที!!',
-            onConfirm: () => this.props.dispatch(deleteUser(id)).then(() => {
+            onConfirm : () => this.props.dispatch(deleteUser(id)).then(() => {
                 this.props.dispatch(loadUsers())
                 if(!this.props.userDelete.isRejected){
                     {alertify.success('ลบข้อมูลผู้ใช้เรียบร้อยแล้ว')}

@@ -68,11 +68,7 @@ class Logon extends Component {
             password: this.state.password
            }
            this.props.SetLogin(LoginData);
-      //  this.props.SetLogin(LoginData);
-          // validate(LoginData)
-        // //    if(this.state.Login){
-        // //        this.props.SetLogin(LoginData);
-        // //    }
+    
 
     }
     renderAlert(){
