@@ -6,7 +6,7 @@ exports.findAll = (req, res,next) => {
     req.getConnection((err, connection)=>{
     if(err) return next(err)
     var sql = "SELECT * FROM course WHERE course_name like ? OR course_nameEng like ?";
-    var params ="%"+req.query.term+"%";
+    var params ="%" + req.query.term+"%";
     connection.query(sql, [params, params], (err, results)=>{
         if (err) return next(err)
         res.send(results)
@@ -44,7 +44,7 @@ exports.create = (req, res, next)=>{
             if(isSave){
                 connection.query("INSERT INTO course set ?", data, (err,result)=>{
                     if(err) return next(err)
-                    res.send(result)
+                    res.send(results)
                 })
             }
         });

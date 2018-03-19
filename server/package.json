@@ -19,7 +19,7 @@
     "flakeid": "^0.1.0",
     "jquery": "^1.9.1",
     "jwt-simple": "^0.5.1",
-    "moment": "^2.20.1",
+    "moment": "^2.21.0",
     "mysql": "^2.15.0",
     "nodemon": "^1.14.3",
     "passport": "^0.4.0",

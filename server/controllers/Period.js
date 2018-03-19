@@ -1,6 +1,7 @@
 const config = require('../config')
 const timestamp = new Date().toLocaleString();
-
+const moment = require('moment');
+moment.locale('th');
 exports.findAll = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return next(err);
@@ -8,7 +9,7 @@ exports.findAll = (req, res, next) => {
                  +" INNER JOIN  course_order ON  course_order.course_id = course.course_id"
                  +" WHERE (period.per_id LIKE ? OR (period.per_start =? AND period.per_end =?) OR course.course_name =?  OR course.course_nameEng =?) "; 
         var params = "%"+req.query.term+"%";
-       // console.log(connection.query(sql,[req.query.term, req.query.term, req.query.term, params, params]))                                                     
+                                                           
         connection.query(sql,[params, req.query.startdate, req.query.expdate, params, params], function(err, results){ 
              if (err) return next(err);
              res.send(results);
@@ -57,14 +58,22 @@ exports.update = (req,res,next) => {
     })
 }
 exports.create  = (req,res,next) => {
+    var _perstart = moment(req.body.per_start, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
+    var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
+    var TimeStart = moment(req.body.per_time_start).format('hh:mm:ss');
+    var TimeEnd = moment(req.body.per_time_end).format('hh:mm:ss');
     var data ={
-        per_start:req.body.per_start,
-        per_end:req.body.per_end,
+        per_start:_perstart,
+        per_end:_perEnd,
+        per_time_start:TimeStart,
+        per_time_end:TimeEnd,
         per_price:req.body.per_price,
-        per_quoata:req.body.per_quota,
+        per_quota:req.body.per_quota,
         course_id:req.body.course_id,
         room_id:req.body.room_id
     }
+    console.log(req.body)
+    console.log(data)
     req.getConnection((err, connection)=>{
         if(err) return next(err)
         connection.query("INSERT INTO period set ?",data, (err, results)=>{
