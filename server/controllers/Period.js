@@ -6,22 +6,12 @@ moment.locale('th');
 exports.findAll = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return next(err);
-<<<<<<< HEAD
         var sql = "SELECT period.*, course.*, operation_room.room_name  FROM period LEFT JOIN course ON period.course_id = course.course_id"
                  +" LEFT JOIN  course_order ON  course_order.course_id = course.course_id"
                  +" LEFT JOIN operation_room ON period.room_id = operation_room.room_id"
                  +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?) "; 
-        var params = "%"+req.query.term+"%";
-        console.log(sql);                                   
+        var params = "%"+req.query.term+"%";                  
         connection.query(sql,[params, params, params], function(err, results){ 
-=======
-        var sql = "SELECT period.*, course.*, operation_room.* FROM period LEFT JOIN course ON period.course_id = course.course_id"
-                 +" LEFT JOIN course_order ON  course_order.course_id = course.course_id"
-                 +" LEFT JOIN operation_room ON operation_room.room_id = period.room_id"
-                 +" WHERE (period.per_id LIKE ? OR  course.course_name LIKE ?  OR course.course_nameEng LIKE ?) "; 
-        var params = "%"+req.query.term+"%";
-        connection.query(sql,[params,  params, params], function(err, results){ 
->>>>>>> e8e205d4ee9940f25d33346d7a078c5e14a6e425
              if (err) return next(err);
              res.send(results);
         }) 
@@ -34,7 +24,7 @@ exports.findById = (req,res,next) => {
     req.getConnection((err, connection)=>{
         if(err) return next(err);
         var sql = "SELECT period.*, course.*, count(course_order.order_id) as period_quantity FROM period LEFT JOIN course ON period.course_id = course.course_id"
-        +" INNER JOIN course_order ON course_order.course_id = course.course_id where period.per_id=?";
+        +" LEFT JOIN course_order ON course_order.course_id = course.course_id where period.per_id=?"; 
         connection.query(sql,[id],function(err, results){
         if(err) return next(err);
             if(results[0]){
@@ -69,15 +59,12 @@ exports.update = (req,res,next) => {
     })
 }
 exports.create  = (req,res,next) => {
-    console.log(moment.locale());
+ 
     var _perstart = moment(req.body.per_start, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
     var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
     var TimeStart = moment(req.body.per_time_start).format('LT');
     var TimeEnd = moment(req.body.per_time_end).format('LT');
-<<<<<<< HEAD
     
-=======
->>>>>>> e8e205d4ee9940f25d33346d7a078c5e14a6e425
     var data ={
         per_start:_perstart,
         per_end:_perEnd,
