@@ -2,15 +2,17 @@ const config = require('../config')
 const timestamp = new Date().toLocaleString();
 const moment = require('moment');
 moment.locale('th');
+
 exports.findAll = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return next(err);
-        var sql = "SELECT period.*, course.*, count(course_order.order_id) as period_quantity FROM period LEFT JOIN course ON period.course_id = course.course_id"
-                 +" INNER JOIN  course_order ON  course_order.course_id = course.course_id"
-                 +" WHERE (period.per_id LIKE ? OR (period.per_start =? AND period.per_end =?) OR course.course_name =?  OR course.course_nameEng =?) "; 
+        var sql = "SELECT period.*, course.*, operation_room.room_name  FROM period LEFT JOIN course ON period.course_id = course.course_id"
+                 +" LEFT JOIN  course_order ON  course_order.course_id = course.course_id"
+                 +" LEFT JOIN operation_room ON period.room_id = operation_room.room_id"
+                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?) "; 
         var params = "%"+req.query.term+"%";
-                                                           
-        connection.query(sql,[params, req.query.startdate, req.query.expdate, params, params], function(err, results){ 
+        console.log(sql);                                   
+        connection.query(sql,[params, params, params], function(err, results){ 
              if (err) return next(err);
              res.send(results);
         }) 
@@ -58,10 +60,12 @@ exports.update = (req,res,next) => {
     })
 }
 exports.create  = (req,res,next) => {
+    console.log(moment.locale());
     var _perstart = moment(req.body.per_start, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
     var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
-    var TimeStart = moment(req.body.per_time_start).format('hh:mm:ss');
-    var TimeEnd = moment(req.body.per_time_end).format('hh:mm:ss');
+    var TimeStart = moment(req.body.per_time_start).format('LT');
+    var TimeEnd = moment(req.body.per_time_end).format('LT');
+    
     var data ={
         per_start:_perstart,
         per_end:_perEnd,
