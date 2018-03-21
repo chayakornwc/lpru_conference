@@ -6,6 +6,7 @@ moment.locale('th');
 exports.findAll = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return next(err);
+<<<<<<< HEAD
         var sql = "SELECT period.*, course.*, operation_room.room_name  FROM period LEFT JOIN course ON period.course_id = course.course_id"
                  +" LEFT JOIN  course_order ON  course_order.course_id = course.course_id"
                  +" LEFT JOIN operation_room ON period.room_id = operation_room.room_id"
@@ -13,6 +14,14 @@ exports.findAll = (req, res, next) => {
         var params = "%"+req.query.term+"%";
         console.log(sql);                                   
         connection.query(sql,[params, params, params], function(err, results){ 
+=======
+        var sql = "SELECT period.*, course.*, operation_room.* FROM period LEFT JOIN course ON period.course_id = course.course_id"
+                 +" LEFT JOIN course_order ON  course_order.course_id = course.course_id"
+                 +" LEFT JOIN operation_room ON operation_room.room_id = period.room_id"
+                 +" WHERE (period.per_id LIKE ? OR  course.course_name LIKE ?  OR course.course_nameEng LIKE ?) "; 
+        var params = "%"+req.query.term+"%";
+        connection.query(sql,[params,  params, params], function(err, results){ 
+>>>>>>> e8e205d4ee9940f25d33346d7a078c5e14a6e425
              if (err) return next(err);
              res.send(results);
         }) 
@@ -65,7 +74,10 @@ exports.create  = (req,res,next) => {
     var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
     var TimeStart = moment(req.body.per_time_start).format('LT');
     var TimeEnd = moment(req.body.per_time_end).format('LT');
+<<<<<<< HEAD
     
+=======
+>>>>>>> e8e205d4ee9940f25d33346d7a078c5e14a6e425
     var data ={
         per_start:_perstart,
         per_end:_perEnd,
@@ -76,8 +88,6 @@ exports.create  = (req,res,next) => {
         course_id:req.body.course_id,
         room_id:req.body.room_id
     }
-    console.log(req.body)
-    console.log(data)
     req.getConnection((err, connection)=>{
         if(err) return next(err)
         connection.query("INSERT INTO period set ?",data, (err, results)=>{
@@ -87,6 +97,7 @@ exports.create  = (req,res,next) => {
     })
 }
 exports.delete  = (req,res,next) => {
+    var id = parseInt(req.params.id);
     req.getConnection((err, connection)=>{
         if(err) return next (err);
         connection.query("DELETE FROM period where per_id =?",[id], (err, results)=>{
