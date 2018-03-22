@@ -7,6 +7,6 @@ const rootReducers = combineReducers({
     authReducers,
     userReducers,
     periodReducers,
-     
+    courseReducers 
 });
 export default rootReducers;
