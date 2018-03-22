@@ -41,14 +41,14 @@ exports.update = (req,res,next) => {
         per_start:req.body.per_start,
         per_end:req.body.per_end,
         per_price:req.body.per_price,
-        per_quoata:req.body.per_quota,
+        per_quota:req.body.per_quota,
         course_id:req.body.course_id,
         room_id:req.body.room_id
     }
     req.getConnection((err, connection) => {
         var id = parseInt(req.params.id);
         if(err) return next(err);
-        connection.query("UPDATE  period SET ? where period_id =?",[data, id],  function(err, results){
+        connection.query("UPDATE  period SET ? where per_id =?",[data, id],  function(err, results){
             if(err) return next(err);
             if(results[0]){
                 res.send(results);
