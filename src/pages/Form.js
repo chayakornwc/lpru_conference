@@ -11,9 +11,7 @@ class Form extends Component {
         
     }
    
-    clear = () =>{
-        console.log('this me is clear!!!');
-    }
+
     
     handleChange = name => event => {
        console.log(event.target.value)
