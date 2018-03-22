@@ -2,9 +2,6 @@ import App from '../App';
 import Home from '../pages/Home';
 import User from '../pages/User';
 import Register from '../pages/Register';
-import Preview from '../pages/preview';
-
-
 import Login from '../pages/Login';
 import Logout from '../components/Logon/logout';
 
