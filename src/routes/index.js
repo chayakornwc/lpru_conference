@@ -22,8 +22,6 @@ component: App,
 indexRoute:{component:Home},
 childRoutes:[
     {path:'user', component:RequireAuth(RequireAuthAdmin(User))},
-    {path: 'album/:userID(/:title)', component: Album },
-    {path: 'photo/:albumID(/:title)', component:Photo  },
     {path:'Register', component:Register},
     {path:'signin',component:Login},
     {path:'Login', component:Login},
