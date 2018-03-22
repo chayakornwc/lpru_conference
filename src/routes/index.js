@@ -25,7 +25,6 @@ childRoutes:[
     {path:'Login', component:Login},
     {path:'form', component:RequireAuth(RequireAuthAdmin(Form))},
     {path:'logout',component:RequireAuth(Logout)}
-    
     ],
  
 }]
