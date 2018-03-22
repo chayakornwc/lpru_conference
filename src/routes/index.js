@@ -1,8 +1,6 @@
 import App from '../App';
 import Home from '../pages/Home';
 import User from '../pages/User';
-import Album from '../pages/Album';
-import Photo from '../pages/Photo';
 import Register from '../pages/Register';
 import Preview from '../pages/preview';
 
