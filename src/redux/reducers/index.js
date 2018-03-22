@@ -5,6 +5,8 @@ import { reducer as formReducer } from 'redux-form'
 const rootReducers = combineReducers({
     form: formReducer,
     authReducers,
-    userReducers 
+    userReducers,
+    periodReducers,
+     
 });
 export default rootReducers;
