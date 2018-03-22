@@ -8,10 +8,8 @@ class App extends Component {
   return(
     <div className="App">
         <Header />
-        
         <div className="sucction">
         {this.props.children}
-      
         </div>
         <div>
             <Footer />
