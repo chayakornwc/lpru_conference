@@ -9,7 +9,7 @@ exports.findAll = (req, res, next) => {
         var sql = "SELECT period.*, course.*, operation_room.room_name  FROM period LEFT JOIN course ON period.course_id = course.course_id"
                  +" LEFT JOIN  course_order ON  course_order.course_id = course.course_id"
                  +" LEFT JOIN operation_room ON period.room_id = operation_room.room_id"
-                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?) "; 
+                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?) ORDER BY period.per_id DESC "; 
         var params = "%"+req.query.term+"%";                  
         connection.query(sql,[params, params, params], function(err, results){ 
              if (err) return next(err);
@@ -37,9 +37,16 @@ exports.findById = (req,res,next) => {
     })  
 }
 exports.update = (req,res,next) => {
-    var data = {
-        per_start:req.body.per_start,
-        per_end:req.body.per_end,
+   
+    var _perstart = moment(req.body.per_start, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
+    var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
+    var TimeStart = moment(req.body.per_time_end).isValid() ? moment(req.body.per_time_start).format('LT') : req.body.per_time_start
+    var TimeEnd = moment(req.body.per_time_end).isValid() ? moment(req.body.per_time_end).format('LT') : req.body.per_time_end
+    var data ={
+        per_start:_perstart,
+        per_end:_perEnd,
+        per_time_start:TimeStart,
+        per_time_end:TimeEnd,
         per_price:req.body.per_price,
         per_quota:req.body.per_quota,
         course_id:req.body.course_id,

@@ -55,8 +55,9 @@ class User extends Component {
 
         //debounce เป็นการหน่วงการส่งตัวอักษรเป็นฟังก์ชันของ lodash ทำเพื่อเรียกใช้การ filter ข้อมูล
         const userSearch = debounce(term => { this.handleSearch(term) }, 500);
+        
         const modalActive = this.state.modal  ? 'is-active' : '';
-      //  const active = this.state.modal ? 'is-active':'is-passive'; 
+        //  const active = this.state.modal ? 'is-active':'is-passive'; 
     
         return (
          <div>
