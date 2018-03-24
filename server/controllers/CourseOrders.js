@@ -64,7 +64,6 @@ exports.update = (req, res, next)=>{
             res.send({status:200, message:'แก้ไขข้อมูลเรียบร้อยแล้ว'});
         })
     })
-    
 }
 exports.delete = (req, res, next)=>{
     var id = parseInt(req.params.id)
