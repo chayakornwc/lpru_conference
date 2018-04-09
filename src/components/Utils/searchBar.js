@@ -8,7 +8,7 @@ class searchBar extends Component {
     }
     //รูปแบบการกำหนด PropTypes เพื่อเช็ค props ที่ส่งเข้ามา
     static propTypes ={
-        onSearchTermChange:propTypes.func.isRequired,
+        onSearchTermChange:propTypes.func.required,
         placeholder:propTypes.string
     }
     render(){

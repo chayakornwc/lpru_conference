@@ -9,8 +9,16 @@ exports.findAll = (req, res, next) => {
         var sql = "SELECT period.*, course.*, operation_room.room_name  FROM period LEFT JOIN course ON period.course_id = course.course_id"
                  +" LEFT JOIN  course_order ON  course_order.course_id = course.course_id"
                  +" LEFT JOIN operation_room ON period.room_id = operation_room.room_id"
-                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?) ORDER BY period.per_id DESC "; 
-        var params = "%"+req.query.term+"%";                  
+                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?)  ORDER BY period.per_id DESC "; 
+        var params = "%"+req.query.term+"%";          
+        var whereOptions = req.query.options
+      console.log(whereOptions)
+       
+        // range.forEach(function (r) {
+        //   console.log(r)
+        //   })
+
+        
         connection.query(sql,[params, params, params], function(err, results){ 
              if (err) return next(err);
              res.send(results);

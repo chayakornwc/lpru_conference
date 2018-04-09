@@ -67,7 +67,7 @@ class User extends Component {
                             <h1 className="title">ผู้ใช้งาน ระบบสารสนเทศการอบรม </h1>
                             <div className="empty">
                                 <div style={{marginLeft:'1rem'}} className="col-sm-6">
-                                    {/* ส่ง props onSearchTermChange ให้ Component SearchBar เพื่อ filgter
+                                    {/* ส่ง props onSearchTermChange ให้ Component SearchBar เพื่อ filter
                                     โดยฝั่ง SearchBar จะนำไปใช้กับ event onChange */}
                                     <SearchBar onSearchTermChange={userSearch}  placeholder="ค้นหา...ชื่อ-สกุล Username" style={{width:'300px'}} />
                                 </div>
