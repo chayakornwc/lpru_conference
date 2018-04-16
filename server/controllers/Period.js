@@ -6,26 +6,35 @@ moment.locale('th');
 exports.findAll = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return next(err);
+        var options = req.query.options
+        var startDate = req.query.startDate ? moment(req.query.startDate, ['DD MMMM YYYY', moment.ISO_8601], 'th').add(-543,'years').format('YYYY-MM-DD') : '';
+        var endDate = req.query.endDate ? moment(req.query.endDate,['DD MMMM YYYY',  moment.ISO_8601], 'th').add(-543,'years').format('YYYY-MM-DD') : '';  
+        var whereOptions = '';
+        var wherestr = '';
+        if(options){
+            whereOptions = ` AND period.per_status IN (${options})`
+        }
+        if(startDate){
+            wherestr = ` AND period.per_start = ${startDate}`
+        }
+        if(endDate){
+            wherestr = ` AND period.per_end = ${endDate}`
+        }
+        if(startDate && endDate){
+            wherestr = `AND period.per_start = ${startDate} AND period.per_end = ${endDate}`
+        }
         var sql = "SELECT period.*, course.*, operation_room.room_name  FROM period LEFT JOIN course ON period.course_id = course.course_id"
                  +" LEFT JOIN  course_order ON  course_order.course_id = course.course_id"
                  +" LEFT JOIN operation_room ON period.room_id = operation_room.room_id"
-                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?)  ORDER BY period.per_id DESC "; 
-        var params = "%"+req.query.term+"%";          
-        var whereOptions = req.query.options
-      console.log(whereOptions)
-       
-        // range.forEach(function (r) {
-        //   console.log(r)
-        //   })
-
-        
+                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?) "+whereOptions+wherestr+"  ORDER BY period.per_id DESC "; 
+        var params = "%"+req.query.term+"%";           
         connection.query(sql,[params, params, params], function(err, results){ 
              if (err) return next(err);
              res.send(results);
-        }) 
+        })
+        console.log(sql); 
     })
-    
-    
+     
 }
 exports.findById = (req,res,next) => {
     var id = parseInt(req.params.id);
@@ -46,8 +55,8 @@ exports.findById = (req,res,next) => {
 }
 exports.update = (req,res,next) => {
    
-    var _perstart = moment(req.body.per_start, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
-    var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY, YYYY-MM-DD']).add(-543, 'years').format();
+    var _perstart = moment(req.body.per_start, ['DD MMMM YYYY', ISO_8601, 'th']).add(-543, 'years').format('YYYY-MM-DD');
+    var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY', ISO_8601, 'th']).add(-543, 'years').format('YYYY-MM-DD');
     var TimeStart = moment(req.body.per_time_end).isValid() ? moment(req.body.per_time_start).format('LT') : req.body.per_time_start
     var TimeEnd = moment(req.body.per_time_end).isValid() ? moment(req.body.per_time_end).format('LT') : req.body.per_time_end
     var data ={
