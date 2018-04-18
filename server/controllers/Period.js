@@ -32,7 +32,6 @@ exports.findAll = (req, res, next) => {
              if (err) return next(err);
              res.send(results);
         })
-        console.log(sql); 
     })
      
 }
