@@ -10,6 +10,7 @@ const period = require('./controllers/Period');
 const courseOrder = require('./controllers/CourseOrders');
 const Examination = require('./controllers/Examination');
 const operationRoom = require('./controllers/OperationRoom');
+const attendee = require('./controllers/Attender');
 module.exports = function(app) {
 
     app.get('/', function(req, res){
@@ -53,4 +54,7 @@ module.exports = function(app) {
 
     app.get('/operation_room/', requireAuth, operationRoom.findAll);
     app.get('/operation_room/:id', operationRoom.findById);
+
+    app.get('/attendee/:id', attendee.findById);
+
 }
