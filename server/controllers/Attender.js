@@ -1,4 +1,3 @@
-import { parse } from '../../../Admin/node_modules/path-to-regexp';
 
 const config = require('../config')
 const timestamp = new Date().toLocaleString();
