@@ -1,3 +1,5 @@
+import { parse } from '../../../Admin/node_modules/path-to-regexp';
+
 const config = require('../config')
 const timestamp = new Date().toLocaleString();
 const moment = require('moment');
@@ -19,4 +21,16 @@ exports.findById = (req,res,next) => {
     })  
 }
 
+exports.create = (req, res, next) =>{
+    var id = parseInt(req.params.id)
+    var data ={
+        per_id:req.body._id,
+        time_stamp:timestamp
+    }
+}
+exports.update = (req,res,next)=>{
 
+}
+exports.delete = (req,res,next)=>{
+    
+}

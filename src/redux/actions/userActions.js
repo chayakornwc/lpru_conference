@@ -5,7 +5,7 @@ import config from '../../configure'
 const BASE_URL = config.BASE_URL
 
 //ฟังก์ชันดึงข้อมูลผู้ใช้ทุกรายการโดยจะส่ง query ชื่อ term เข้าไปด้วยเพื่อนำไป filter
-//สำหรับ es6 เราสามารถกำหนดค่า default ของ parameter ได้ด้วยครับ
+//สำหรับ es6 เราสามารถกำหนดค่า default ของ parameter 
 export const loadUsers = (term = '') => {
     return (dispatch) => {
         //ก่อนดึงข้อมูลสั่ง dispatch ให้ reducer รู้ว่าก่อนเพื่อจะแสดง loading
