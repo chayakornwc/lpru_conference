@@ -3,7 +3,7 @@ module.exports = {
     dbOptions: {
         host: 'localhost',
         user: 'root',
-        password: '',
+        password: '121F29CA74',
         port: 3306,
         database: 'lpru_conference'
     }

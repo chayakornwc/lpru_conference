@@ -13,13 +13,12 @@ exports.findById = (req,res,next) => {
         +" LEFT JOIN registration r ON course_order.registration_id = r.id where period.per_id=?"; 
         connection.query(sql,[id],function(err, results){
         if(err) return next(err);
-        res.send(sql)
+        res.send(results)
          
     })  
     
     })  
 }
-
 exports.create = (req, res, next) =>{
     var id = parseInt(req.params.id)
     var data ={
