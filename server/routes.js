@@ -58,4 +58,5 @@ module.exports = function(app) {
     app.get('/attendee/:id', attendee.findById);
   
     app.get('/publicusers/', users.findByTerm);
+    app.get('/publicuser/:id', users.findPublicId);
 }
