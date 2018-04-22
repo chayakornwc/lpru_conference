@@ -34,7 +34,10 @@ exports.findAll = (req, res,next) => {
     })
 }
 exports.findByTerm = (req, res, next)=>{
-    var params = "%" +req.query.term + "%";
+    var params = ""
+    if(req.query.term !==''){
+         params = "%" +req.query.term + "%";
+    }
     var sql ="SELECT id, prefix, first_name, last_name, gender, major, affiliation, company, username FROM registration WHERE username LIKE ? OR first_name LIKE ? OR last_name LIKE  ? OR first_name+' '+last_name LIKE ? LIMIT 5 ";
     req.getConnection((err,connection)=>{
         connection.query(sql, [params, params, params, params], function(err, results){
