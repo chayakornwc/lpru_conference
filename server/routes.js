@@ -11,6 +11,7 @@ const courseOrder = require('./controllers/CourseOrders');
 const Examination = require('./controllers/Examination');
 const operationRoom = require('./controllers/OperationRoom');
 const attendee = require('./controllers/Attender');
+
 module.exports = function(app) {
 
     app.get('/', function(req, res){
@@ -58,5 +59,5 @@ module.exports = function(app) {
     app.get('/attendee/:id', attendee.findById);
   
     app.get('/publicusers/', users.findByTerm);
-    app.get('/publicuser/:id', users.findPublicId);
+    app.get('/publicuser/:id', requireAuth, users.findPublicId);
 }

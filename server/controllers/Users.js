@@ -68,11 +68,12 @@ exports.findById = (req, res, next)=>{
             res.send(row[0])
         })
     })
-}    
-exports.findPublicId=(res,res,next)=>{
-    var id =parseInt(req.params.id)
+}
+
+exports.findPublicId = (req, res, next) => {
+    var id = parseInt(req.params.id)
     req.getConnection((err, connection)=>{
-            connection.query("SELECT id, username, major,  concat(prefix,' ',first_name,' ',last_name) as fullname FROM registration WHERE=?", [id], (err, response)=>{
+            connection.query("SELECT id, username, major,  concat(prefix,' ',first_name,' ',last_name) as fullname FROM registration WHERE id=?", [id], (err, response)=>{
                 if(err) return next(err)
                 res.send(response[0])
             })
