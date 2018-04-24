@@ -57,6 +57,7 @@ module.exports = function(app) {
     app.get('/operation_room/:id', operationRoom.findById);
 
     app.get('/attendee/:id', attendee.findById);
+    app.post('/attendee/:id', requireAuth, attendee.create);
   
     app.get('/publicusers/', users.findByTerm);
     app.get('/publicuser/:id', requireAuth, users.findPublicId);

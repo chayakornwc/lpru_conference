@@ -1,3 +1,5 @@
+import { connect } from '../../../../../AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/react-redux';
+
 
 const config = require('../config')
 const timestamp = new Date().toLocaleString();
@@ -21,14 +23,30 @@ exports.findById = (req,res,next) => {
 }
 exports.create = (req, res, next) =>{
     var id = parseInt(req.params.id)
-    var data ={
-        per_id:req.body._id,
+    var data = {
+        per_id:id,
+        registration_id:req.body.registration_id,
         time_stamp:timestamp
-    }
-}
-exports.update = (req,res,next)=>{
+        }
+        req.getConnection((err, connection)=>{
+            if(err)return next(err);
 
-}
+            connection.query("SELECT course_order LEFT JOIN registration ON course_order.registration_id = registration.id    where registraion.id = ? AND course_order.per_id"[data.registration_id, id], function (err, results){
+                if(err)return next(err);
+                if(results.length >0){
+                    res.send({status:201, message:'User is already exits in this period!'})
+                }else{
+                    connection.query("INSERT INTO course_order SET ? ", data, (err, results)=>{
+                        if(err) return next(err);
+                        res.send(results);
+                    })
+                }    
+            })
+        })
+    }
+exports.update = (req,res,next)=>{
+    
+    }
 exports.delete = (req,res,next)=>{
     
-}
+    }
