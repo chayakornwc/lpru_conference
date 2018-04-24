@@ -61,4 +61,5 @@ module.exports = function(app) {
   
     app.get('/publicusers/', users.findByTerm);
     app.get('/publicuser/:id', requireAuth, users.findPublicId);
+    
 }

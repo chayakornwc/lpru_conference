@@ -1,5 +1,3 @@
-import { connect } from '../../../../../AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/react-redux';
-
 
 const config = require('../config')
 const timestamp = new Date().toLocaleString();
@@ -8,17 +6,18 @@ moment.locale('th');
 
 exports.findById = (req,res,next) => {
     var id = parseInt(req.params.id);
+
     req.getConnection((err, connection)=>{
         if(err) return next(err);
-        var sql = "SELECT r.username, r.prefix, r.first_name, r.last_name, gender, r.major, r.affiliation, r.company, course_order.order_id,  period.*, course.* FROM period LEFT JOIN course ON period.course_id = course.course_id"
-        +" LEFT JOIN course_order ON course_order.course_id = course.course_id"
-        +" LEFT JOIN registration r ON course_order.registration_id = r.id where period.per_id=?"; 
-        connection.query(sql,[id],function(err, results){
-        if(err) return next(err);
-        res.send(results)
-         
-    })  
-    
+        var sql = "SELECT r.username, r.prefix, r.first_name, r.last_name, gender, r.major, r.affiliation, r.company, course_order.order_id,  period.*, course.* FROM course_order"
+        +"  LEFT JOIN period ON course_order.per_id = period.per_id"
+        +"  LEFT JOIN course ON period.course_id = course.course_id"
+        +"  LEFT JOIN registration r ON course_order.registration_id = r.id WHERE period.per_id= ? ";
+            connection.query(sql,[id],function(err, results){
+            if(err) return next(err);
+            res.send(results)
+                })  
+       
     })  
 }
 exports.create = (req, res, next) =>{
@@ -30,8 +29,7 @@ exports.create = (req, res, next) =>{
         }
         req.getConnection((err, connection)=>{
             if(err)return next(err);
-
-            connection.query("SELECT course_order LEFT JOIN registration ON course_order.registration_id = registration.id    where registraion.id = ? AND course_order.per_id"[data.registration_id, id], function (err, results){
+            connection.query("SELECT course_order LEFT JOIN registration ON course_order.registration_id = registration.id WHERE registraion.id = ? AND course_order.per_id"[data.registration_id, id], function (err, results){
                 if(err)return next(err);
                 if(results.length >0){
                     res.send({status:201, message:'User is already exits in this period!'})
