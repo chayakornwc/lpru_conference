@@ -21,20 +21,22 @@ exports.findById = (req,res,next) => {
     })  
 }
 exports.create = (req, res, next) =>{
-    var id = parseInt(req.params.id)
+    var id = parseInt(req.params.id);
+    var registration_id = parseInt(req.body.registration_id);
     var data = {
         per_id:id,
-        registration_id:req.body.registration_id,
+        registration_id:registration_id,
         time_stamp:timestamp
         }
+    
         req.getConnection((err, connection)=>{
             if(err)return next(err);
-            connection.query("SELECT course_order LEFT JOIN registration ON course_order.registration_id = registration.id WHERE registraion.id = ? AND course_order.per_id"[data.registration_id, id], function (err, results){
+            connection.query("SELECT r.username FROM registration r LEFT JOIN course_order co ON r.id = co.registration_id WHERE r.id =? AND co.per_id =?",[registration_id, id], function (err, results){
                 if(err)return next(err);
                 if(results.length >0){
                     res.send({status:201, message:'User is already exits in this period!'})
                 }else{
-                    connection.query("INSERT INTO course_order SET ? ", data, (err, results)=>{
+                    connection.query("INSERT INTO course_order SET ?", [data], (err, results)=>{
                         if(err) return next(err);
                         res.send(results);
                     })
