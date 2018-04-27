@@ -23,10 +23,10 @@ exports.findAll = (req, res, next) => {
         if(startDate && endDate){
             wherestr = `AND period.per_start = ${startDate} AND period.per_end = ${endDate}`
         }
-        var sql = "SELECT period.*, course.*, operation_room.room_name  FROM period LEFT JOIN course ON period.course_id = course.course_id"
+        var sql = "SELECT period.*, course.*, operation_room.room_name, count(course_order.order_id) as period_quantity  FROM period LEFT JOIN course ON period.course_id = course.course_id"
                  +" LEFT JOIN  course_order ON  course_order.per_id = period.per_id"
                  +" LEFT JOIN operation_room ON period.room_id = operation_room.room_id"
-                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?) "+whereOptions+wherestr+"  ORDER BY period.per_id DESC "; 
+                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?) "+whereOptions+wherestr+"  GROUP BY period.per_id  ORDER BY period.per_id DESC "; 
         var params = "%"+req.query.term+"%";           
         connection.query(sql,[params, params, params], function(err, results){ 
              if (err) return next(err);
