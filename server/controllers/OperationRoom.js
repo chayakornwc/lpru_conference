@@ -1,5 +1,3 @@
-import { connect } from '../../../../../AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/react-redux';
-import { reset } from '../../../../../AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/redux-form';
 
 const config = require('../config')
 
