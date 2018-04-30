@@ -54,7 +54,10 @@ module.exports = function(app) {
     app.post('/examination/:course_id', Examination.create);
 
     app.get('/operation_room/', requireAuth, operationRoom.findAll);
-    app.get('/operation_room/:id', operationRoom.findById);
+    app.get('/operation_room/:id',requireAuth, operationRoom.findById);
+    app.post('/operation_room/', requireAuth, operationRoom.create);
+    app.put('/operation_room/:id', requireAuth, operationRoom.update);
+    app.delete('/operation_room/:id', requireAuth, operationRoom.delete);
 
     app.get('/attendee/:id', attendee.findById);
     app.post('/attendee/:id', requireAuth, attendee.create);

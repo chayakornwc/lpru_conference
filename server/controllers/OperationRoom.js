@@ -1,3 +1,6 @@
+import { connect } from '../../../../../AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/react-redux';
+import { reset } from '../../../../../AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/redux-form';
+
 const config = require('../config')
 
 
@@ -30,4 +33,60 @@ exports.findById = (req,res,next) => {
     })  
    
     })  
+}
+exports.create = (req, res, next)=>{
+    var data = {
+        room_name:req.body.room_name
+    }
+    req.getConnection((err, connection)=>{
+        if(err) return next(err)
+        connection.query("SELECT * FROM operation_room WHERE room_name =?",[data.room_name], function(err, results){
+            if(err) return next(err);
+            if(results.length > 0){
+                res.send({status:201, message:'ตรวจพบข้อมูลห้องปฏิบัติการนี้ในระบบ'})
+            }else{
+                connection.query("INSERT INTO operation_room SET ?",data, function(err, results){
+                    if(err) return next (err);
+                    res.send(results)
+                })
+            }
+        })       
+    })
+}
+exports.update = () =>{
+    var id = parseInt(req.params.id)
+    var data = {
+        room_name:req.body.room_name
+    }
+    req.getConnection((err, connection)=>{
+        connection.query("SELECT * FROM operation_room WHERE room_name = ?",[data.room_name],function(err,results){
+            if(err) return next(err);
+            var isUpdate = false;
+            if(results.length > 0 ){
+                if(results[0].id!==id){
+                    res.send({status:201,message:'ตรวจพบข้อมูลห้องปฏิบัติการนี้ในระบบ'})
+                }else{
+                    isUpdate = true;
+                }
+            }else{
+                isUpdate = true;
+            }
+            if(isUpdate){
+                connection.query("UPDATE operation_room SET ? WHERE room_id = ?",[data, id], function(err, results){
+                    if(err) return next(err)
+                    res.send(results)
+                })  
+            }
+        })
+    })
+}
+exports.delete = (req, res, next) =>{
+    var id = parseInt(req.params.id)
+    req.getConnection(function(err, connection){
+        if(err) return next(err)
+        connection.query("DELETE FROM operation_room where room_id=?",[id], (err, results)=>{
+            if(err) return next(err)
+           res.send(results)
+        })
+    })
 }
