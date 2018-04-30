@@ -1,4 +1,3 @@
-
 const config = require('../config')
 const timestamp = new Date().toLocaleString();
 const moment = require('moment');
@@ -9,7 +8,7 @@ exports.findById = (req,res,next) => {
 
     req.getConnection((err, connection)=>{
         if(err) return next(err);
-        var sql = "SELECT r.username, concat(r.prefix,' ', r.first_name,' ', r.last_name)  as fullname, gender, r.major, r.affiliation, r.company, course_order.order_id,  period.*, course.* FROM course_order"
+        var sql = "SELECT r.id, r.username, concat(r.prefix,' ', r.first_name,' ', r.last_name)  as fullname, gender, r.major, r.affiliation, r.company, course_order.order_id,  period.*, course.* FROM course_order"
         +"  LEFT JOIN period ON course_order.per_id = period.per_id"
         +"  LEFT JOIN course ON period.course_id = course.course_id"
         +"  LEFT JOIN registration r ON course_order.registration_id = r.id WHERE period.per_id= ? ";
@@ -17,7 +16,6 @@ exports.findById = (req,res,next) => {
             if(err) return next(err);
             res.send(results)
                 })  
-       
     })  
 }
 exports.create = (req, res, next) =>{
@@ -47,6 +45,14 @@ exports.create = (req, res, next) =>{
 exports.update = (req,res,next)=>{
     
     }
+
 exports.delete = (req,res,next)=>{
-    
+    var id = parseInt(req.params.id);
+        req.getConnection((err, connection)=>{
+            if(err) return next(err);
+            connection.query("DELETE FROM course_order WHERE order_id = ?", id, (err, results)=>{
+                if(err) return next(err);
+                res.send(results);
+            })
+        })
     }

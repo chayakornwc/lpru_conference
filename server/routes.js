@@ -58,7 +58,8 @@ module.exports = function(app) {
 
     app.get('/attendee/:id', attendee.findById);
     app.post('/attendee/:id', requireAuth, attendee.create);
-  
+    app.delete('/attendee/:id', requireAuth, attendee.delete);
+
     app.get('/publicusers/', users.findByTerm);
     app.get('/publicuser/:id', requireAuth, users.findPublicId);
     
