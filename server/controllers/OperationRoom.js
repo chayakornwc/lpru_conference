@@ -20,7 +20,7 @@ exports.findById = (req,res,next) => {
     var id = parseInt(req.params.id);
     req.getConnection((err, connection)=>{
         if(err) return next(err);
-        var sql = "SELECT * FROM operation_room WHERE id=?";
+        var sql = "SELECT * FROM operation_room WHERE room_id=?";
         connection.query(sql,[id],function(err, results){
         if(err) return next(err);
             if(results[0]){
@@ -51,7 +51,7 @@ exports.create = (req, res, next)=>{
         })       
     })
 }
-exports.update = () =>{
+exports.update = (req, res, next) =>{
     var id = parseInt(req.params.id)
     var data = {
         room_name:req.body.room_name
