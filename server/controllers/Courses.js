@@ -13,6 +13,17 @@ exports.findAll = (req, res,next) => {
         })
     })
 }
+exports.findAllByExams = (req, res, next)=>{
+    req.getConnection((err, connection)=>{
+        if(err) return next(err)
+        var sql ="SELECT c.*, ce.exam_id from course c LEFT OUTER JOIN course_exam ce ON c.course_id = ce.course_id WHERE c.course_name LIKE ? OR c.course_id LIKE ?";
+        var params = "%"+req.query.term+"%";
+        connection.query(sql, [params, params], (err,results)=>{
+            if(err) return next(err);
+            res.send(results)
+        })
+    })
+}
 
 exports.findById = (req, res, next) =>{
     var id = parseInt(req.params.id)
