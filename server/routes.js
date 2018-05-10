@@ -51,7 +51,7 @@ module.exports = function(app) {
     app.delete('/courseorder/:id', courseOrder.delete);
     
     app.get('/examination/:course_id/:exam_id', Examination.findById);
-    app.post('/examination/:course_id', Examination.create);
+    app.post('/registerexamination/', requireAuth,  Examination.registers);
     app.get('/examinationbycourse/', requireAuth, courses.findAllByExams);
     app.get('/nullexamination/', Examination.findNullexam);
 

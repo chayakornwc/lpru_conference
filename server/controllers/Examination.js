@@ -29,10 +29,35 @@ exports.create = (req,res,next)=>{
         });
     })
 }
+exports.registers  = (req, res, next)=>{
+    var course_id = parseInt(req.body.course_id)
+    var data = req.body.members
+    var arr = [];
+    data.forEach(function(e,i){
+        data[i].question = escape(e.question)
+        data[i].answer1 = escape(e.answer1)
+        data[i].answer2 = escape(e.answer2)
+        data[i].answer3 = escape(e.answer3)
+        data[i].answer4 = escape(e.answer4)
+        data[i].answer_real = parseInt(e.answer_real)
+        data[i].course_id = course_id
+   })
+   data.forEach(function(e,i){
+    arr[i] = Object.values(e);
+   })
+   console.log(arr);
+    req.getConnection((err,connection)=>{
+        if(err) return next(err);
+        connection.query("INSERT INTO course_exam  (question, answer1, answer2, answer3, answer4, answer_real, course_id) values ? ", [arr], (err, results)=>{
+            if(err) return next(err);
+            res.send({status:200, message:`เพิ่มข้อมูลเรียบร้อยแล้ว จำนวนข้อสอบทั้งหมด ${results.affectedRows} ข้อ`, records:results.affectedRows});
+        });
+    })
+}
 exports.findNullexam = (req,res,next)=>{
         req.getConnection((err, connection)=>{
             if(err) return next(err);
-            connection.query("SELECT c.*, ex.exam_id from course c LEFT OUTER JOIN course_exam ex ON ex.course_id = c.course_id WHERE  ex.exam_id IS NULL GROUP BY c.course_id", (err, results)=>{
+            connection.query("SELECT c.*, ex.exam_id from course c LEFT  JOIN course_exam ex ON ex.course_id = c.course_id WHERE  ex.exam_id IS NULL GROUP BY c.course_id", (err, results)=>{
                 if(err) return next(err);
                 res.send(results)
             })
