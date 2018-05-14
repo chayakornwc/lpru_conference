@@ -53,15 +53,68 @@ exports.registers  = (req, res, next)=>{
         });
     })
 }
+exports.update = (req, res,next)=>{
+    var id = parseInt(req.params.id);
+    var data = req.body.members
+    var update_arr = [];
+    var insert_arr = [];
+    var delete_arr =[];
+    req.getConnection((err, connection)=>{
+         connection.query("SELECT exam_id FROM course_exam where course_id = ? ORDER BY exam_id ASC ",id, function(err, results){
+            if(err) return next(err);
+            data.forEach((e,i)=>{
+                if(!e.exam_id){
+                  insert_arr.push(e)
+                }else{
+                    results.forEach((_e,_i)=>{
+                        if(e.exam_id == _e.exam_id){
+                            
+                        }else{
+
+                        }
+                    })
+                }
+            })
+           
+            res.send(insert_arr)
+        })
+  
+        // data.forEach((value)=>{
+
+        //     if( !value.exam_id ){
+        //         // insert
+
+        //     }
+        //     else{
+        //         old.forEach((val)=>{
+
+        //             if( val.exam_id == value.exam_id ){
+        //                 exam.push( value );
+        //                 // update
+
+        //             }
+        //             else{
+        //                 // delete
+        //                 connection.query("", function(err, results){
+                
+        //                 })
+        //             }
+        //         })
+        //     }
+        // })
+
+    })
+}
     exports.findExambycourse =(req,res,next)=>{
         var id = parseInt(req.params.id);
   
         req.getConnection((err, connection)=>{
-            connection.query("SELECT ce.*, c.course_name FROM course_exam ce LEFT OUTER JOIN course c on c.course_id = ce.course_id WHERE ce.course_id = ? GROUP BY ce.exam_id",[id], function(err, results){
+            connection.query("SELECT ce.*,  c.course_name FROM course_exam ce LEFT OUTER JOIN course c on c.course_id = ce.course_id WHERE ce.course_id = ? GROUP BY ce.exam_id ORDER BY ce.exam_id ASC",[id], function(err, results){
                 if(err) throw err;
               var data = {
                   members:results,
-                 course_name:results[0].course_name
+                 course_name:results[0].course_name,
+                 course_id:results[0].course_id
               }
               
               res.send(data);
