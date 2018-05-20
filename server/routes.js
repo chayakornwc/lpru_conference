@@ -15,7 +15,14 @@ const attendee = require('./controllers/Attender');
 module.exports = function(app) {
 
     app.get('/', function(req, res){
-        res.send({message: 'lpru conference api'})
+        //res.send({message: 'lpru conference api'})
+        req.getConnection((err, connection)=>{
+            connection.query('USE mysql', function(err) {
+                //if (err) throw err;
+                console.log(err);
+                res.send('Query Successful');
+              });
+        })
     })
      app.post('/signin',requireSignin, users.signin)
      app.get('/users',requireAuth,  users.findAll)
