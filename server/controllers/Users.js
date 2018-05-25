@@ -46,24 +46,14 @@ exports.findByTerm = (req, res, next)=>{
         })
     })
 }
-// exports.findAll = (req, res, next) => {
-//     req.getConnection((err, connection) => {
-//         if (err) return next(err)
-//         var sql = "select * from registration where (first_name like ? or username like ?)";
-//         var params = "%" + req.query.term + "%"
-//         connection.query(sql, [params, params], (err, results) => {
-//             if (err) return next(err)
-//             res.send(results);
-//         })
-//     })
-//}
+
 
 
 exports.findById = (req, res, next)=>{
    
     var id = parseInt(req.params.id)
     req.getConnection((err, connection)=>{
-        connection.query("select * from registration where id=?",[id], (err, row)=>{
+        connection.query("SELECT id, user_group, prefix, first_name, last_name, gender, address, city, district, major, affiliation, company, province, username FROM registration WHERE id=?",[id], (err, row)=>{
             if (err) return next(err)
             res.send(row[0])
         })
@@ -95,7 +85,7 @@ exports.create = (req, res, next) => {
             city:body.city,
             district:body.district,
             province:body.province,
-            email: body.email,
+            email: (body.email),
             username:body.username,
             password:sha256(body.password)
         }
@@ -105,10 +95,18 @@ exports.create = (req, res, next) => {
                 if (results.length > 0) {
                         res.send({ status: 201, message: 'ตรวจพบ username นี้ในระบบ' })
                         } else  {
-                                connection.query("insert into registration set ? ", post, (err, results) => {
-                                if (err) return next(err)
-                                res.send(results)
-                        })
+                            connection.query("SELECT email from registration WHERE email=?", [post.email], function(err, results){
+                                if(err) throw err;
+                                if(results.length > 0){
+                                    res.send({ status: 201, message: 'ตรวจพบ email นี้ในระบบ' })
+                                }else{
+                                        connection.query("insert into registration set ? ", post, (err, results) => {
+                                            if (err) return next(err)
+                                            res.send({success:true, message:"เพิ่มข้อมูลเรียบร้อยแล้ว"})
+                                    })
+                                }
+                            })
+                                
                 }
             });
         });
@@ -118,22 +116,57 @@ exports.update = (req, res, next) =>{
     var id =parseInt(req.params.id)
     var {body} = req
     var data = {
-        user_group: parseInt(body.user_group),   
-        prefix: body.prefix,
-        first_name: body.first_name,
-        last_name: body.last_name,
-        major:body.major,
-        affiliation:body.affiliation,
-        company:body.company,
-        gender:body.gender,
-        address: body.address,
-        city:body.city,
-        district:body.district,
-        province:body.province,
-        email: body.email,
-        username:body.username,
-        password:sha256(body.password)
+    
     }
+        if(body.user_group){
+            data.user_group = parseInt(body.user_group)
+        }
+        if(body.prefix){
+            data.prefix = body.prefix
+        }
+        if(body.first_name){
+            data.first_name = body.first_name
+        }
+        if(body.last_name){
+            data.last_name = body.last_name
+        }
+        if(body.major){
+            data.major = body.major
+        }
+        if(body.affiliation){
+            data.affiliation = body.affiliation
+        }
+        if(body.company){
+            data.company = body.company
+        }
+        if(body.gender){
+            data.gender = body.gender
+        }
+        if(body.email){
+            data.email = body.email
+        }
+        if(body.username){
+            data.username = body.username
+        }
+        if(body.major){
+            data.major = body.major
+        }
+        if(body.address){
+            data.address = body.address
+        }
+        if(body.city){
+            data.city = body.city
+        }
+        if(body.district){
+            data.district = body.district
+        }
+        if(body.province){
+            data.province = body.province
+        }
+        if(body.password){
+            data.password = sha256(body.password);
+        }
+        console.log(data)
     req.getConnection(function(err, connection){
         connection.query("SELECT * FROM registration WHERE username=?",[data.username], function(err, results){
             if (err) return next(err)
@@ -148,8 +181,9 @@ exports.update = (req, res, next) =>{
                isUpdate = true;
             }
             if(isUpdate){ //ตรวจสอบ ว่าสามารถอัพเดทได้หรือไม่ แล้วทำการอัพเดท     
-                connection.query("UPDATE registration set ? where id=?", [data, id], function(err, results){
+                connection.query("UPDATE registration SET ? WHERE id= ?", [data, id], function(err, results){
                         if(err) return next(err)
+                        console.log(results)
                         res.send(results)
                 })
             }
