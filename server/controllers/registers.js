@@ -8,12 +8,9 @@ var gen = rn.generator({
     
     exports.create = (req, res, next) => {
     var { body } = req
-    let id =   gen();
-   // let password = sha256(req.password)
-   // console.log(password);
-    console.log(id)
+   
     var post = {
-    user_group:null,
+    user_group:body.user_group,
     prefix: body.prefxtitle,
     first_name: body.first_name,
     last_name: body.last_name,
@@ -27,11 +24,10 @@ var gen = rn.generator({
     username:body.username,
     password:sha256(body.password)
     }
-    console.log(post)
     req.getConnection(function (err, connection) {
     
        
-    connection.query("insert into registration set ? ", post, (err, results) => {
+    connection.query("INSERT INTO registration SET ? ", post, (err, results) => {
     if (err) return next(err)
        console.log(results)
        res.send(results)

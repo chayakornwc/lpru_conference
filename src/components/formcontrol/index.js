@@ -9,6 +9,7 @@ import Radio, { RadioGroup } from 'material-ui/Radio';
 import { FormLabel, FormControl, FormControlLabel, FormHelperText } from 'material-ui/Form';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import {saveUser} from '../../redux/actions/userActions';
  const alertify = require('alertify.js');
 const styles = theme => ({
   container: {
@@ -89,7 +90,29 @@ class TextFields extends React.Component {
   
 
  }
- 
+ resetState = () =>{
+   this.setState({
+    first_name: null,
+    prefxtitle: '',
+    last_name:null,
+    affiliation: null,
+    address:null,
+    city:null,
+    gender:null,
+    province: null,
+    postal: null,
+    country: null,
+    email: null,
+    confirm_email: null,
+    error:false,
+    emailvalid:false,
+    district:null,
+    isLoad:false,
+    username:null,
+    password:null,
+    confirm_password:null
+   })
+ }
  handleSubmit = (event)=>{
    event.preventDefault();
   this.setState({isLoad:true});
@@ -107,14 +130,17 @@ class TextFields extends React.Component {
     email:this.state.email,
     district:this.state.district,
     username:this.state.username,
-    password:this.state.password
+    password:this.state.password,
+    user_group:7
   }
-  axios({
+ 
+ return axios({
     method:'post',
     url: 'http://localhost:3009/registers',
     data:data,
   }).then(response =>{
     this.setState({isLoad:false});
+    this.resetState();
     alertify.success("ดำเนินการสร้างบัญชีผู้ใช้ เรียบร้อยแล้ว โปรดดำเนินการขั้นต่อไป!");
   }).catch(err =>{
     this.setState({isLoad:false});
@@ -153,7 +179,7 @@ class TextFields extends React.Component {
   render() {
 
     
-    const { classes, dataForm } = this.props;
+    const { classes, dataForm, submitting } = this.props;
     const isLoad = (this.state.isLoad ? 'is-loading': '')
     return ( 
       <form className={classes.container}  onSubmit={this.handleSubmit}  autoComplete="off">
@@ -161,7 +187,6 @@ class TextFields extends React.Component {
           id="select-data"
           select
           label="กรุณาเลือกคำนำหน้า"
-          
           className={classes.textField}
           value={this.state.prefxtitle}
           onChange={this.handleChange('prefxtitle')}
@@ -328,7 +353,7 @@ class TextFields extends React.Component {
           margin="normal"
           error={this.state.password == this.state.confirm_password? false:true}
         />
-      <button className={"button is-larges is-orange "+isLoad} type="submit" ><i className="material-icons md-24">submit</i></button>
+      <button  className={"button is-larges is-orange "+isLoad} type="submit" ><i className="material-icons md-24">submit</i></button>
       
       </form>
     );

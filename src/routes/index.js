@@ -3,6 +3,7 @@ import Home from '../pages/Home';
 import User from '../pages/User';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
+import Course from '../pages/Course';
 import Logout from '../components/Logon/logout';
 
 import Form from '../pages/Form';
@@ -19,6 +20,7 @@ childRoutes:[
     {path:'user', component:RequireAuth(RequireAuthAdmin(User))},
     {path:'Register', component:Register},
     {path:'signin',component:Login},
+    {path:'course',component:Course},
     {path:'Login', component:Login},
     {path:'form', component:RequireAuth(RequireAuthAdmin(Form))},
     {path:'logout',component:RequireAuth(Logout)}
