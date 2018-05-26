@@ -4,6 +4,7 @@ import userReducers from './userReducers';
 import periodReducers from './periodReducers';
 import courseReducers from './courseReducer';
 import operationRoomReducers from './operationRoomReducers';
+
 import { reducer as formReducer } from 'redux-form'
 const rootReducers = combineReducers({
     form: formReducer,

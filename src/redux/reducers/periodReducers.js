@@ -1,8 +1,7 @@
 const initialState = {
     periods:{data:null, isLoading:true, isRejected: false},
     period:{data:null, isLoading:true, isRejected: false},
-    periodDelete:{data:null, isLoading:true, isRejected: false},
-    periodSave:{data:null, isLoading:true, isRejected: false}
+   
 }
 
 export default (state = initialState, action) =>{
@@ -23,17 +22,7 @@ export default (state = initialState, action) =>{
         case'LOAD_PERIOD_REJECTED':
         return{...state, period:{data:action.payload, isLoading:false, isRejected:true}}
 
-       //การลบข้อมูล
-        case'DELETE_PERIOD_SUCCESS':
-        return{...state, periodDelete:{data:null, isLoading:false, isRejected:false}}
-        case'DELETE_PERIOD_REJECTED':
-        return{...state, periodDelete:{data:action.payload, isLoading:false, isRejected:true}}
 
-        //การบันทึกข้อมูล  
-        case'SAVE_PERIOD_SUCCESS':
-        return{...state, periodSave:{data:null, isLoading:false, isRejected:false}}
-        case'SAVE_PERIOD_REJECTED':
-        return{...state, periodSave:{data:action.payload, isLoading:false, isRejected:true}}
 
         default: 
         return state
