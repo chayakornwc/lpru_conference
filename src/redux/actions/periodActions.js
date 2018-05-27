@@ -23,7 +23,6 @@ export const getPeriod = (id)=>{
     return(dispatch) =>{
         dispatch({type:'LOAD_PERIOD_PENDING'})
         return axios.get(`${BASE_URL}/period/${id}`,{
-
         }).then( results=>{
             dispatch({type:'LOAD_PERIOD_SUCCESS', payload:results.data})
         }).catch(err=>{
