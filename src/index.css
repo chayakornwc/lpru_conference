@@ -27,6 +27,16 @@
     color: #f78e1f;
     border: solid 1px;
 }
+.button.is-mystyle{
+  background: #f78e1f;
+    color: #fff!important;
+    border: solid 1px #363636;
+}
+.button.is-mystyle:hover{
+  background: #e27909;
+    color: #fff;
+    border: solid 1px #363636;
+}
 .button.is-orange:hover{
   background: #e07002;
   border-color: #f78e1f;
@@ -43,6 +53,7 @@
 .button.button.is-orange.is-loading{
   background: #f78f1e;
 }
+
 .content{
   padding: 20px;
   }

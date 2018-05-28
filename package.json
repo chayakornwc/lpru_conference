@@ -11,6 +11,7 @@
     "jquery": "^1.9.1",
     "jwt-decode": "^2.2.0",
     "material-ui": "^1.0.0-beta.28",
+    "moment": "^2.8.1",
     "primer": "^10.5.0",
     "react": "^16.2.0",
     "react-alert": "^3.1.3",
