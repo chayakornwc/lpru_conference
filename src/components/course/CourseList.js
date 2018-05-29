@@ -16,7 +16,7 @@ const statusTags = (data) =>{
       return <span className="tag is-danger"> ระงับการอบรม </span>
       break;
       case 3:
-      return <span className="tag is-light"> เสร็จสิ้น </span>
+      return <span className="tag is-info"> เสร็จสิ้น</span>
       break;
       default: 
       return  <span className="tag is-primary"> รอการตรวจสอบ</span>
@@ -28,16 +28,17 @@ const statusTags = (data) =>{
      
 
      constructor(props){
-        super(props)
+        super(props);
+        
      }
   
   render() {
-      const {data} = this.props;
+      const {data, buttonAttends} = this.props;
     return (
         <div className="container">
         {data &&data.map(function(e, i){
             return(
-                    <div className="box boder">
+                    <div className="box boder" key={i}>
                     <article className="media">
                         <div className="media-left">
                         {statusTags(e.per_status)}
@@ -89,7 +90,7 @@ const statusTags = (data) =>{
                             </div>
                         </div>
                         <div className="media-right">
-                        <a className="button is-mystyle">สมัครเลย</a>
+                        <a className="button is-mystyle" onClick={()=>{buttonAttends(e.per_id)}} >สมัครเลย</a>
                         </div>
                     </article>
                 </div>  

@@ -70,16 +70,16 @@ export default class ReactConfirmModalDialog extends Component {
                 modalColor = "modal-info";
                 break;
             default:
-                buttonColor = "warning";
+                buttonColor = "danger";
                 modalColor = "modal-warning";
                 break;
         }
       
         return (
-            <div>
+            <div >
                 <div className={"modal "+active} toggle={this.toggle} >
                 <div className="modal-background"></div>
-                    <div className="modal-card" >
+                    <div className="modal-card animated bounceInDown" >
                         <header className="modal-card-head">
                         <p className="modal-card-title">{title}</p>
                         <button className="delete" onClick={this.toggle}></button>
@@ -91,7 +91,7 @@ export default class ReactConfirmModalDialog extends Component {
 
                     <footer className="modal-card-foot">
                         <button className="button" onClick={this.toggle}>{cancelLabel}</button>
-                        {confirmLabel && <button className="button is-danger" onClick={this.onClickConfirm}>{confirmLabel}</button>}
+                        {confirmLabel && <button className={"button is-"+buttonColor} onClick={this.onClickConfirm}>{confirmLabel}</button>}
                     </footer>
                     </div> 
                 </div>

@@ -7,7 +7,7 @@ import { loadUsers, getUser, saveUser,
     deleteUser, resetStatus
     } from '../redux/actions/userActions';
 
-//import { Modal, ModalHeader } from 'reactstrap';
+
 import { confirmModalDialog } from '../components/Utils/reactConfirmModalDialog';
 //import {modalDialog} from '../components/Utils/reactModalDialog';
 import Modal from 'react-modal';

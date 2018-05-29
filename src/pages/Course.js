@@ -5,6 +5,9 @@ import {connect} from 'react-redux'
 import Loader from '../components/Utils/loader';
 import   'moment/locale/th';
 import CourseList from '../components/course/CourseList.js';
+import { debounce } from 'lodash';
+
+import { confirmModalDialog } from '../components/Utils/reactConfirmModalDialog';
 const moment = require('moment')
 moment.locale('th')
 
@@ -19,7 +22,14 @@ class Course extends Component {
         })
     }
     attends = (id)=>{
-        
+        confirmModalDialog({
+            show: true,
+            type:'info',
+            title: 'ยืนยันการสมัคร',
+            message: 'คุณต้องการสมัครหลักสูตรนี้ใช่หรือไม่',
+            confirmLabel: 'ใช่!!',
+            onConfirm : console.log('confirm')
+        })
     }
   render() {
   
