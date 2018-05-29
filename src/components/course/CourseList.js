@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import 'moment/locale/th';
-
+import {connect} from 'react-redux';
 const moment = require('moment');
 moment.locale('th');
 
@@ -33,7 +33,8 @@ const statusTags = (data) =>{
      }
   
   render() {
-      const {data, buttonAttends} = this.props;
+      const {data, buttonAttends,auth} = this.props;
+      console.log(auth)
     return (
         <div className="container">
         {data &&data.map(function(e, i){
@@ -90,7 +91,7 @@ const statusTags = (data) =>{
                             </div>
                         </div>
                         <div className="media-right">
-                        <a className="button is-mystyle" onClick={()=>{buttonAttends(e.per_id)}} >สมัครเลย</a>
+                        <a className="button is-mystyle" onClick={()=>{buttonAttends(e.per_id, e.course_name)}} >สมัครเลย</a>
                         </div>
                     </article>
                 </div>  
@@ -101,4 +102,9 @@ const statusTags = (data) =>{
     )
   }
 }
-export default CourseList;
+function mapStateToProps(state){
+    return{
+        auth:state.authReducers.data
+    }
+}
+export default connect(mapStateToProps)(CourseList);

@@ -8,7 +8,7 @@ return jwt.encode(
 {
     sub: user.id,
     user_group: user.user_group,
-    name: user.name,
+    name:'secrete',
     username: user.username,
     iat: timestamp
 },

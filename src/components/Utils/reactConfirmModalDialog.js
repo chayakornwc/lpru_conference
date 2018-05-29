@@ -77,7 +77,7 @@ export default class ReactConfirmModalDialog extends Component {
       
         return (
             <div >
-                <div className={"modal "+active} toggle={this.toggle} >
+                <div className={"modal "+active}>
                 <div className="modal-background"></div>
                     <div className="modal-card animated bounceInDown" >
                         <header className="modal-card-head">

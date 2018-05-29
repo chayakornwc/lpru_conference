@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 
-import {loadPeriods} from '../redux/actions/periodActions.js';
+import {loadPeriods} from '../redux/actions/periodActions';
+import {Attends} from '../redux/actions/courseOrderActions';
 import {connect} from 'react-redux'
 import Loader from '../components/Utils/loader';
 import   'moment/locale/th';
-import CourseList from '../components/course/CourseList.js';
+import CourseList from '../components/course/CourseList';
 import { debounce } from 'lodash';
 
 import { confirmModalDialog } from '../components/Utils/reactConfirmModalDialog';
-const moment = require('moment')
+const moment = require('moment');
+
 moment.locale('th')
 
 class Course extends Component {
@@ -21,14 +23,22 @@ class Course extends Component {
             
         })
     }
-    attends = (id)=>{
+    attends = (id, information='')=>{
+     const  data = {
+            id:id,
+            registration_id:this.props.auth.data.sub
+        }
         confirmModalDialog({
             show: true,
             type:'info',
             title: 'ยืนยันการสมัคร',
-            message: 'คุณต้องการสมัครหลักสูตรนี้ใช่หรือไม่',
-            confirmLabel: 'ใช่!!',
-            onConfirm : console.log('confirm')
+            message: 'คุณต้องการสมัครหลักสูตร : '+information+' ใช่หรือไม่',
+            confirmLabel: 'ใช่!!', 
+            onConfirm : ()=>{
+               return this.props.dispatch(Attends(data)).then(()=>{
+                   
+               })
+            }
         })
     }
   render() {
@@ -55,7 +65,8 @@ class Course extends Component {
 }
 function mapStateToProps(state){
     return{
-        periods:state.periodReducers.periods
+        periods:state.periodReducers.periods,
+        auth:state.authReducers.data
     }
 }
 export default  connect(mapStateToProps)(Course);

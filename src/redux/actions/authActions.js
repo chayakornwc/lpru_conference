@@ -19,7 +19,6 @@ export const signin = ({ username, password }) => {
                             type: 'AUTH_USER',
                             payload: jwtDecode(token)
                             })
-                            console.log(jwtDecode(token))
                      }).catch(() => {
                              dispatch({ type: 'AUTH_ERROR', payload: "Login failed wrong username or password." })
                             })
