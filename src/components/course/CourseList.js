@@ -1,0 +1,103 @@
+import React, { Component } from 'react'
+import 'moment/locale/th';
+
+const moment = require('moment');
+moment.locale('th');
+
+const statusTags = (data) =>{
+    switch(data){
+      case 0 :
+      return <span className="tag is-success">เปิดการอบรม</span>
+      break;
+      case 1:
+      return <span className="tag is-warning">กำลังดำเนินการ</span>
+      break;
+      case 2:
+      return <span className="tag is-danger"> ระงับการอบรม </span>
+      break;
+      case 3:
+      return <span className="tag is-light"> เสร็จสิ้น </span>
+      break;
+      default: 
+      return  <span className="tag is-primary"> รอการตรวจสอบ</span>
+      break;
+    }
+  }
+
+ class CourseList extends Component {
+     
+
+     constructor(props){
+        super(props)
+     }
+  
+  render() {
+      const {data} = this.props;
+    return (
+        <div className="container">
+        {data &&data.map(function(e, i){
+            return(
+                    <div className="box boder">
+                    <article className="media">
+                        <div className="media-left">
+                        {statusTags(e.per_status)}
+                        </div>
+                        <div className="media-content">
+                        <div className="content">
+                            <div className="columns">
+                            <span className="is-tag " style={{paddingTop:"1.5rem"}}><i className="fa fa-graduation-cap" /></span>
+                                <div className="column">
+                                        <div className="colums">
+                                    
+                                            <div className="colum is-half">
+                                                <span>{e.course_name}</span>
+                                            </div>
+                                            <div className="colum is-half">
+                                                <span>{e.course_nameEng}</span>
+                                            </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div className="column">
+                                <div className="colums">
+                                        <div className="colum is-half">
+                                            <span><i className="fa fa-calendar-alt" />{' '}{moment(e.per_start).add(543, 'years').format('ll')}{' '}<i className="fas fa-long-arrow-alt-right"></i>{' '}{moment(e.per_end).add(543, 'years').format('ll')}</span>
+                                        </div>
+                                        <div className="colum is-half">
+                                            <span><i className="fa fa-clock" />{' '}{moment(e.per_time_start, ['HH:mm:ss', 'HH:mm:ss']).format('HH:mm')}{' '}<i className="fas fa-long-arrow-alt-right"></i>{' '}{moment(e.per_time_end, ['HH:mm:ss', 'HH:mm']).format('HH:mm')}</span>
+                                        
+                                        </div>
+                                </div>
+                                </div>
+                                <div className="column">
+                                <div className="colums">
+                                    <div className="colum is-half">
+                                        <span>
+                                            <i className="fas fa-map-marker-alt" />{' '}{e.room_name}
+                                        </span>
+                                    </div>
+                                    <div className="colum is-half">
+                                        <span><i className="fa fa-university" ></i>{' '}{e.lecture}</span>
+                                    </div>
+                                </div>
+                                </div>
+                            <div className="is-tag">
+                                    <span><i className="fa fa-users"/>{' '}{e.period_quantity}{' / '}{e.per_quota}</span>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="media-right">
+                        <a className="button is-mystyle">สมัครเลย</a>
+                        </div>
+                    </article>
+                </div>  
+            )
+        })}
+               
+        </div>
+    )
+  }
+}
+export default CourseList;

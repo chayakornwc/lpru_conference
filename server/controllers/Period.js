@@ -40,7 +40,7 @@ exports.findById = (req,res,next) => {
     req.getConnection((err, connection)=>{
         if(err) return next(err);
         var sql = "SELECT period.*, course.*, count(course_order.order_id) as period_quantity FROM period LEFT JOIN course ON period.course_id = course.course_id"
-        +" LEFT JOIN course_order ON course_order.course_id = course.course_id where period.per_id=?"; 
+        +" LEFT JOIN course_order ON course_order.per_id = period.per_id WHERE period.per_id=?"; 
         connection.query(sql,[id],function(err, results){
         if(err) return next(err);
             if(results[0]){
@@ -54,8 +54,8 @@ exports.findById = (req,res,next) => {
 }
 exports.update = (req,res,next) => {
    
-    var _perstart = moment(req.body.per_start, ['DD MMMM YYYY', ISO_8601, 'th']).add(-543, 'years').format('YYYY-MM-DD');
-    var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY', ISO_8601, 'th']).add(-543, 'years').format('YYYY-MM-DD');
+    var _perstart = moment(req.body.per_start, ['DD MMMM YYYY', 'ISO_8601', 'th']).add(-543, 'years').format('YYYY-MM-DD');
+    var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY', 'ISO_8601', 'th']).add(-543, 'years').format('YYYY-MM-DD');
     var TimeStart = moment(req.body.per_time_end).isValid() ? moment(req.body.per_time_start).format('LT') : req.body.per_time_start
     var TimeEnd = moment(req.body.per_time_end).isValid() ? moment(req.body.per_time_end).format('LT') : req.body.per_time_end
     var data ={
@@ -66,7 +66,9 @@ exports.update = (req,res,next) => {
         per_price:req.body.per_price,
         per_quota:req.body.per_quota,
         course_id:req.body.course_id,
-        room_id:req.body.room_id
+        room_id:req.body.room_id,
+        lecture:req.body.lecture
+        
     }
     req.getConnection((err, connection) => {
         var id = parseInt(req.params.id);
@@ -96,7 +98,8 @@ exports.create  = (req,res,next) => {
         per_price:req.body.per_price,
         per_quota:req.body.per_quota,
         course_id:req.body.course_id,
-        room_id:req.body.room_id
+        room_id:req.body.room_id,
+        lecture:req.body.lecture,
     }
     req.getConnection((err, connection)=>{
         if(err) return next(err)

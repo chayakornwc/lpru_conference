@@ -7,7 +7,7 @@
     "alertifyjs": "^1.11.0",
     "axios": "^0.17.1",
     "bootstrap": "^4.0.0-beta.2",
-    "bulma": "^0.6.2",
+    "bulma": "^0.7.1",
     "jquery": "^1.9.1",
     "jwt-decode": "^2.2.0",
     "material-ui": "^1.0.0-beta.28",
