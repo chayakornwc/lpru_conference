@@ -7,8 +7,9 @@ import Loader from '../components/Utils/loader';
 import   'moment/locale/th';
 import CourseList from '../components/course/CourseList';
 import { debounce } from 'lodash';
-
 import { confirmModalDialog } from '../components/Utils/reactConfirmModalDialog';
+
+const alertify = require('alertify.js');
 const moment = require('moment');
 
 moment.locale('th')
@@ -38,7 +39,13 @@ class Course extends Component {
             confirmLabel: 'ใช่!!', 
             onConfirm : ()=>{
                return this.props.dispatch(Attends(data)).then(()=>{
-                   
+                   console.log(this.props.attendsSave)
+                   if(!this.props.attendsSave.isRejected){
+                       this.props.dispatch(loadPeriods());
+                        alertify.success(this.props.attendsSave.data.message)
+                   }else{
+                    alertify.error(this.props.attendsSave.data.message)
+                   }
                })
             }
         })
@@ -68,7 +75,8 @@ class Course extends Component {
 function mapStateToProps(state){
     return{
         periods:state.periodReducers.periods,
-        auth:state.authReducers.data
+        auth:state.authReducers.data,
+        attendsSave:state.courseorderReducers.attendsSave
     }
 }
 export default  connect(mapStateToProps)(Course);
