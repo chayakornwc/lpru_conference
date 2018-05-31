@@ -29,7 +29,7 @@ export const Attends = (values)=>{
                 authorization: localStorage.getItem('token') 
             }
         }).then( results=>{
-            if(results.status =201){
+            if(results.status=201){
                 dispatch({type:'SAVE_ATTENDS_REJECTED', payload:results.data})
             }else{
                 dispatch({type:'SAVE_ATTENDS_SUCCESS', payload:results.data})

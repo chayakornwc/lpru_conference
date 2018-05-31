@@ -25,7 +25,6 @@ class Course extends Component {
         })
     }
     attends = (id, information='')=>{
-        console.log(this.props.auth);
      const  data = {
             id:id,
             registration_id:this.props.auth.sub
@@ -44,7 +43,7 @@ class Course extends Component {
                        this.props.dispatch(loadPeriods());
                         alertify.success(this.props.attendsSave.data.message)
                    }else{
-                    alertify.error(this.props.attendsSave.data.message)
+                        alertify.error(this.props.attendsSave.data.message)
                    }
                })
             }
