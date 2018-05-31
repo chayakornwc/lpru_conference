@@ -36,15 +36,13 @@ exports.create = (req, res, next) =>{
                 }else{
                     connection.query("INSERT INTO course_order SET ?", [data], (err, results)=>{
                         if(err) return next(err);
-                        res.send(results);
+                        res.send({message:"เพิ่มข้อมูลเรียบร้อยแล้ว"});
                     })
                 }    
             })
         })
     }
-exports.update = (req,res,next)=>{
-    
-    }
+
 
 exports.delete = (req,res,next)=>{
     var id = parseInt(req.params.id);

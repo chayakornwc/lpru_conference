@@ -22,7 +22,7 @@ export const Attends = (values)=>{
     return(dispatch) =>{
         dispatch({type:'SAVE_ATTENDS_PENDING'})
         return axios({
-            url:`${BASE_URL}/attendee/${values.registration_id}`,
+            url:`${BASE_URL}/attendee/${values.id}`,
             method:'post',
             data:values,
             headers: { 

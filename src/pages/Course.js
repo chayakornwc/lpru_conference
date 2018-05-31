@@ -24,10 +24,12 @@ class Course extends Component {
         })
     }
     attends = (id, information='')=>{
+        console.log(this.props.auth);
      const  data = {
             id:id,
-            registration_id:this.props.auth.data.sub
+            registration_id:this.props.auth.sub
         }
+        
         confirmModalDialog({
             show: true,
             type:'info',
