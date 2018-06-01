@@ -8,7 +8,7 @@ import   'moment/locale/th';
 import CourseList from '../components/course/CourseList';
 import { debounce } from 'lodash';
 import { confirmModalDialog } from '../components/Utils/reactConfirmModalDialog';
-
+import Filter from '../components/course/Filter'
 const alertify = require('alertify.js');
 const moment = require('moment');
 
@@ -49,8 +49,15 @@ class Course extends Component {
             }
         })
     }
+    handleSearch = (term)=>{
+       return this.props.dispatch(loadPeriods(1, term)).then(()=>{
+
+       }) //1 = upcoming events arg();
+
+    }
+
   render() {
-  
+    const filter = debounce(term => { this.handleSearch(term) }, 500);
 
     const  {periods} = this.props
     
@@ -60,14 +67,28 @@ class Course extends Component {
         </div>
         }
     return (
+        <div>
+            <div className="container" style={{paddingTop:'1rem'}}>
+             <Filter 
+             title="การอบรมที่กำลังจะเกิดขึ้น (Upcoming events)"
+             placeholder="ค้นหา เช่น ชื่อหลักสูตร วิทยากร"
+             onSearchTermChange={filter}
+                />
+             </div>
       <div className="container " style={{paddingTop:'1rem'}}>
+     
         {periods.isLoading && 
             <div className="columns  is-centered">
                 <Loader />
             </div>}
-            {!periods.isLoading && <CourseList buttonAttends={this.attends} data={periods.data} />}
+            {!periods.isLoading && <CourseList 
+            buttonAttends={this.attends} 
+            data={periods.data}
+           
+            />}
             
     </div>  
+    </div>
     )
   }
 }
