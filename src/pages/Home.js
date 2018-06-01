@@ -9,7 +9,7 @@ class Home extends Component {
 render() {
 return (
     <div>
-    <h3>You age:{this.props.age} </h3>
+    <h3>You age:{this.props.params.id} </h3>
    
     </div>
     );       

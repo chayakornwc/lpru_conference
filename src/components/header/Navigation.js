@@ -21,19 +21,21 @@ import Brand from './Brand';
                    ]
                 }   else{
                        return[
-                        <Link to="/statistics" className="navbar-item" key={4}>Statistics</Link>,   
-                        <Link to="/Course" className="navbar-item" key={1}>Course</Link>,
-                        <Link to="/User" className="navbar-item" key={2}>User</Link>,
-                        <Link to="/Register" className="navbar-item" key={5}>Register</Link>,
+                        <Link to="/statistics" className="navbar-item" key={1}>Statistics</Link>,   
+                        <Link to="/pastevents" className="navbar-item" key={2}>Past events</Link>,
+                        <Link to="/upcomingevents" className="navbar-item" key={3}>Upcoming events</Link>,
+                        <Link to="/User" className="navbar-item" key={4}>Certification</Link>,
+                        <Link to="/User" className="navbar-item" key={5}>Profile</Link>,
                         <Link to="/Logout" className="navbar-item" key={6}>Logout</Link>
                        ]
                    }
                 
           }else{
                 return [
-                    <Link to="/Course" className="navbar-item" key={1}>Course</Link>,
-                    <Link to="/Register" className="navbar-item" key={5}>Register</Link>,
-                    <Link to="/Login" className="navbar-item" key={3}>Login</Link>
+                    <Link to="/Course" className="navbar-item" key={1}>Past events</Link>,
+                    <Link to="/Course" className="navbar-item" key={2}>Upcoming events</Link>,
+                    <Link to="/Register" className="navbar-item" key={3}>Register</Link>,
+                    <Link to="/Login" className="navbar-item" key={4}>Login</Link>
                 ]
           }
         }

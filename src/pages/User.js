@@ -83,7 +83,7 @@ class User extends Component {
                                 buttonEdit={this.handleEdit}
                                 buttonDelete={this.handleDelete}
                             />
-                                
+                                  {this.props.children}
                             {/* เป็น Component สำหรับแสดง Modal ของ reactstrap 
                             ซึ่งเราต้องควบคุมการแสดงไว้ที่ไฟล์นี้ ถ้าทำแยกไฟล์จะควบคุมยาก */}
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-primary" autoFocus={false}  style={ModalStyle}>

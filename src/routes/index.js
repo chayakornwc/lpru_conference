@@ -12,12 +12,15 @@ import RequireAuth from '../pages/Auth/Authentication';
 import RequireAuthAdmin from '../pages/Auth/AuthenticationAdmin';
 
 
+  
 const routes = [{
 path: '/',
 component: App,
 indexRoute:{component:Home},
 childRoutes:[
-    {path:'user', component:RequireAuth(RequireAuthAdmin(User))},
+    {path:'user', component:RequireAuth(RequireAuthAdmin(User)),childRoutes:[
+        {path:':id',component:Home}
+    ]},
     {path:'Register', component:Register},
     {path:'signin',component:Login},
     {path:'course',component:Course},
@@ -26,5 +29,8 @@ childRoutes:[
     {path:'logout',component:RequireAuth(Logout)}
     ],
  
+},{
+    path:'/order/:id/', 
+    component:App
 }]
 export default routes;
