@@ -23,6 +23,12 @@ const statusTags = (data) =>{
       break;
     }
   }
+  const renderButton = (time)=>{
+      
+      if(moment(time) < moment()){
+          console.log(true)
+      }
+  }
 
  class CourseList extends Component {
      
@@ -35,9 +41,11 @@ const statusTags = (data) =>{
   render() {
       const {data, buttonAttends,auth} = this.props;
       console.log(auth)
+    
     return (
         <div className="container">
         {data &&data.map(function(e, i){
+              renderButton(e.per_start)
             return(
                     <div className="box boder" key={i}>
                     <article className="media">

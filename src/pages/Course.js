@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-
+import React, { Component } from 'react';
 import {loadPeriods} from '../redux/actions/periodActions';
 import {Attends} from '../redux/actions/courseOrderActions';
 import {connect} from 'react-redux'
