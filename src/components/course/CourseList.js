@@ -24,9 +24,11 @@ const statusTags = (data) =>{
     }
   }
   const renderButton = (time)=>{
-      
+     
       if(moment(time) < moment()){
-          console.log(true)
+         return(
+           'disabled'
+         )
       }
   }
 
@@ -45,7 +47,7 @@ const statusTags = (data) =>{
     return (
         <div className="container">
         {data &&data.map(function(e, i){
-              renderButton(e.per_start)
+             
             return(
                     <div className="box boder" key={i}>
                     <article className="media">
@@ -98,8 +100,15 @@ const statusTags = (data) =>{
                                 </div>
                             </div>
                         </div>
-                        <div className="media-right">
-                        <a className="button is-mystyle" onClick={()=>{buttonAttends(e.per_id, e.course_name)}} >สมัครเลย</a>
+                        <div className="media-right" >
+                        <div className="colums">
+                            <div className="colum is-half">
+                                <button className=" button is-mystyle" disabled={renderButton(e.per_start)} onClick={()=>{buttonAttends(e.per_id, e.course_name)}} >สมัครเลย</button>
+                            </div>
+                            <div className="colum is-half">
+                                <button className="colum is-primary s button is-mystyle" >รายชื่อ</button>
+                            </div>
+                        </div>
                         </div>
                     </article>
                 </div>  

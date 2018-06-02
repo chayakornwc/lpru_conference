@@ -7,6 +7,7 @@ exports.findAll = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return next(err);
         var options = req.query.options ; 
+        var Pasevents = req.query.Pastevents ? req.query.Pastevents  : false
         var Upcoming = req.query.Upcoming ? req.query.Upcoming : false ;
         var startDate = req.query.startDate ? moment(req.query.startDate, ['DD MMMM YYYY', moment.ISO_8601], 'th').add(-543,'years').format('YYYY-MM-DD') : '';
         var endDate = req.query.endDate ? moment(req.query.endDate,['DD MMMM YYYY',  moment.ISO_8601], 'th').add(-543,'years').format('YYYY-MM-DD') : '';  
@@ -24,14 +25,16 @@ exports.findAll = (req, res, next) => {
         if(startDate && endDate){
             wherestr = `AND period.per_start = ${startDate} AND period.per_end = ${endDate}`
         }
-        if(Upcoming  ==true) {
+        if(Upcoming) {
             wherestr += `AND period.per_start >= CURRENT_DATE()`
+        }
+        if(Pasevents){
+            wherestr += `AND period.per_start < CURRENT_DATE()`
         }
         var sql = "SELECT period.*, course.*, operation_room.room_name, count(course_order.order_id) as period_quantity  FROM period LEFT JOIN course ON period.course_id = course.course_id"
                  +" LEFT JOIN  course_order ON  course_order.per_id = period.per_id"
                  +" LEFT JOIN operation_room ON period.room_id = operation_room.room_id"
-                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?) "+whereOptions+wherestr+"  GROUP BY period.per_id  ORDER BY period.per_id DESC "; 
-       
+                 +" WHERE (period.per_id LIKE ?  OR course.course_name LIKE ?  OR course.course_nameEng LIKE ?) "+whereOptions+wherestr+"  GROUP BY period.per_id  ORDER BY per_start DESC "; 
                  var params = "%"+req.query.term+"%";        
                   
         connection.query(sql,[params, params, params], function(err, results){ 

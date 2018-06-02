@@ -49,9 +49,9 @@ class Course extends Component {
         })
     }
     handleSearch = (term)=>{
-       return this.props.dispatch(loadPeriods(1, term)).then(()=>{
+       return this.props.dispatch(loadPeriods(true, term)).then(()=>{
 
-       }) //1 = upcoming events arg();
+       }) //true = upcoming events arguments();
 
     }
 

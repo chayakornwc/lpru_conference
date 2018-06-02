@@ -8,6 +8,9 @@
   width: 100%
   
 }
+.button.button[disabled]{
+  background:#f78f1e; 
+}
 .md-auto{
   margin: 0 auto;
 }

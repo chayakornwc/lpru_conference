@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import {loadPeriods} from '../redux/actions/periodActions';
+import {loadPastEvens} from '../redux/actions/periodActions';
 import {Attends} from '../redux/actions/courseOrderActions';
 import {connect} from 'react-redux'
 import Loader from '../components/Utils/loader';
@@ -19,25 +19,40 @@ class Pastevents extends Component {
     super(props);
   }
   componentDidMount (){
-    return this.props.dispatch(loadPeriods(false)).then(()=>{
+    return this.props.dispatch(loadPastEvens()).then(()=>{
         
     })
 }
+handleSearch = (term)=>{
+  return this.props.dispatch(loadPastEvens(term)).then(()=>{
 
+  }) 
+}
   render() {
+     const filter = debounce((term) => { 
+       this.handleSearch(term) 
+      }, 500);
     const  {periods} = this.props
     return (
       <div className="container">
           <div className="container" style={{padding:"1.25rem"}}>
+          <Filter 
+             title="รายการอบรมที่ผ่านมา (Past events)"
+             placeholder="ค้นหา เช่น ชื่อหลักสูตร วิทยากร"
+             onSearchTermChange={filter}
+                />
             {periods.isLoading && 
             <div className="columns  is-centered">
                 <Loader />
             </div>}
-            {!periods.isLoading && <CourseList 
+            {!periods.isLoading && 
+            <div style={{paddingTop:'1.25rem'}}>
+            <CourseList 
             buttonAttends={this.attends} 
             data={periods.data}
            
-            />}
+            />
+            </div>}
             </div>
       </div>
     )

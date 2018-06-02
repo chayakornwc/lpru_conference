@@ -2,6 +2,7 @@ import axios from 'axios';
 //lib
 import config from '../../configure';
 import actions from 'redux-form/lib/actions';
+import Pastevents from '../../pages/Pastevents';
 //config
 const BASE_URL = config.BASE_URL
 
@@ -17,7 +18,17 @@ export const loadPeriods =(Upcoming=true,term='')=>{
             })  
     }
 }
-
+export const loadPastEvens = (term='')=>{
+    return(dispatch) =>{
+        dispatch({type:'LOAD_PERIODS_PENDING'})
+        return axios.get(`${BASE_URL}/period?term=${term}&Pastevents=true`,{
+            }).then( results =>{
+                dispatch({type:'LOAD_PERIODS_SUCCESS', payload:results.data})  
+            }).catch(err=>{
+                dispatch({type:'LOAD_PERIODS_REJECTED',payload: err.message})
+            })  
+    }
+}
  // get period by id
 export const getPeriod = (id)=>{
     return(dispatch) =>{
