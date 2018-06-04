@@ -5,6 +5,7 @@ const moment = require('moment');
 moment.locale('th');
 
 const statusTags = (data) =>{
+
     switch(data){
       case 0 :
       return <span className="tag is-success">เปิดการอบรม</span>
@@ -19,9 +20,10 @@ const statusTags = (data) =>{
       return <span className="tag is-info"> เสร็จสิ้น</span>
       break;
       default: 
-      return  <span className="tag is-primary"> รอการตรวจสอบ</span>
+      return  <span className="tag is-primary">รอการตรวจสอบ</span>
       break;
     }
+
   }
   const renderButton = (time)=>{
      
@@ -42,12 +44,11 @@ const statusTags = (data) =>{
   
   render() {
       const {data, buttonAttends,auth} = this.props;
-      console.log(auth)
+   
     
     return (
         <div className="container">
         {data &&data.map(function(e, i){
-             
             return(
                     <div className="box boder" key={i}>
                     <article className="media">
@@ -95,7 +96,7 @@ const statusTags = (data) =>{
                                 </div>
                                 </div>
                             <div className="is-tag">
-                                    <span><i className="fa fa-users"/>{' '}{e.period_quantity}{' / '}{e.per_quota}</span>
+                                    <span><i className="fa fa-users" />{' '}{e.period_quantity}{' / '}{e.per_quota}</span>
                             </div>
                                 </div>
                             </div>
@@ -106,7 +107,7 @@ const statusTags = (data) =>{
                                 <button className=" button is-mystyle" disabled={renderButton(e.per_start)} onClick={()=>{buttonAttends(e.per_id, e.course_name)}} >สมัครเลย</button>
                             </div>
                             <div className="colum is-half">
-                                <button className="colum is-primary s button is-mystyle" >รายชื่อ</button>
+                                <a href={"../events/"+e.per_id} className="colum is-primary button is-mystyle" >รายชื่อ</a>
                             </div>
                         </div>
                         </div>

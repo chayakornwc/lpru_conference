@@ -3,18 +3,25 @@ const config = require('../config')
 var sha256 = require('sha256');
 
 function tokenForUser(user) {
-const timestamp = new Date().getTime();
-return jwt.encode(
-{
-    sub: user.id,
-    user_group: user.user_group,
-    name:'secrete',
-    username: user.username,
-    iat: timestamp
-},
-config.secret
-)
-}
+    const timestamp = new Date().getTime();
+    return jwt.encode(
+                        {
+                            sub: user.id,
+                            user_group: user.user_group,
+                            name:'secrete',
+                            username: user.username,
+                            iat: timestamp,
+                            fullname: user.prefix+' '+user.first_name+' '+user.last_name,
+                            major: user.major,
+                            affiliation: user.affiliation,
+                            address:user.address,
+                            district: user.district,
+                            province: user.province,
+                            company:user.company
+                        },
+                        config.secret
+                    )
+        }
 exports.signin = (req, res, next) => {
 res.send({ token: tokenForUser(req.user) })
 }

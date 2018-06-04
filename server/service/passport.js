@@ -11,7 +11,7 @@ const localLogin = new LocalStrategy(localOptions, function (req, username, pass
 req.getConnection((err, connection) => {
   if(err) console.log('connection mysql error');
 //if (err) return next(err) ถ้าเอาขึ้นของจริงแล้วมาเปิดด้วยนะจ้ะ
-connection.query("select * from registration where username=?", [username], (err, row) => {
+connection.query("SELECT * FROM registration WHERE username=?", [username], (err, row) => {
 if (err) return done(err)
 if (!row.length) return done(null, false)
 if (row[0].password !== sha256(password)) {

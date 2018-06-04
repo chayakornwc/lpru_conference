@@ -7,12 +7,15 @@ const BASE_URL = config.BASE_URL
 // loadPeriod for loops
 export const loadOrder =(id)=>{
     return(dispatch) =>{
-        dispatch({type:'LOAD_ATTENDS_PENDING'})
-        return axios.get(`${BASE_URL}/courseOrder/period/${id}`,{
+        dispatch({type:'LOAD_ORDERS_PEDNING'})
+        return axios({
+            url:`${BASE_URL}/courseorder/user/${id}`,
+            method:'get',
+            headers:{authorization:localStorage.getItem('token')}
             }).then( results =>{
-                dispatch({type:'LOAD_PERIODS_SUCCESS', payload:results.data})  
+                dispatch({type:'LOAD_ORDERS_SUCCESS', payload:results.data})  
             }).catch(err=>{
-                dispatch({type:'LOAD_PERIODS_REJECTED',payload: err.message})
+                dispatch({type:'LOAD_ORDERS_REJECTED',payload: err.message})
             })  
     }
 }

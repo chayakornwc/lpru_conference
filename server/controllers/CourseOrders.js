@@ -32,6 +32,19 @@ exports.findById = (req, res, next)=>{
         })
     })
 }
+exports.findByuserId = (req, res,next)=>{
+    req.getConnection((err, connection)=>{
+        if(err) throw err;
+        var id = parseInt(params.id);
+        var sql = "SELECT co.*, p.*, c.course_name, c.course_nameEng FROM course_order co" 
+        +" INNER JOIN period p ON p.per_id = co.per_id" 
+        +" LEFT OUTER JOIN  course c ON c.course_id = p.course_id WHERE co.registration_id = ?" 
+        connection.query(sql, [id], (err,results)=>{
+            if(err) throw err;
+            res.send(results);
+        })
+    })
+}
 
 exports.create = (req, res, next)=>{
     var data =  {

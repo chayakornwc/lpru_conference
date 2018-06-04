@@ -5,6 +5,7 @@ import periodReducers from './periodReducers';
 import courseReducers from './courseReducer';
 import operationRoomReducers from './operationRoomReducers';
 import  courseorderReducers from './courseorderReducers';
+import attendsReducers from './attendsReducers';
 import { reducer as formReducer } from 'redux-form'
 const rootReducers = combineReducers({
     form: formReducer,
@@ -13,6 +14,8 @@ const rootReducers = combineReducers({
     periodReducers,
     courseReducers,
     operationRoomReducers,
-    courseorderReducers 
+    courseorderReducers,
+    attendsReducers
+
 });
 export default rootReducers;

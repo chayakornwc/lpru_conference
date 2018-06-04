@@ -11,6 +11,9 @@
 .button.button[disabled]{
   background:#f78f1e; 
 }
+.button:hover{
+  text-decoration:none;
+}
 .md-auto{
   margin: 0 auto;
 }

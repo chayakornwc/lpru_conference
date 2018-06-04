@@ -17,7 +17,7 @@ app.use(myConnection(mysql, config.dbOptions, 'pool'))
 routes(app)
 
 app.listen(PORT, () => {
-    console.log('ready server on http://localhost:' + PORT)
+    console.log('ready server on http://localhost:' + PORT +' Now use this database :'+config.dbOptions.database)
     
 })
 

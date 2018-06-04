@@ -53,7 +53,7 @@ module.exports = function(app) {
     app.get('/courseorder/', courseOrder.findAll);
     app.get('/courseorder/:id', courseOrder.findById)
     app.post('/courseorder/', courseOrder.create);
-
+    app.get('/courseorder/user/:id', requireAuth, courseOrder.findByuserId)
     app.put('/courseorder/:id',courseOrder.update);
     app.delete('/courseorder/:id', courseOrder.delete);
     
