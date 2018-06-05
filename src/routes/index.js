@@ -11,13 +11,13 @@ import Form from '../pages/Form';
 import Profile from '../pages/Profile';
 import RequireAuth from '../pages/Auth/Authentication';
 import RequireAuthAdmin from '../pages/Auth/AuthenticationAdmin';
-
+import Editprofile from '../pages/Editprofile';
 
   
 const routes = [{
 path: '/',
 component: App,
-indexRoute:{component:Home},
+indexRoute:{component:Profile},
 childRoutes:[
     {path:'user', component:RequireAuth(RequireAuthAdmin(User)),childRoutes:[
         {path:':id',component:Home}
@@ -28,6 +28,7 @@ childRoutes:[
     {path:'upcomingevents',component:Course},
     {path:'pastevents',component:Pastevents},
     {path:'profile', component:RequireAuth(Profile)},
+    {path:'/profile/edit', component:RequireAuth(Editprofile)},
     {path:'Login', component:Login},
     {path:'form', component:RequireAuth(RequireAuthAdmin(Form))},
     {path:'logout',component:RequireAuth(Logout)}

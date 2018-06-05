@@ -126,6 +126,11 @@
   left: 45px;
   animation: lds-ellipsis3 0.6s infinite;
 }
+table.is-linked>tbody>tr:hover{
+  background-color: #f78f1e!important;
+  cursor: pointer;
+  
+}
 @keyframes lds-ellipsis1 {
   0% {
     transform: scale(0);

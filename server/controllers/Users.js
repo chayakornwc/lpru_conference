@@ -17,7 +17,10 @@ function tokenForUser(user) {
                             address:user.address,
                             district: user.district,
                             province: user.province,
-                            company:user.company
+                            company:user.company,
+                            city:user.city,
+                            email:user.email,
+                            gender:user.gender
                         },
                         config.secret
                     )

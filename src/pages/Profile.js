@@ -2,61 +2,110 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {loadOrder} from '../redux/actions/courseOrderActions';
 import courseorderReducers from '../redux/reducers/courseorderReducers';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom'
+import 'moment/locale/th';
+import Loader from '../components/Utils/loader';
+
+const moment = require('moment');
+
+moment.locale('th');
  class Profile extends Component {
      constructor(props){
          super(props);
      }
+     static contextTypes = {
+        router: PropTypes.object
+      }
+      redirectToTarget = (id) => {
+        this.context.router.push(`/events/${id}`)
+      }
      componentDidMount(){
-      return this.props.dispatch(loadOrder(this.props.auth.sub)).then(()=>{
-          console.log(this.props.orders)
+         
+      return this.props.auth && this.props.dispatch(loadOrder(this.props.auth.sub)).then(()=>{
       })
      }
+     
 
         
   render() {
       const {auth,orders} = this.props
-      console.log(orders)
     return (
       <div className="container" style={{paddingTop:"1.25rem"}}>
         <div className="card">
-            <header class="card-header">
-                <p class="card-header-title">
+            <header className="card-header">
+                <p className="card-header-title">
                     รายละเอียดผู้ใช้
                 </p>
             </header>
-            <div class="card-content">
-                <div class="content">
+            <div className="card-content">
+                <div className="content">
                     <div className="columns ">
+                    
                         <div className="colum" style={{paddingRight:'1rem'}}>
-                        <strong>รหัสนักศึกษา</strong> {auth.username} 
+                        <strong>รหัสนักศึกษา</strong> {auth && auth.username} 
                         </div>
                         <div className="colum " style={{paddingRight:'1rem'}}>
-                        <strong>ชื่อ - นามสกุล</strong> {auth.fullname}
+                        <strong>ชื่อ - นามสกุล</strong> {auth && auth.fullname}
                         </div>
                         <div className="colum " style={{paddingRight:'1rem'}}>
-                        <strong>สาขาวิชา</strong> {auth.major ? auth.major : 'ไม่ระบุ'}
+                        <strong>สาขาวิชา</strong> {auth && auth.major ? auth.major : 'ไม่ระบุ'}
                         </div>
                         <div className="colum " style={{paddingRight:'1rem'}}>
-                        <strong>คณะ / สำนัก</strong> {auth.major ? Affiliation(auth.affiliation) : 'ไม่ระบุ'}
+                        <strong>คณะ / สำนัก</strong> {auth && auth.major ? Affiliation(auth.affiliation) : 'ไม่ระบุ'}
                         </div>
                     </div>
                     <div className="columns is-mobile" style={{paddingTop:'.5rem'}}>
                         <div className="colum" style={{paddingRight:'1rem'}}>
-                        <strong>ที่อยู่</strong> {auth.address ? auth.address :'ไม่ระบุ'} 
+                        <strong>ที่อยู่</strong> {auth && auth.address ? auth.address :'ไม่ระบุ'} 
                         </div>
                         <div className="colum " style={{paddingRight:'1rem'}}>
-                        <strong>อำเภอ</strong> {auth.district ? auth.district :'ไม่ระบุ'}
+                        <strong>อำเภอ</strong> {auth && auth.district ? auth.district :'ไม่ระบุ'}
                         </div>
                         <div className="colum " style={{paddingRight:'1rem'}}>
-                        <strong>จังหวัด</strong> {auth.province ? auth.province : 'ไม่ระบุ'}
+                        <strong>จังหวัด</strong> {auth && auth.province ? auth.province : 'ไม่ระบุ'}
                         </div>
                         <div className="colum " style={{paddingRight:'1rem'}}>
-                        <strong>สังกัด / หน่วยงาน</strong> {auth.company ? auth.company : 'ไม่ระบุ'}
+                        <strong>สังกัด / หน่วยงาน</strong> {auth && auth.company ? auth.company : 'ไม่ระบุ'}
                         </div>
                     </div>
                 </div>
             </div>
                 <footer className="card-footer"><a href="profile/edit" className="button is-warning">แก้ไขข้อมูล</a></footer>
+            </div>
+            <div className="content" style={{paddingTop:'1rem'}}>
+                <div className="card">
+                <header className="card-header">
+                    รายการอบรมที่เข้าร่วม
+                </header>
+                <div className="card-content">
+                    <table className="table is-bordered is-striped is-linked">
+                        <thead>
+                            <tr>
+                                <th>ที่</th>
+                                <th>ชื่อหลักสูตร</th>
+                                <th>วันที่อบรม</th>
+                                <th>วิทยากร</th>          
+                                <th>สอบ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {orders.isLoading && <Loader/>}
+                            {orders.data && orders.data.map((e,i)=>{
+                                return(
+                                   <tr  key={i} onClick={()=>{this.redirectToTarget(e.per_id)}}>
+                                        <td>{(i+1)}</td>
+                                        <td>{e.course_name}</td>
+                                        <td>{moment(e.per_start).add(543, 'years').format('ll')} - {moment(e.per_end).add(543, 'years').format('ll')}</td>
+                                        <td>{e.lecture ? e.lecture : 'ไม่ระบุ'}</td>
+                                        <td></td>
+                                  </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+               </div> 
             </div>
       </div>
     )
