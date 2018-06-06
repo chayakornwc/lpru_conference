@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import {Field,reduxForm} from 'redux-form'
-import {connect} from 'react-redux'
+import {Field,reduxForm} from 'redux-form';
+import {connect} from 'react-redux';
+import {saveUser} from '../redux/actions/userActions';
 import renderField from '../components/Editprofile/renderFields';
 import renderSelect from '../components/Editprofile/renderSelect';
 import renderSelectPrefix  from '../components/Editprofile/renderSelectPrefix';
 import renderChooseGender from '../components/Editprofile/renderChooseGenders';
+import { updateToken } from '../redux/actions/authActions';
+const alertify = require('alertify.js');
 
  class Editprofile extends Component {
     handleInitailize(){
@@ -26,12 +29,26 @@ import renderChooseGender from '../components/Editprofile/renderChooseGenders';
             "affiliation":auth.affiliation,
             "company":auth.company,
         }
-        console.log(initData)
         this.props.initialize(initData)
     }
 
      componentDidMount(){
         this.handleInitailize();
+     }
+     handleSubmit=(values)=>{
+       return( 
+            this.props.dispatch(saveUser(values)).then(()=>{
+                if(!this.props.userSave.isRejected){
+                    alertify.success("แก้ไขข้อมูลเรียบร้อยแล้ว")
+                    this.props.dispatch(updateToken()).then(()=>{
+                        this.handleInitailize();
+                    })
+                  
+                    }else{
+
+            }
+            })
+        )
      }
   render() {
     const _province = ['กรุงเทพฯ',
@@ -111,6 +128,8 @@ import renderChooseGender from '../components/Editprofile/renderChooseGenders';
     'อุตรดิตถ์',
     'อุทัยธานี',
     'อุบลราชธานี'];
+     const {handleSubmit} = this.props
+        
     return (
       <div className="container" style={{paddingTop:'1rem'}}> 
         <div className="card"> 
@@ -193,7 +212,7 @@ import renderChooseGender from '../components/Editprofile/renderChooseGenders';
                     <div class="field-body">
                         <div class="field">
                         <div class="control">
-                            <button class="button is-mystyle">
+                            <button onClick={handleSubmit(this.handleSubmit)} type="button" className="button is-mystyle">
                             บันทึก
                             </button>
                         </div>
@@ -215,6 +234,7 @@ const form = reduxForm({
  function mapStateToProps(state){
      return{
         auth:state.authReducers.data,
+        userSave:state.userReducers.userSave
      }
  }
  

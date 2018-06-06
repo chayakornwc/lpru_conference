@@ -29,6 +29,7 @@ exports.signin = (req, res, next) => {
 res.send({ token: tokenForUser(req.user) })
 }
 
+
 exports.findAll = (req, res,next) => {
     req.getConnection((err, connection)=>{
         if(err) return next(err)

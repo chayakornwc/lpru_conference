@@ -5,7 +5,7 @@ const renderChooseGender = ({ input, label,  type, textarea, autoFocus, meta: { 
 //สำหรับรูปแบบ Field ที่เป็น TextArea
 
 //สำหรับรูปแบบ Field ที่เป็น TextBox
-console.log(input)
+
     return (
         
         <div class="field is-narrow">

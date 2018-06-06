@@ -8,21 +8,19 @@
     const sha256 = require('sha256');
     const localOptions = { passReqToCallback: true }
 const localLogin = new LocalStrategy(localOptions, function (req, username, password, done) {
-req.getConnection((err, connection) => {
-  if(err) console.log('connection mysql error');
-//if (err) return next(err) ถ้าเอาขึ้นของจริงแล้วมาเปิดด้วยนะจ้ะ
-connection.query("SELECT * FROM registration WHERE username=?", [username], (err, row) => {
-if (err) return done(err)
-if (!row.length) return done(null, false)
-if (row[0].password !== sha256(password)) {
-    return done(null, false)
-    
-    } else {
-    return done(null, row[0])
-    }
-    })
-    })
-  
+    req.getConnection((err, connection) => {
+        if(err) console.log('connection mysql error');
+            //if (err) return next(err) ถ้าเอาขึ้นของจริงแล้วมาเปิดด้วยนะจ้ะ
+            connection.query("SELECT * FROM registration WHERE username=?", [username], (err, row) => {
+                if (err) return done(err)
+                if (!row.length) return done(null, false)
+                if (row[0].password !== sha256(password)) {
+                    return done(null, false)
+                    } else {
+                        return done(null, row[0])
+                        }
+                })
+            })
     })
    
 

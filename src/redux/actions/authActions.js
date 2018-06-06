@@ -23,7 +23,28 @@ export const signin = ({ username, password }) => {
                              dispatch({ type: 'AUTH_ERROR', payload: "Login failed wrong username or password." })
                             })
                 }
-        }   
+        }
+export const updateToken=()=>{
+        return (dispatch)=>{
+            return axios({
+                method:"get",
+                url:`${BASE_URL}/updateToken`,
+                headers:{authorization:localStorage.getItem('token')}
+            }).then(response=>{
+                localStorage.setItem('token', response.data.token)
+                const token = localStorage.getItem('token')
+                    dispatch({
+                        type:'AUTH_USER',
+                        payload:jwtDecode(token)
+                    })
+                    console.log(jwtDecode(token))
+            }).catch(()=>{
+                dispatch({
+                    type:'AUTH_ERROR', payload:'Authorization Failed'
+                })
+            })
+        }
+}
         export const signout = () => {
             return (dispatch) => {
                 localStorage.removeItem('token')

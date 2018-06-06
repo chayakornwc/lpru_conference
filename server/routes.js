@@ -1,7 +1,9 @@
-const passport = require('passport'); // มันสำคัญที่สุดนะ เลยต้องอยู่ข้างบน
+const passport = require('passport'); // มันสำคัญที่สุดนะ เลยต้องอยู่ข้างบน/
 const passportService = require('./service/passport');
 const requireSignin = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
+
+
 
 const registers = require('./controllers/registers');
 const users = require('./controllers/Users');
@@ -15,7 +17,7 @@ const attendee = require('./controllers/Attender');
 module.exports = function(app) {
 
     app.get('/', function(req, res){
-        //res.send({message: 'lpru conference api'})
+        res.send({message: 'lpru conference api'})
         req.getConnection((err, connection)=>{
             connection.query('USE mysql', function(err) {
                 //if (err) throw err;
@@ -25,6 +27,7 @@ module.exports = function(app) {
         })
     })
      app.post('/signin',requireSignin, users.signin)
+     app.get('/updateToken',requireAuth, users.signin);
      app.get('/users',requireAuth,  users.findAll)
 
 
