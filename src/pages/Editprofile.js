@@ -10,10 +10,10 @@ import { updateToken } from '../redux/actions/authActions';
 const alertify = require('alertify.js');
 
  class Editprofile extends Component {
+
     handleInitailize(){
       const  {auth} = this.props
       let fullname = auth.fullname ? auth.fullname.split(/[ ,]/) : '';
-      
         let initData = {
             "id":auth.sub,
             "prefix":fullname[0],
@@ -36,6 +36,7 @@ const alertify = require('alertify.js');
         this.handleInitailize();
      }
      handleSubmit=(values)=>{
+
        return( 
             this.props.dispatch(saveUser(values)).then(()=>{
                 if(!this.props.userSave.isRejected){
@@ -152,7 +153,7 @@ const alertify = require('alertify.js');
                         <label class="label">ชื่อ นามสกุล</label>
                     </div>
                     <div class="field-body">
-                      <Field component={renderField} type="text" name="first_name"  label="ชื่อ" />
+                     <Field component={renderField} type="text" name="first_name"  label="ชื่อ" />
                      <Field component={renderField} type="text" name="last_name"  label="นามสกุล" />
                     </div>
                     </div>

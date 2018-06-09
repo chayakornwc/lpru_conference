@@ -133,20 +133,23 @@ exports.update = (req, res,next)=>{
     exports.findExambycourse =(req,res,next)=>{
         var id = parseInt(req.params.id);
         req.getConnection((err, connection)=>{
-            connection.query("SELECT ce.*,  c.course_name FROM course_exam ce LEFT OUTER JOIN course c on c.course_id = ce.course_id WHERE ce.course_id = ? GROUP BY ce.exam_id ORDER BY ce.exam_id ASC",[id], function(err, results){
-                if(err) throw err;
-              var data = {
-                  members:results,
-                 course_name:results[0].course_name,
-                 course_id:results[0].course_id
-              }
-              
-              res.send(data);
-            })
-           
-           
+            if(err) throw err;
+            
+            connection.query("SELECT ce.*, c.course_name FROM course_exam ce LEFT OUTER JOIN course c on c.course_id = ce.course_id WHERE ce.course_id = ? GROUP BY ce.exam_id ORDER BY ce.exam_id ASC",[id], function(err, results){
+                var data = {
+                    members:results,
+                   course_name:results[0].course_name,
+                   course_id:results[0].course_id
+                }
+                connection.query("SELECT count(exam_id) as count from course_exam WHERE course_id = ?",[id], function(err, results){
+                    if(err) throw err;
+                    data.CountOfexam = results[0].count;
+                    res.send(data);
+                })
+            })        
         })
     }
+    
 exports.findNullexam = (req,res,next)=>{
         req.getConnection((err, connection)=>{
             if(err) return next(err);

@@ -20,13 +20,19 @@ moment.locale('th');
       redirectToTarget = (id) => {
         this.context.router.push(`/events/${id}`)
       }
+      renderExamination = (status, id)=>{
+            switch(status){
+                case 4:return <a className="button is-mystyle" href={`/examination/${id}`} >เข้าสอบ</a>
+                default : return <button className="button is-danger" disabled="disabled">ปิดสอบ</button>
+                break;
+            }
+        }  
      componentDidMount(){
-         
       return this.props.auth && this.props.dispatch(loadOrder(this.props.auth.sub)).then(()=>{
       })
      }
+        
      
-
         
   render() {
       const {auth,orders} = this.props
@@ -98,7 +104,7 @@ moment.locale('th');
                                         <td>{e.course_name}</td>
                                         <td>{moment(e.per_start).add(543, 'years').format('ll')} - {moment(e.per_end).add(543, 'years').format('ll')}</td>
                                         <td>{e.lecture ? e.lecture : 'ไม่ระบุ'}</td>
-                                        <td></td>
+                                        <td>{this.renderExamination(e.per_status, e.per_id)}</td>
                                   </tr>
                                 )
                             })}

@@ -12,7 +12,7 @@ import Profile from '../pages/Profile';
 import RequireAuth from '../pages/Auth/Authentication';
 import RequireAuthAdmin from '../pages/Auth/AuthenticationAdmin';
 import Editprofile from '../pages/Editprofile';
-
+import Examination from '../pages/Examination';
   
 const routes = [{
 path: '/',
@@ -24,6 +24,7 @@ childRoutes:[
     ]},
     {path:'/events/:id', component:EventDetail},
     {path:'Register', component:Register},
+    {path:'/examination/:id', component:Examination},
     {path:'signin',component:Login},
     {path:'upcomingevents',component:Course},
     {path:'pastevents',component:Pastevents},

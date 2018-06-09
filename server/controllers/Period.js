@@ -1,6 +1,6 @@
 const config = require('../config')
 const timestamp = new Date().toLocaleString();
-const moment = require('moment');
+var moment = require('moment');
 moment.locale('th');
 
 exports.findAll = (req, res, next) => {
@@ -63,7 +63,7 @@ exports.findById = (req,res,next) => {
 }
 exports.findUpcoming = (req,res,next)=>{
         req.getConnection((err, connection)=>{
-            if(err) return next(err);
+            if(err) throw (err);
             var sql ="SELECT period.*, course.*, operation_room.room_name, count(course_order.order_id) as period_quantity  FROM period LEFT JOIN course ON period.course_id = course.course_id"
             +" LEFT JOIN  course_order ON  course_order.per_id = period.per_id"
             +" LEFT JOIN operation_room ON period.room_id = operation_room.room_id"
@@ -73,15 +73,16 @@ exports.findUpcoming = (req,res,next)=>{
 }
 exports.update = (req,res,next) => {
    
-    var _perstart = moment(req.body.per_start, ['DD MMMM YYYY', 'ISO_8601', 'th']).add(-543, 'years').format('YYYY-MM-DD');
-    var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY', 'ISO_8601', 'th']).add(-543, 'years').format('YYYY-MM-DD');
-    var TimeStart = moment(req.body.per_time_end).isValid() ? moment(req.body.per_time_start).format('LT') : req.body.per_time_start
-    var TimeEnd = moment(req.body.per_time_end).isValid() ? moment(req.body.per_time_end).format('LT') : req.body.per_time_end
+    var _perstart = moment(req.body.per_start, ['DD MMMM YYYY', 'YYYY-MM-DD']).add(-543, 'years').format();
+    var _perEnd = moment(req.body.per_end, ['DD MMMM YYYY', 'YYYY-MM-DD']).add(-543, 'years').format();
+    var TimeStart = moment(req.body.per_time_end).isValid() ? moment(req.body.per_time_start,'HH:mm').format('LT') : req.body.per_time_start
+    var TimeEnd = moment(req.body.per_time_end).isValid() ? moment(req.body.per_time_end,'HH:mm').format('LT') : req.body.per_time_end
     var data ={
         per_start:_perstart,
         per_end:_perEnd,
         per_time_start:TimeStart,
         per_time_end:TimeEnd,
+        per_status:req.body.per_status,
         per_price:req.body.per_price,
         per_quota:req.body.per_quota,
         course_id:req.body.course_id,
@@ -93,8 +94,8 @@ exports.update = (req,res,next) => {
         var id = parseInt(req.params.id);
         if(err) return next(err);
         connection.query("UPDATE  period SET ? where per_id =?",[data, id],  function(err, results){
-            if(err) return next(err);
-            if(results[0]){
+            if(err) throw (err);
+            if(results){
                 res.send(results);
             }else{
                 res.send({status:201, message:'เกิดข้อผิดพลาดกรุณาลองใหม่อีกครั้ง'})
