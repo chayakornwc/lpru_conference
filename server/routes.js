@@ -67,6 +67,7 @@ module.exports = function(app) {
     app.get('/examination/:id', requireAuth, Examination.findExambycourse);
     app.post('/registerexamination/update/:id', requireAuth, Examination.update);
     app.get('/examination/:course_id', requireAuth, Examination.findExambycourse)
+    app.post('/examination/save', requireAuth, Examination.userExaminationCreate )
 
     app.get('/operation_room/', requireAuth, operationRoom.findAll);
     app.get('/operation_room/:id',requireAuth, operationRoom.findById);

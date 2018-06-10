@@ -31,10 +31,17 @@ export const saveExamination = (values) =>{
                 authorization:localStorage.getItem('token')
             }
         }).then(results =>{
-            dispatch({
-                type:'SAVE_EXAMINATION_SUCCESS',
-                payload:results.data,
-            })
+            if(results.status){
+                dispatch({
+                    type:'SAVE_EXAMINATION_REJECTED',
+                    payload:results.data.message,
+                })
+            }else{
+                dispatch({
+                    type:'SAVE_EXAMINATION_SUCCESS',
+                    payload:results.message,
+                })
+            }
         }).catch(err=>{
             dispatch({
                 type:'SAVE_EXAMINATION_REJECTED',
@@ -43,7 +50,28 @@ export const saveExamination = (values) =>{
         })
     }
 }
-
+export const examinationChecker = (data) =>{
+    return (dispatch)=>{ 
+        dispatch({
+            type:'LOAD_EXAMINATIONCHECKER_PENDING'
+        })
+        return axios({
+            method:'get',
+            url:`${BASE_URL}/examination/checker/${data.per_id}/${data.sub}`,
+            headers:{authorization:localStorage.getItem('token')}
+        }).then(results =>{
+            dispatch({
+                type:'LOAD_EXAMINATIONCHECKER_SUCCESS',
+                payload:results.data
+            })
+        }).catch(err=>{
+            dispatch({
+                type:'LOAD_EXAMINATIONCHECKER_REJECTED',
+                payload:err.message
+            })
+        })
+    }
+}
    
     
 // only one action dispatch courseReducers

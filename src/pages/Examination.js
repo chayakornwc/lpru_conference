@@ -5,7 +5,8 @@ import {getPeriod} from '../redux/actions/periodActions';
 import {getExamination, saveExamination} from '../redux/actions/examinationActions';
 import WizardFormFirstPage from '../components/Examination/WizardFormFirstPage';
 import WizardFormSecondPage from '../components/Examination/WizardFormSecondsPage';
-
+import WizardFormThirdPage  from '../components/Examination/WizardFormThirdPage';
+const alertify = require('alertify.js');
 
 
 class Examination extends Component {
@@ -37,6 +38,12 @@ class Examination extends Component {
   }
   handleSubmit = (values)=>{
     this.props.dispatch(saveExamination(values)).then(()=>{
+      if(!this.props.examinationsSave.isRejected){
+          this.nextPage();
+      }else{
+        this.nextPage();
+        alertify.alert(this.props.examinationsSave.data);
+      }
     })
   }
   render() {
@@ -60,6 +67,7 @@ class Examination extends Component {
             <div className="card-content">
             {page === 1 && <WizardFormFirstPage data={period.data} countExam={examinations&& examinations.data &&  examinations.data.CountOfexam} onSubmit={this.nextPage}/>}
             {page === 2 && <WizardFormSecondPage examinations={examinations&& examinations.data && examinations.data.members} information={information && information.data && information.data.sub && information.data.per_id && information.data.course_id && information.data} previousPage={this.previousPage} onSubmit={this.handleSubmit}/>}
+            {page === 3 && <WizardFormThirdPage />}
             </div>
         </div>
         </div>
@@ -76,7 +84,8 @@ function mapStateToProps(state){
      auth:state.authReducers.data,
      userSave:state.userReducers.userSave,
      period:state.periodReducers.period,
-     examinations:state.examinationReducers.examinations
+     examinations:state.examinationReducers.examinations,
+     examinationsSave:state.examinationReducers.examinationsSave
   }
 }
 Examination = connect(mapStateToProps)(Examination);

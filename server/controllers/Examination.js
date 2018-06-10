@@ -134,6 +134,7 @@ exports.update = (req, res,next)=>{
         var id = parseInt(req.params.id);
         req.getConnection((err, connection)=>{
             if(err) throw err;
+            if(err) return next(err);
             
             connection.query("SELECT ce.*, c.course_name FROM course_exam ce LEFT OUTER JOIN course c on c.course_id = ce.course_id WHERE ce.course_id = ? GROUP BY ce.exam_id ORDER BY ce.exam_id ASC",[id], function(err, results){
                 var data = {
@@ -148,6 +149,37 @@ exports.update = (req, res,next)=>{
                 })
             })        
         })
+    }
+
+    exports.userExaminationCreate = (req,res,next)=>{
+        let arr = [];
+        let data = [];
+        var i = 0 ;
+        for(var key  in req.body.values){
+            data[i] = {
+                exam_id:key.split('exam').join(''), answer:req.body.values[key], per_id:req.body.information.per_id, course_id:req.body.information.course_id, registration_id:req.body.information.sub
+            }
+            i++;
+        }
+        data.forEach(function(e,i){
+           arr[i] = Object.values(e);
+           })
+        req.getConnection((err, connection)=>{
+            if(err) return next(err);
+            connection.query("SELECT * FROM afterExamination WHERE exam_id = ? AND per_id = ? AND registration_id=? ",[data[0].exam_id,data[0].per_id, data[0].registration_id], function(err, results){
+               if(err) console.log(err);
+               if(results.length > 0){
+                res.send({ status: 201, message: 'พบการสอบ ของพีเรียดและผู้ใช้ หากท่านยังไม่ได้สอบในหลักสูตรนี้ กรุณาติดต่อผู้ดูแล'})
+               }else{
+                   connection.query("INSERT INTO afterExamination (exam_id, answer, per_id, course_id, registration_id) values ?", [arr], function(err, results){
+                        if(err) return next(err);
+                        res.send({message:'ส่งข้อสอบเรียบร้อยแล้ว'})
+                   })
+               }
+            
+            })
+        })
+    
     }
     
 exports.findNullexam = (req,res,next)=>{
