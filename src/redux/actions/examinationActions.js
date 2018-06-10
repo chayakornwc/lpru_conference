@@ -2,6 +2,7 @@ import axios from 'axios';
 //lib
 
 import config from '../../configure';
+import { values } from 'redux-form';
 //config
 const BASE_URL = config.BASE_URL
 
@@ -14,6 +15,31 @@ export const getExamination = (id) => { //  get by course_id
             dispatch({type:'LOAD_EXAMINATION_SUCCESS', payload:results.data})
         }).catch(err =>{
             dispatch({type:'LOAD_EXAMINATION_REJECTED',payload:err.message})
+        })
+    }
+}
+export const saveExamination = (values) =>{
+    return(dispatch)=>{
+        dispatch({
+            type:'SAVE_EXAMINATION_PENDING'
+        })
+        return axios({
+            method:'post',
+            data:values,
+            url:`${BASE_URL}/examination/save`,
+            headers:{
+                authorization:localStorage.getItem('token')
+            }
+        }).then(results =>{
+            dispatch({
+                type:'SAVE_EXAMINATION_SUCCESS',
+                payload:results.data,
+            })
+        }).catch(err=>{
+            dispatch({
+                type:'SAVE_EXAMINATION_REJECTED',
+                payload:err.message
+            })
         })
     }
 }

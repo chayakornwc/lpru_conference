@@ -8,11 +8,12 @@ const renderRadio = ({ input, label,  type, textarea, autoFocus, meta: { touched
 
     return (
         
-        <div class="field is-narrow">
-            <div class="control">
-                <label class="radio">
+        <div className="field is-narrow">
+            <div className="control">
+                <label className="radio">
                 <input {...input} type={type}  checked={input.checked} />
-                {' '}{label}
+                {input.value==='1' && ' ก.'}{input.value==='2' && ' ข.'}{input.value==='3' && ' ค.'}{input.value==='4' && ' ง.'}
+                <div style={{display:'inline-block'}}>{label}</div>
                 </label>
               
             </div>
