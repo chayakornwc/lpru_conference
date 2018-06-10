@@ -133,7 +133,6 @@ exports.update = (req, res,next)=>{
     exports.findExambycourse =(req,res,next)=>{
         var id = parseInt(req.params.id);
         req.getConnection((err, connection)=>{
-            if(err) throw err;
             if(err) return next(err);
             
             connection.query("SELECT ce.*, c.course_name FROM course_exam ce LEFT OUTER JOIN course c on c.course_id = ce.course_id WHERE ce.course_id = ? GROUP BY ce.exam_id ORDER BY ce.exam_id ASC",[id], function(err, results){
