@@ -13,7 +13,7 @@ const courseOrder = require('./controllers/CourseOrders');
 const Examination = require('./controllers/Examination');
 const operationRoom = require('./controllers/OperationRoom');
 const attendee = require('./controllers/Attender');
-
+const survey = require('./controllers/Survey');
 module.exports = function(app) {
 
     app.get('/', function(req, res){
@@ -68,6 +68,7 @@ module.exports = function(app) {
     app.post('/registerexamination/update/:id', requireAuth, Examination.update);
     app.get('/examination/:course_id', requireAuth, Examination.findExambycourse)
     app.post('/examination/save', requireAuth, Examination.userExaminationCreate )
+    app.get('/examination/check/:per_id/:sub', requireAuth , Examination.userChecker);
 
     app.get('/operation_room/', requireAuth, operationRoom.findAll);
     app.get('/operation_room/:id',requireAuth, operationRoom.findById);
@@ -78,8 +79,9 @@ module.exports = function(app) {
     app.get('/attendee/:id', attendee.findById);
     app.post('/attendee/:id', requireAuth, attendee.create);
     app.delete('/attendee/:id', requireAuth, attendee.delete);
-
+    
     app.get('/publicusers/', users.findByTerm);
     app.get('/publicuser/:id', requireAuth, users.findPublicId);
     
+    app.post('/survey', requireAuth, survey.create );
 }

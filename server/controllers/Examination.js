@@ -165,7 +165,7 @@ exports.update = (req, res,next)=>{
            })
         req.getConnection((err, connection)=>{
             if(err) return next(err);
-            connection.query("SELECT * FROM afterExamination WHERE exam_id = ? AND per_id = ? AND registration_id=? ",[data[0].exam_id,data[0].per_id, data[0].registration_id], function(err, results){
+            connection.query("SELECT * FROM afterExamination WHERE exam_id = ? AND per_id = ? AND registration_id=?",[data[0].exam_id,data[0].per_id, data[0].registration_id], function(err, results){
                if(err) console.log(err);
                if(results.length > 0){
                 res.send({ status: 201, message: 'พบการสอบ ของพีเรียดและผู้ใช้ หากท่านยังไม่ได้สอบในหลักสูตรนี้ กรุณาติดต่อผู้ดูแล'})
@@ -179,6 +179,39 @@ exports.update = (req, res,next)=>{
             })
         })
     
+    }
+    exports.userChecker = (req, res, next)=>{
+        var per_id = req.params.per_id ;
+        var registration_id = req.params.sub
+        var totalSum = 0;
+        var count = 0;
+        req.getConnection((err, connection)=>{
+            if(err) return next(err);
+            
+            connection.query("SELECT CE.course_id, CE.answer_real, AE.answer, (CASE WHEN CE.answer_real = AE.answer THEN 1 ELSE 0 END)as score FROM course_exam CE LEFT JOIN afterExamination AE ON AE.course_id = CE.course_id WHERE AE.per_id = ? AND AE.registration_id = ?  GROUP BY AE.exam_id ",[per_id, registration_id],function(err, results){
+                if(err) console.log(err)
+                if(results.length <= 0){
+                    res.send({certification:false, message:'คุณยังไม่สอบหลักสูตรนี้',  state:'none'})
+                }else{
+                    results.forEach(function(e,i){
+                        return totalSum += e.score
+                     });
+                     connection.query("SELECT count(exam_id) as count FROM course_exam WHERE course_id",[results[0].course_id], function(err,results){
+                         if(err) console.log(err)
+                         count =results[0].count;
+                         if(totalSum >= (count * 0.8)){
+                             res.send({certification:true, message:'คุณสอบผ่านการอบรมหลักสูตรนี้', state:'done'});
+                         }else{
+                             res.send({certification:false, message:'เสียใจด้วยคุณสอบตก', score:totalSum, minScore:count * 0.8, state:'done'});
+                         }
+                     })
+                    
+                }
+                
+               
+                
+            })
+        })
     }
     
 exports.findNullexam = (req,res,next)=>{

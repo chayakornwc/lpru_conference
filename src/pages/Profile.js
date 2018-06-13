@@ -6,7 +6,12 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom'
 import 'moment/locale/th';
 import Loader from '../components/Utils/loader';
-
+import {examinationChecker} from '../redux/actions/examinationActions';
+import axios from 'axios';
+import config from '../configure';
+import { values } from 'redux-form';
+//config
+const BASE_URL = config.BASE_URL
 const moment = require('moment');
 
 moment.locale('th');
@@ -27,6 +32,19 @@ moment.locale('th');
                 break;
             }
         }  
+        certificateCheck = (per_id)=>{
+         const  data = {
+                    per_id:per_id,
+                    sub:this.props.auth.sub
+                  }
+        return    axios({  method:'get',
+            url:`${BASE_URL}/examination/check/${data.per_id}/${data.sub}`,
+            headers:{authorization:localStorage.getItem('token')}}).then(resutls =>{
+                console.log(resutls)
+            })
+          
+        }
+
      componentDidMount(){
       return this.props.auth && this.props.dispatch(loadOrder(this.props.auth.sub)).then(()=>{
       })

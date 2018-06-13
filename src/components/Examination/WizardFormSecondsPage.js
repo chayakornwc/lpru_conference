@@ -7,6 +7,7 @@ import renderRadio from './renderRadio';
 
 
 const WizardFormSecondsPage = (props)=> {
+  
   const onSubmit = (values)=>{
     const data = {
       values:values,
@@ -14,7 +15,8 @@ const WizardFormSecondsPage = (props)=> {
     }
     props.onSubmit(data);
   }
-    const {examinations,previousPage, handleSubmit, information, initialize} = props
+  
+    const {examinations,previousPage, handleSubmit, information} = props
   
     return (
       <div>
@@ -44,6 +46,7 @@ const WizardFormSecondsPage = (props)=> {
                 <Field name={`exam${e.exam_id}`}  label={ReactHtmlParser(unescape(e.answer4))} value="4" type="radio" component={renderRadio}/>
                 </div>
               </div>
+            
             </div>
           )
         })}

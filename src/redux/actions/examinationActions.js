@@ -57,7 +57,7 @@ export const examinationChecker = (data) =>{
         })
         return axios({
             method:'get',
-            url:`${BASE_URL}/examination/checker/${data.per_id}/${data.sub}`,
+            url:`${BASE_URL}/examination/check/${data.per_id}/${data.sub}`,
             headers:{authorization:localStorage.getItem('token')}
         }).then(results =>{
             dispatch({

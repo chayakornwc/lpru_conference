@@ -21,11 +21,11 @@ export default (state = initialState, action) =>{
         return{...state, examinationsSave:{data:action.payload, isLoading:false, isRejected:true}}
 
         case'LOAD_EXAMINATIONCHECKER_PENDING':
-        return {...state, examinationsChecker:{data:null, isLoading:true, isRejected:false}}
+        return {...state, examUserCheck:{data:null, isLoading:true, isRejected:false}}
         case'LOAD_EXAMINATIONCHECKER_SUCCESS':
-        return {...state, examinationsChecker:{data:action.payload, isLoading:false, isLoading:false}}
+        return {...state, examUserCheck:{data:action.payload, isLoading:false, isLoading:false}}
         case'LOAD_EXAMINATIONCHECKER_REJECTED':
-        return {...state, examinationsChecker:{data:action.payload, isLoading:false, isLoading:true}}
+        return {...state, examUserCheck:{data:action.payload, isLoading:false, isLoading:true}}
         default: 
         return state
     }
