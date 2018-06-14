@@ -41,7 +41,20 @@ exports.findByuserId = (req, res,next)=>{
         +" LEFT OUTER JOIN  course c ON c.course_id = p.course_id WHERE co.registration_id = ?" 
         connection.query(sql, [id], (err,results)=>{
             if(err) throw err;
-            res.send(results);
+            var dataResponse = results;
+            results.forEach(e => i => {
+                connection.query("SELECT * FROM afterExamination WHERE  per_id = ? AND registration_id=?",[e.per_id, id],function(err, results){
+                    if(err) throw(err);
+                    if(results.length > 0){
+                            dataResponse[i].examState = true
+                    }else{
+                        dataResponse[i].examState = false
+                    }
+                    return dataResponse;
+                })
+            });
+            res.send(dataResponse);
+
         })
     })
 }

@@ -37,10 +37,9 @@ moment.locale('th');
                     per_id:per_id,
                     sub:this.props.auth.sub
                   }
-        return    axios({  method:'get',
+        return  axios({  method:'get',
             url:`${BASE_URL}/examination/check/${data.per_id}/${data.sub}`,
             headers:{authorization:localStorage.getItem('token')}}).then(resutls =>{
-                console.log(resutls)
             })
           
         }

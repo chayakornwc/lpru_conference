@@ -7,10 +7,11 @@
 
     const sha256 = require('sha256');
     const localOptions = { passReqToCallback: true }
+    
 const localLogin = new LocalStrategy(localOptions, function (req, username, password, done) {
     req.getConnection((err, connection) => {
         if(err) console.log('connection mysql error');
-            //if (err) return next(err) ถ้าเอาขึ้นของจริงแล้วมาเปิดด้วยนะจ้ะ
+            if (err) throw (err) 
             connection.query("SELECT * FROM registration WHERE username=?", [username], (err, row) => {
                 if (err) return done(err)
                 if (!row.length) return done(null, false)
@@ -22,9 +23,8 @@ const localLogin = new LocalStrategy(localOptions, function (req, username, pass
                 })
             })
     })
-   
 
-const jwtOptions = {
+    const jwtOptions = {
         jwtFromRequest: ExtractJwt.fromHeader('authorization'),
         secretOrKey: config.secret,
         passReqToCallback: true
