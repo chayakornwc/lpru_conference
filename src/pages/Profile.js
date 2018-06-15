@@ -25,10 +25,22 @@ moment.locale('th');
       redirectToTarget = (id) => {
         this.context.router.push(`/events/${id}`)
       }
-      renderExamination = (status, id)=>{
-            switch(status){
-                case 4:return <a className="button is-mystyle" href={`/examination/${id}`} >เข้าสอบ</a>
-                default : return <button className="button is-danger" disabled="disabled">ปิดสอบ</button>
+      renderExamination = (status, certification, id)=>{
+            switch(certification){
+                // case 4:return <a className="button is-mystyle" href={`/examination/${id}`} >เข้าสอบ</a>
+                case 'passed':return <div><i className="fa fa-certificate" style={{color:'green'}}></i>{' '}<span>ผ่านการสอบ</span></div>
+                break;
+                case 'failed':return <div><i className="fa fa-window-close" style={{color:'red'}}></i>{' '}<span>คุณสอบตก</span></div>
+                break;
+                case 'none':
+                 switch (status){
+                     case 4 :
+                     return  <a className="button is-mystyle" href={`/examination/${id}`} >เข้าสอบ</a>
+                     break;
+                     default :
+                     return <button disabled="1" className="button is-danger is-outlined">ปิดสอบ</button>
+                     
+                 }
                 break;
             }
         }  
@@ -121,7 +133,7 @@ moment.locale('th');
                                         <td>{e.course_name}</td>
                                         <td>{moment(e.per_start).add(543, 'years').format('ll')} - {moment(e.per_end).add(543, 'years').format('ll')}</td>
                                         <td>{e.lecture ? e.lecture : 'ไม่ระบุ'}</td>
-                                        <td>{this.renderExamination(e.per_status, e.per_id)}</td>
+                                        <td>{this.renderExamination(e.per_status, e.certification, e.per_id)}</td>
                                   </tr>
                                 )
                             })}

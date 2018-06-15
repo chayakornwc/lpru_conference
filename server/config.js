@@ -5,6 +5,7 @@ module.exports = {
         user: 'root',
         password: 'password',
         port: 3306,
-        database: 'lpru_conference'
+        database: 'lpru_conference',
+        multipleStatements: true
     }
 }

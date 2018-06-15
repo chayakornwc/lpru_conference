@@ -38,23 +38,31 @@ exports.findByuserId = (req, res,next)=>{
         var id = parseInt(req.params.id);
         var sql = "SELECT co.*, p.*, c.course_name, c.course_nameEng FROM course_order co" 
         +" INNER JOIN period p ON p.per_id = co.per_id" 
-        +" LEFT OUTER JOIN  course c ON c.course_id = p.course_id WHERE co.registration_id = ?" 
+        +" LEFT OUTER JOIN  course c ON c.course_id = p.course_id WHERE co.registration_id = ? ORDER BY p.per_id DESC" 
         connection.query(sql, [id], (err,results)=>{
-            if(err) throw err;
-            var dataResponse = results;
-            results.forEach(e => i => {
-                connection.query("SELECT * FROM afterExamination WHERE  per_id = ? AND registration_id=?",[e.per_id, id],function(err, results){
+            if(err) throw err; 
+               connection.query("SELECT sum(score) as totalScore, count(exam_id) as maximumScore, per_id FROM (SELECT CE.exam_id as exam_id, CE.course_id, CE.answer_real, AE.answer, AE.per_id as per_id, (CASE WHEN CE.answer_real = AE.answer THEN 1 ELSE 0 END)as score FROM course_exam CE LEFT JOIN afterExamination AE ON AE.course_id = CE.course_id WHERE AE.registration_id = ? GROUP BY AE.exam_id, per_id ) as dekg GROUP BY per_id ORDER BY per_id DESC",[id],function(err, results1){
+                 
                     if(err) throw(err);
-                    if(results.length > 0){
-                            dataResponse[i].examState = true
-                    }else{
-                        dataResponse[i].examState = false
+                    var response = results; 
+                    for(i=0; i<response.length; i++){
+                        response[i].certification = 'none'
+                        for(_i=0; _i<results1.length; _i++){
+                                
+                               if(response[i].per_id == results1[_i].per_id && results1[_i].totalScore >=(results1[_i].maximumScore * 0.8)){
+                                response[i].certification = 'passed'
+                               }else if(response[i].per_id == results1[_i].per_id ){
+                                response[i].certification = 'failed'
+                               }
+                               
+                        }
                     }
-                    return dataResponse;
+                    res.send(response);      
                 })
-            });
-            res.send(dataResponse);
-
+               
+            
+           
+            
         })
     })
 }
