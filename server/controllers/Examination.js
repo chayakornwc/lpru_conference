@@ -164,15 +164,35 @@ exports.update = (req, res,next)=>{
            arr[i] = Object.values(e);
            })
         req.getConnection((err, connection)=>{
-            if(err) return next(err);
+            if(err) throw (err);
             connection.query("SELECT * FROM afterExamination WHERE exam_id = ? AND per_id = ? AND registration_id=?",[data[0].exam_id,data[0].per_id, data[0].registration_id], function(err, results){
                if(err) console.log(err);
                if(results.length > 0){
                 res.send({ status: 201, message: 'พบการสอบ ของพีเรียดและผู้ใช้ หากท่านยังไม่ได้สอบในหลักสูตรนี้ กรุณาติดต่อผู้ดูแล'})
                }else{
                    connection.query("INSERT INTO afterExamination (exam_id, answer, per_id, course_id, registration_id) values ?", [arr], function(err, results){
-                        if(err) return next(err);
-                        res.send({message:'ส่งข้อสอบเรียบร้อยแล้ว'})
+                    if(err) throw (err);
+                    console.log(arr)
+                        
+                   })
+                  
+                   var per_id = parseInt(data[0].per_id);
+                   var reg_id = parseInt(data[0].registration_id);
+                 
+                   connection.query("SELECT sum(score) as totalScore, count(exam_id) as maximumScore, per_id FROM (SELECT CE.exam_id as exam_id, CE.course_id, CE.answer_real, AE.answer, AE.per_id as per_id, (CASE WHEN CE.answer_real = AE.answer THEN 1 ELSE 0 END)as score FROM course_exam CE LEFT JOIN afterExamination AE ON AE.course_id = CE.course_id WHERE AE.registration_id = ? AND per_id = ? GROUP BY AE.exam_id, per_id ) as dekg GROUP BY per_id ", [reg_id, per_id],function(err, results1){
+                       if(err) throw err;
+                       var isGenerator = false
+                       if(results1[0].totalScore >= (results1[0].maximumScore * 0.8)){
+                           isGenerator = true
+                       }
+                       var certificationData = [parseInt(makeid()), reg_id, per_id];
+                       console.log(certificationData)
+                       if(isGenerator){
+                           connection.query("INSERT INTO certification (iat, registration_id, per_id) values(?, ?, ?)",[makeid(), reg_id, per_id], function(err, results2){
+                               if(err) console.log(err)
+                           })
+                       }
+                       res.send({message:'ส่งข้อสอบเรียบร้อยแล้ว'})
                    })
                }
             
@@ -223,3 +243,11 @@ exports.findNullexam = (req,res,next)=>{
             })
         })
 }
+function makeid() {
+    var text = "";
+    d = new Date(); 
+    text += d.getDate().toString()+d.getMonth().toString()+d.getYear().toString();
+    return text;
+  }
+
+  

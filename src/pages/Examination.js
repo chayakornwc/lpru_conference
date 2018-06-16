@@ -79,7 +79,7 @@ class Examination extends Component {
     })
   }
   render() {
-    const {period,examinations, auth,examUserCheck} = this.props
+    const {period,examinations, auth, examUserCheck} = this.props
     const { page } = this.state
     const information = {
       data:{
