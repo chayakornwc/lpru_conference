@@ -177,7 +177,7 @@ exports.update = (req, res, next) =>{
         if(body.password){
             data.password = sha256(body.password);
         }
-        console.log(data)
+        
     req.getConnection(function(err, connection){
         connection.query("SELECT * FROM registration WHERE username=?",[data.username], function(err, results){
             if (err) return next(err)

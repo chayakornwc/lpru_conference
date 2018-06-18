@@ -43,7 +43,7 @@ const statusTags = (data) =>{
      }
   
   render() {
-      const {data, buttonAttends,auth} = this.props;
+      const {data, buttonAttends, auth} = this.props;
    
     
     return (
@@ -79,7 +79,6 @@ const statusTags = (data) =>{
                                         </div>
                                         <div className="colum is-half">
                                             <span><i className="fa fa-clock" />{' '}{moment(e.per_time_start, ['HH:mm:ss', 'HH:mm:ss']).format('HH:mm')}{' '}<i className="fas fa-long-arrow-alt-right"></i>{' '}{moment(e.per_time_end, ['HH:mm:ss', 'HH:mm']).format('HH:mm')}</span>
-                                        
                                         </div>
                                 </div>
                                 </div>

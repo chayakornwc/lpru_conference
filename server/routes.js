@@ -14,6 +14,7 @@ const Examination = require('./controllers/Examination');
 const operationRoom = require('./controllers/OperationRoom');
 const attendee = require('./controllers/Attender');
 const survey = require('./controllers/Survey');
+const certification = require('./controllers/certification');
 module.exports = function(app) {
 
     app.get('/', function(req, res){
@@ -84,4 +85,6 @@ module.exports = function(app) {
     app.get('/publicuser/:id', requireAuth, users.findPublicId);
     
     app.post('/survey', requireAuth, survey.create );
+
+    app.get('/certification', requireAuth, certification.findAll )
 }

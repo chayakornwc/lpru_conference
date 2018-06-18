@@ -43,7 +43,7 @@ exports.findByuserId = (req, res,next)=>{
             if(err) throw err; 
                connection.query("SELECT sum(score) as totalScore, per_id FROM (SELECT CE.exam_id as exam_id, CE.course_id, CE.answer_real, AE.answer, AE.per_id as per_id, (CASE WHEN CE.answer_real = AE.answer THEN 1 ELSE 0 END)as score FROM course_exam CE LEFT OUTER JOIN afterExamination AE ON AE.course_id = CE.course_id WHERE AE.registration_id = ? GROUP BY AE.exam_id, per_id ) as dekg GROUP BY per_id ORDER BY per_id DESC",[id],function(err, results1){
                 if(err) throw(err);
-                   connection.query("SELECT count(exam_id) as maximumScore, per_id FROM (SELECT CE.exam_id as exam_id, AE.per_id as per_id FROM course_exam CE LEFT OUTER JOIN afterExamination AE ON AE.course_id = CE.course_id WHERE AE.registration_id = 10 GROUP BY CE.exam_id, per_id ) as dekg GROUP BY per_id ORDER BY per_id DESC", function(err,results2){
+                   connection.query("SELECT count(exam_id) as maximumScore, per_id FROM (SELECT CE.exam_id as exam_id, AE.per_id as per_id FROM course_exam CE LEFT OUTER JOIN afterExamination AE ON AE.course_id = CE.course_id WHERE AE.registration_id = ? GROUP BY CE.exam_id, per_id ) as dekg GROUP BY per_id ORDER BY per_id DESC",[id], function(err,results2){
                     if(err) throw(err);
                     for(i=0;  i<results1.length; i++){
                         for(_i=0; _i<results2.length; _i++){

@@ -180,19 +180,22 @@ exports.update = (req, res,next)=>{
                    var reg_id = parseInt(data[0].registration_id);
                  
                    connection.query("SELECT sum(score) as totalScore, count(exam_id) as maximumScore, per_id FROM (SELECT CE.exam_id as exam_id, CE.course_id, CE.answer_real, AE.answer, AE.per_id as per_id, (CASE WHEN CE.answer_real = AE.answer THEN 1 ELSE 0 END)as score FROM course_exam CE LEFT JOIN afterExamination AE ON AE.course_id = CE.course_id WHERE AE.registration_id = ? AND per_id = ? GROUP BY AE.exam_id, per_id ) as dekg GROUP BY per_id ", [reg_id, per_id],function(err, results1){
-                       if(err) throw err;
-                       var isGenerator = false
-                       if(results1[0].totalScore >= (results1[0].maximumScore * 0.8)){
-                           isGenerator = true
-                       }
-                       var certificationData = [parseInt(makeid()), reg_id, per_id];
-                       console.log(certificationData)
-                       if(isGenerator){
-                           connection.query("INSERT INTO certification (iat, registration_id, per_id) values(?, ?, ?)",[makeid(), reg_id, per_id], function(err, results2){
-                               if(err) console.log(err)
-                           })
-                       }
-                       res.send({message:'ส่งข้อสอบเรียบร้อยแล้ว'})
+                        if(err) throw err;
+                        connection.query("SELECT count(exam_id) as maximumScore, per_id FROM (SELECT CE.exam_id as exam_id, AE.per_id as per_id FROM course_exam CE LEFT OUTER JOIN afterExamination AE ON AE.course_id = CE.course_id WHERE AE.registration_id = ? AND per_id = ? GROUP BY CE.exam_id, per_id ) as dekg GROUP BY per_id ORDER BY per_id DESC",[reg_id, per_id], function(err, results2){
+                             if(err) throw err;      
+                        var isGenerator = false
+                        if(results1[0].totalScore >= (results2[0].maximumScore * 0.8)){
+                            isGenerator = true
+                        }
+                        var certificationData = [parseInt(makeid()), reg_id, per_id];
+                        console.log(certificationData)
+                        if(isGenerator){
+                            connection.query("INSERT INTO certification (iat, registration_id, per_id) values(?, ?, ?)",[makeid(), reg_id, per_id], function(err, results3){
+                                if(err) console.log(err)
+                            })
+                        }
+                        res.send({message:'ส่งข้อสอบเรียบร้อยแล้ว'})
+                            })
                    })
                }
             
