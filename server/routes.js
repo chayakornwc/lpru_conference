@@ -15,6 +15,7 @@ const operationRoom = require('./controllers/OperationRoom');
 const attendee = require('./controllers/Attender');
 const survey = require('./controllers/Survey');
 const certification = require('./controllers/certification');
+const mailGun = require('./controllers/mailGun');
 module.exports = function(app) {
 
     app.get('/', function(req, res){
@@ -23,7 +24,7 @@ module.exports = function(app) {
             connection.query('USE mysql', function(err) {
                 //if (err) throw err;
                 console.log(err);
-                res.send('Query Successful');
+                res.send('Query Successful');   
               });
         })
     })
@@ -89,4 +90,6 @@ module.exports = function(app) {
     app.get('/certification', requireAuth, certification.findAll);
     app.get('/certification/forprint', requireAuth, certification.findByOption);
     app.get('/certification/period/:id', requireAuth, certification.findByPeriodsId)
+
+    app.get('/testapi', mailGun.emailDaily);
 }
