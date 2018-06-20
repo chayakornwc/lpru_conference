@@ -35,7 +35,6 @@ class Examination extends Component {
   }
   componentDidMount(){
   return  this.props.dispatch(getPeriod(this.props.params.id)).then(()=>{
-    console.log(this.props.auth)
        {this.props.period.data && this.props.dispatch(getExamination(this.props.period.data.course_id)).then(()=>{
         const forchecker = {
           per_id:this.props.period.data.per_id,

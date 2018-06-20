@@ -4,7 +4,6 @@ const renderSelect = ({  input, data, label, type, textarea, autoFocus, meta: { 
 
 
     return (
-               
                     <div className="field is-narrow">
                         <div className="control">
                             <div className={touched && error ? 'select is-fullwidth is-danger': 'select is-fullwidth'}>

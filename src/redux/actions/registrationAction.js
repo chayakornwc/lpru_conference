@@ -10,8 +10,6 @@ export const loadLocations = (term = '') => {
 return (dispatch) => {
 //ก่อนดึงข้อมูลสั่ง dispatch ให้ reducer รู้ว่าก่อนเพื่อจะแสดง loading
 dispatch({ type: 'POST_PENDING' })
-
-
 return axios.get(`${BASE_URL}/locations?term=${term}`, {
 //ต้องส่ง heder ชื่อ authorization โดยส่ง token เขาไป
 //เพื่อบอกให้ server รู้ว่าเราได้ signin ถูกต้องแล้ว

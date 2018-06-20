@@ -86,5 +86,7 @@ module.exports = function(app) {
     
     app.post('/survey', requireAuth, survey.create );
 
-    app.get('/certification', requireAuth, certification.findAll )
+    app.get('/certification', requireAuth, certification.findAll);
+    app.get('/certification/forprint', requireAuth, certification.findByOption);
+    app.get('/certification/period/:id', requireAuth, certification.findByPeriodsId)
 }
