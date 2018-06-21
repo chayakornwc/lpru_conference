@@ -7,5 +7,9 @@ module.exports = {
         port: 3306,
         database: 'lpru_conference',
         multipleStatements: true
+    },
+    emailOption:{
+        API_KEY:'',
+        DOMAIN:''
     }
 }

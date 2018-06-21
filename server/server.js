@@ -16,8 +16,8 @@ app.use(bodyParser.json({ type: '*/*' }))
 app.use(myConnection(mysql, config.dbOptions, 'pool'))
 routes(app)
 var mailgun = require("mailgun-js");
-var api_key = 'API_KEY';
-var DOMAIN = 'DOMAIN';
+var api_key = config.emailOption.API_KEY;
+var DOMAIN = config.emailOption.DOMAIN;
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN});
 var CronJob = require('cron').CronJob;
 var moment = require('moment');
