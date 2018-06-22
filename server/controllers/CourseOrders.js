@@ -1,6 +1,7 @@
 const config = require('../config');
 const timestamp = new Date().toLocaleString();
-
+const moment = require('moment');
+moment.locale('th');
 exports.findAll = (req, res,next)=>{
     req.getConnection((err, connection)=>{
         if(err) return next(err);
@@ -16,7 +17,30 @@ exports.findAll = (req, res,next)=>{
     })
 
 }
-
+exports.findAllByCompletePeriod = (req, res, next)=>{
+    req.getConnection((err,connection)=>{
+        if(err) throw err;
+        var startDate = req.query.start ? moment(req.query.start, ['DD MMMM YYYY', moment.ISO_8601], 'th').add(-543,'years').format('YYYY-MM-DD') : '';
+        var endDate = req.query.end ? moment(req.query.end,['DD MMMM YYYY',  moment.ISO_8601], 'th').add(-543,'years').format('YYYY-MM-DD') : '';  
+        var wherestr = ``;
+        if(startDate && endDate){
+            wherestr = `AND p.per_end  BETWEEN '${startDate}' AND '${endDate}' `
+        }
+        var sql=`SELECT p.*, r.username, CONCAT(r.prefix,' ',r.first_name,' ',r.last_name)as fullname, r.affiliation, r.major,c.course_name FROM course_order co LEFT OUTER JOIN  period p ON co.per_id = p.per_id
+         LEFT OUTER JOIN course c ON c.course_id = p.course_id
+        LEFT OUTER JOIN  registration r on co.registration_id = r.id
+        WHERE p.per_status = 3 ${wherestr} ORDER BY p.per_id DESC, p.per_end`
+        connection.query(sql,function(err, results){
+            if(err) {
+                res.status(400)
+                res.send(sql)
+                throw err;
+                
+            }
+            res.send(results)
+        })
+    })
+}
 exports.findById = (req, res, next)=>{
     req.getConnection((err, connection)=>{
        var id = parseInt(params.id); 

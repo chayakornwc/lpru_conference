@@ -56,6 +56,7 @@ module.exports = function(app) {
     app.delete('/period/:id', requireAuth, period.delete);
 
     app.get('/courseorder/', courseOrder.findAll);
+    app.get('/orders',requireAuth, courseOrder.findAllByCompletePeriod);
     app.get('/courseorder/:id', courseOrder.findById)
     app.post('/courseorder/', courseOrder.create);
     app.get('/courseorder/user/:id', requireAuth, courseOrder.findByuserId)
@@ -91,5 +92,5 @@ module.exports = function(app) {
     app.get('/certification/forprint', requireAuth, certification.findByOption);
     app.get('/certification/period/:id', requireAuth, certification.findByPeriodsId)
 
-    app.get('/testapi', mailGun.emailDaily);
+   
 }
