@@ -15,7 +15,8 @@ const operationRoom = require('./controllers/OperationRoom');
 const attendee = require('./controllers/Attender');
 const survey = require('./controllers/Survey');
 const certification = require('./controllers/certification');
-const mailGun = require('./controllers/mailGun');
+const analysis = require('./controllers/analysis');
+
 module.exports = function(app) {
 
     app.get('/', function(req, res){
@@ -92,5 +93,5 @@ module.exports = function(app) {
     app.get('/certification/forprint', requireAuth, certification.findByOption);
     app.get('/certification/period/:id', requireAuth, certification.findByPeriodsId)
 
-   
+    app.get('/analysis/attends/:year', requireAuth, analysis.attendYears);
 }

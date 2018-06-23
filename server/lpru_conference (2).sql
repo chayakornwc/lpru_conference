@@ -205,3 +205,185 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+SELECT m.*
+FROM (
+SELECT 1 AS MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 1 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 1 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 1 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 1 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 1 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 1 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 1 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION 
+SELECT 2 AS MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 2 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 2 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 2 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 2 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 2 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 2 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 2 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION 
+SELECT 3 AS MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 3 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 3 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 3 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 3 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 3 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 3 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 3 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION 
+SELECT 4 AS MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 4 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 4 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 4 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 4 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 4 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 4 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 4 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION 
+SELECT 5 AS MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 5 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 5 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 5 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 5 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 5 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 5 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 5 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION SELECT 6 AS
+MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 6 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 6 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 6 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 6 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 6 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 6 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 6 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION SELECT 7 AS
+MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 7 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 7 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 7 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 7 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 7 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 7 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 7 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION SELECT 8 AS
+MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 8 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 8 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 8 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 8 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 8 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 8 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 8 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION SELECT 9 AS
+MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 9 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 9 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 9 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 9 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 9 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 9 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 9 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION SELECT 10 AS
+MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 10 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 10 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 10 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 10 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 10 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 10 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 10 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION SELECT 11 AS
+MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 11 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 11 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 11 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 11 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 11 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 11 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 11 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+UNION SELECT 12 AS
+MONTH, COUNT(itech.order_id) as itech, COUNT(edu.order_id) as edu, COUNT(human.order_id) as human, COUNT(sci.order_id) as sci, COUNT(manage.order_id) as manage, COUNT(arc.order_id) as arc, COUNT(OTHER.order_id) as OTHER FROM 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end  FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 12 AND r.affiliation = 1007) as itech
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 12 AND r.affiliation = 1002) as edu ON itech.month_end = edu.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 12 AND r.affiliation = 1003) as human ON edu.month_end = human.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 12 AND r.affiliation = 1004) as sci ON human.month_end = sci.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 12 AND r.affiliation = 1005) as manage ON sci.month_end = manage.month_end
+LEFT OUTER JOIN
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 12 AND r.affiliation = 1006) as arc ON manage.month_end = arc.month_end
+LEFT OUTER JOIN 
+(SELECT co.order_id, MONTH(p.per_end) AS month_end FROM period p LEFT OUTER JOIN course_order co ON p.per_id = co.per_id LEFT OUTER JOIN registration r ON co.registration_id = r.id  WHERE MONTH(p.per_end) = 12 AND r.affiliation > 1007 AND r.affiliation < 1002) as OTHER ON arc.month_end = OTHER.month_end
+) AS m
