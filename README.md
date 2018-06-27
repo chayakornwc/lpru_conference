@@ -1,5 +1,9 @@
 ## The Application,Technology training, at Comcentre Lampang Rajabhat University.
 
+### react lifecycle diagram 
+![image diagram] (https://cdn-images-1.medium.com/max/1600/0*VoYsN6eq7I_wjVV5.png)
+
+
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
