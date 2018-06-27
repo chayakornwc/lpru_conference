@@ -9,7 +9,7 @@ module.exports = {
         multipleStatements: true
     },
     emailOption:{
-        API_KEY:'',
-        DOMAIN:''
+        API_KEY:'api',
+        DOMAIN:'test'
     }
 }

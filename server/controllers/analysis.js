@@ -4,7 +4,8 @@ const moment = require('moment');
 moment.locale('th');
 
 exports.attendYears = (req,res,next) => {
-    var year = req.params.year ? parseInt(req.params.year) : moment.year();
+    var year = req.params.year ? parseInt(req.params.year - 543) : moment.year();
+    
         var option =``
             if(year){
                 option = `YEAR(p.per_end) = ${year} AND`

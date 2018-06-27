@@ -24,7 +24,6 @@ import Brand from './Brand';
                         <Link to="/statistics" className="navbar-item" key={1}>Statistics</Link>,   
                         <Link to="/pastevents" className="navbar-item" key={2}>Past events</Link>,
                         <Link to="/upcomingevents" className="navbar-item" key={3}>Upcoming events</Link>,
-                        <Link to="/Certificate" className="navbar-item" key={4}>Certification</Link>,
                         <Link to="/Profile" className="navbar-item" key={5}>Profile</Link>,
                         <Link to="/Logout" className="navbar-item" key={6}>Logout</Link>
                        ]

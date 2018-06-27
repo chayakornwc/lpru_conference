@@ -1,5 +1,4 @@
 import App from '../App';
-import Home from '../pages/Home';
 import User from '../pages/User';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
@@ -20,7 +19,6 @@ component: App,
 indexRoute:{component:Profile},
 childRoutes:[
     {path:'user', component:RequireAuth(RequireAuthAdmin(User)),childRoutes:[
-        {path:':id',component:Home}
     ]},
     {path:'/events/:id', component:EventDetail},
     {path:'Register', component:Register},

@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {loadOrder} from '../redux/actions/courseOrderActions';
-import courseorderReducers from '../redux/reducers/courseorderReducers';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom'
 import 'moment/locale/th';
 import Loader from '../components/Utils/loader';
-import {examinationChecker} from '../redux/actions/examinationActions';
 import axios from 'axios';
 import config from '../configure';
-import { values } from 'redux-form';
+
 //config
 const BASE_URL = config.BASE_URL
 const moment = require('moment');
@@ -115,6 +112,7 @@ moment.locale('th');
                 </header>
                 <div className="card-content">
                     <table className="table is-bordered is-striped is-linked">
+                    {orders.isLoading && <Loader/>}
                         <thead>
                             <tr>
                                 <th>ที่</th>
@@ -125,10 +123,10 @@ moment.locale('th');
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.isLoading && <Loader/>}
+                           
                             {orders.data && orders.data.map((e,i)=>{
                                 return(
-                                   <tr  key={i} onClick={()=>{this.redirectToTarget(e.per_id)}}>
+                                   <tr  key={'order_'+i} onClick={()=>{this.redirectToTarget(e.per_id)}}>
                                         <td>{(i+1)}</td>
                                         <td>{e.course_name}</td>
                                         <td>{moment(e.per_start).add(543, 'years').format('ll')} - {moment(e.per_end).add(543, 'years').format('ll')}</td>

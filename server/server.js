@@ -15,6 +15,7 @@ app.use(bodyParser.json({ type: '*/*' }))
 
 app.use(myConnection(mysql, config.dbOptions, 'pool'))
 routes(app)
+
 var mailgun = require("mailgun-js");
 var api_key = config.emailOption.API_KEY;
 var DOMAIN = config.emailOption.DOMAIN;
@@ -37,7 +38,7 @@ moment.locale('th');
    * 
    */
 var job = new CronJob({
-    cronTime: '* * * 00 * *',
+    cronTime: '* * * 00 8 *',
     onTick: function() {
         var connection = mysql.createConnection(config.dbOptions, 'pool');
         connection.connect();
@@ -147,7 +148,6 @@ var job = new CronJob({
               </html>
               `
               mailgun.messages().send(data, function (error, body) {
-                console.log(body);
                 });
            })
            

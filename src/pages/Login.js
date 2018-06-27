@@ -5,7 +5,7 @@ import Whitebrand from '../components/brand/whitebrand';
 class Login extends Component {
     render() {
         return (
-            <div>
+        <div>
                 <div className="forest">
                 <div className="brand md-auto" style={{width:'200px'}}>
                 <Whitebrand />
