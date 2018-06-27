@@ -20,8 +20,7 @@ import Brand from './Brand';
                         <Link to="/Logout" className="navbar-item" key={6}>Logout</Link>
                    ]
                 }   else{
-                       return[
-                        <Link to="/statistics" className="navbar-item" key={1}>Statistics</Link>,   
+                       return[  
                         <Link to="/pastevents" className="navbar-item" key={2}>Past events</Link>,
                         <Link to="/upcomingevents" className="navbar-item" key={3}>Upcoming events</Link>,
                         <Link to="/Profile" className="navbar-item" key={5}>Profile</Link>,
@@ -31,8 +30,8 @@ import Brand from './Brand';
                 
           }else{
                 return [
-                    <Link to="/Course" className="navbar-item" key={1}>Past events</Link>,
-                    <Link to="/Course" className="navbar-item" key={2}>Upcoming events</Link>,
+                    <Link to="/pastevents" className="navbar-item" key={1}>Past events</Link>,
+                    <Link to="/upcomingevents" className="navbar-item" key={2}>Upcoming events</Link>,
                     <Link to="/Register" className="navbar-item" key={3}>Register</Link>,
                     <Link to="/Login" className="navbar-item" key={4}>Login</Link>
                 ]

@@ -10,9 +10,9 @@ class Login extends Component {
                 <div className="brand md-auto" style={{width:'200px'}}>
                 <Whitebrand />
                 </div>
-                    <div class="tile tile is-8 is-vertical md-auto">
-                       <div class="tile is-child box">
-                            <div class="form-control">
+                    <div className="tile tile is-8 is-vertical md-auto">
+                       <div className="tile is-child box">
+                            <div className="form-control">
                                 <Logon />
                               
                              </div>

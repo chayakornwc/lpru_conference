@@ -111,8 +111,9 @@ moment.locale('th');
                     รายการอบรมที่เข้าร่วม
                 </header>
                 <div className="card-content">
+                {orders.isLoading && <Loader/>}
                     <table className="table is-bordered is-striped is-linked">
-                    {orders.isLoading && <Loader/>}
+              
                         <thead>
                             <tr>
                                 <th>ที่</th>

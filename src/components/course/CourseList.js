@@ -44,7 +44,7 @@ const statusTags = (data) =>{
   
   render() {
       const {data, buttonAttends, auth} = this.props;
-   
+    console.log(auth)
     
     return (
         <div className="container">
@@ -103,10 +103,10 @@ const statusTags = (data) =>{
                         <div className="media-right" >
                         <div className="colums">
                             <div className="colum is-half">
-                                <button className=" button is-mystyle" disabled={renderButton(e.per_start)} onClick={()=>{buttonAttends(e.per_id, e.course_name)}} >สมัครเลย</button>
+                              {auth && auth.sub && <button className=" button is-mystyle" disabled={renderButton(e.per_start)} onClick={()=>{buttonAttends(e.per_id, e.course_name)}} >สมัครเลย</button>}  
                             </div>
                             <div className="colum is-half">
-                                <a href={"../events/"+e.per_id} className="colum is-primary button is-mystyle" >รายชื่อ</a>
+                              {auth && auth.sub &&  <a href={"../events/"+e.per_id} className="colum is-primary button is-mystyle" >รายชื่อ</a>}
                             </div>
                         </div>
                         </div>
