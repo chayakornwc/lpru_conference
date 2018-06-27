@@ -1,5 +1,5 @@
 ## The Application,Technology training, at Comcentre Lampang Rajabhat University.
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png=250x)
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 ### react lifecycle diagram 
 ![Image of diagram](https://cdn-images-1.medium.com/max/1600/0*VoYsN6eq7I_wjVV5.png)
 
