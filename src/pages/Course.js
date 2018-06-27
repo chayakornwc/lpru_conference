@@ -42,6 +42,7 @@ class Course extends Component {
                        this.props.dispatch(loadPeriods());
                         alertify.success(this.props.attendsSave.data.message)
                    }else{
+                        this.props.dispatch(loadPeriods());
                         alertify.error(this.props.attendsSave.data.message)
                    }
                })

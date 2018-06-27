@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import Logon from '../components/Logon';
+import {connect} from 'react-redux';
 import Whitebrand from '../components/brand/whitebrand';
-
+import PropTypes from 'prop-types'
 class Login extends Component {
+    static contextTypes = {
+        router: PropTypes.object
+        }
     render() {
+        const {auth} = this.props
         return (
         <div>
                 <div className="forest">
@@ -24,4 +29,11 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default connect(mapStateToProps)(Login);
+
+
+function mapStateToProps(state){
+    return{
+        auth:state.authReducers.authentificated,
+    }
+}

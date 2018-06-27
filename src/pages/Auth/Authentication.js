@@ -20,7 +20,7 @@ export default function(ComposedComponent){
         }
 
         render(){
-            // รูปแบบการทeเป็น HOC เราจะต้องเอา ส่ง ComposedComponent กลับไป
+            // รูปแบบการทำเป็น HOC เราจะต้องเอา ส่ง ComposedComponent กลับไป
             // พร้อม props เดิมของ component นั้นๆ ด้วย
             return <ComposedComponent {...this.props} />
         }
