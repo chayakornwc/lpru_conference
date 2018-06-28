@@ -94,4 +94,5 @@ module.exports = function(app) {
     app.get('/certification/period/:id', requireAuth, certification.findByPeriodsId)
 
     app.get('/analysis/attends/:year', requireAuth, analysis.attendYears);
+    app.get(`/periodsurvey/:periodId`,requireAuth, analysis.periodsurvey)
 }

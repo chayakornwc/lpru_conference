@@ -280,3 +280,15 @@ exports.attendYears = (req,res,next) => {
 
     })  
 }
+exports.periodsurvey = (req,res)=>{
+    req.getConnection((err, connection)=>{
+        var periodId = parseInt(req.params.periodId)
+            if(err) throw err;
+            connection.query(`SELECT COUNT(title) as COUNT, title, SUM(value) / COUNT(title) as Mean, POWER(value - SUM(value) / COUNT(title),2) as Error FROM (SELECT survey.title, survey.id, survey.value FROM survey WHERE per_id = ${periodId} ) as a GROUP by title
+            `, function(err, results){
+                if(err) throw err;
+                res.send(results)
+                
+            })
+    })
+}
