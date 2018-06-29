@@ -188,7 +188,7 @@ exports.update = (req, res,next)=>{
                             isGenerator = true
                         }
                         var certificationData = [parseInt(makeid()), reg_id, per_id];
-                        console.log(certificationData)
+                  
                         if(isGenerator){
                             connection.query("INSERT INTO certification (iat, registration_id, per_id) values(?, ?, ?)",[makeid(), reg_id, per_id], function(err, results3){
                                 if(err) console.log(err)

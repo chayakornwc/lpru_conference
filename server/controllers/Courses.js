@@ -1,5 +1,6 @@
 const config = require('../config')
-const timestamp = new Date().toLocaleString();
+const moment = require('moment');
+const timestamp = moment().format();
 
 
 exports.findAll = (req, res,next) => {
@@ -41,8 +42,9 @@ exports.create = (req, res, next)=>{
         course_nameEng:req.body.course_nameEng,
         course_log:req.body.remark,
         course_status:req.body.course_status,
-        time_stamp:timestamp,
+        time_stamp:timestamp
     }      
+   
     req.getConnection((err, connection)=>{
         if(err) return next(err)
         connection.query("SELECT * FROM course WHERE course_name=? OR course_nameEng=?",[data.course_name, data.course_nameEng], function(err, results){

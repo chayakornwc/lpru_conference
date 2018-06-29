@@ -1,5 +1,4 @@
-const config = require('../config')
-const timestamp = new Date().toLocaleString();
+
 const moment = require('moment');
 moment.locale('th');
 

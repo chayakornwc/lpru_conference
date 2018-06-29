@@ -17,6 +17,7 @@ const survey = require('./controllers/Survey');
 const certification = require('./controllers/certification');
 const analysis = require('./controllers/analysis');
 
+
 module.exports = function(app) {
 
     app.get('/', function(req, res){
@@ -94,5 +95,5 @@ module.exports = function(app) {
     app.get('/certification/period/:id', requireAuth, certification.findByPeriodsId)
 
     app.get('/analysis/attends/:year', requireAuth, analysis.attendYears);
-    app.get(`/periodsurvey/:periodId`,requireAuth, analysis.periodsurvey)
+    app.get(`/periodsurvey/:periodId`,  requireAuth, analysis.periodsurvey)
 }

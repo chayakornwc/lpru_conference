@@ -24,7 +24,6 @@ var CronJob = require('cron').CronJob;
 var moment = require('moment');
 moment.locale('th');
 
-
  /*
    * Runs every day
    * at 00:00:00 
@@ -171,7 +170,7 @@ var job = new CronJob({
 
 
 app.listen(PORT, () => {
-    console.log('ready server on http://localhost:' + PORT +' Now use this database :'+config.dbOptions.database)
+    console.log('ready server on http://localhost:' + PORT +' Now use this database :'+config.dbOptions.database+' Now is locale time'+moment().format())
     
 })
 
