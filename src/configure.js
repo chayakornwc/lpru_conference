@@ -1,4 +1,4 @@
 const config = {
-    BASE_URL: 'http://localhost:3009',
+    BASE_URL: 'http://api.bamboo.in.th',
     }
     export default config

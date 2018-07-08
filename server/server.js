@@ -170,7 +170,7 @@ var job = new CronJob({
 
 
 app.listen(PORT, () => {
-    console.log('ready server on http://localhost:' + PORT +' Now use this database :'+config.dbOptions.database+' Now is locale time'+moment().format())
+    console.log('ready server on http://localhost:' + PORT +' Now use this database :'+config.dbOptions.database+' Now is locale time '+moment().format())
     
 })
 

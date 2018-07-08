@@ -16,7 +16,7 @@ const attendee = require('./controllers/Attender');
 const survey = require('./controllers/Survey');
 const certification = require('./controllers/certification');
 const analysis = require('./controllers/analysis');
-
+const userTypes = require('./controllers/userTypes');
 
 module.exports = function(app) {
 
@@ -34,6 +34,10 @@ module.exports = function(app) {
      app.get('/updateToken',requireAuth, users.signin);
      app.get('/users',requireAuth,  users.findAll)
 
+    app.get(`/userTypes`, requireAuth, userTypes.findAll)
+    app.post('/userTypes', requireAuth)
+    app.put('/userTypes', requireAuth)
+    app.delte('/userTypes', requireAuths)
 
     app.post('/registers', registers.create) 
 

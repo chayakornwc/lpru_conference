@@ -136,7 +136,7 @@ class TextFields extends React.Component {
  
  return axios({
     method:'post',
-    url: 'http://localhost:3009/registers',
+    url: 'http://api.bamboo.in.th/registers',
     data:data,
   }).then(response =>{
     this.setState({isLoad:false});

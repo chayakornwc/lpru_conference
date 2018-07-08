@@ -10,13 +10,13 @@
     
 const localLogin = new LocalStrategy(localOptions, function (req, username, password, done) {
     req.getConnection((err, connection) => {
-        if(err) console.log('connection mysql error');
+        if(err) console.log('connection mysql error'); // Critical error
             if (err) throw (err) 
             connection.query("SELECT * FROM registration WHERE username=?", [username], (err, row) => {
                 if (err) return done(err)
-                if (!row.length) return done(null, false)
+                if (!row.length) return done('ไม่พบชื่อผู้ใช้นี้ภายในระบบ', false)
                 if (row[0].password !== sha256(password)) {
-                    return done(null, false)
+                    return done('รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง', false)
                     } else {
                         return done(null, row[0])
                         }

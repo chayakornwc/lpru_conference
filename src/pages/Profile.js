@@ -127,7 +127,7 @@ moment.locale('th');
                            
                             {orders.data && orders.data.map((e,i)=>{
                                 return(
-                                   <tr  key={'order_'+i} onClick={()=>{this.redirectToTarget(e.per_id)}}>
+                                   <tr  key={e.order_id} onClick={()=>{this.redirectToTarget(e.per_id)}}>
                                         <td>{(i+1)}</td>
                                         <td>{e.course_name}</td>
                                         <td>{moment(e.per_start).add(543, 'years').format('ll')} - {moment(e.per_end).add(543, 'years').format('ll')}</td>

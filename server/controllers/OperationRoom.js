@@ -5,7 +5,7 @@ const config = require('../config')
 exports.findAll = (req, res, next) => {
     req.getConnection((err, connection) => {
         if (err) return next(err);
-        var sql = "SELECT room_id as id, room_name as name FROM operation_room WHERE room_name LIKE ?"; 
+        var sql = "SELECT room_id as id, room_name as name, room_code as code FROM operation_room WHERE room_name LIKE ?"; 
         var params = "%"+req.query.term+"%";
                                                            
         connection.query(sql,[params], function(err, results){ 
@@ -34,7 +34,8 @@ exports.findById = (req,res,next) => {
 }
 exports.create = (req, res, next)=>{
     var data = {
-        room_name:req.body.room_name
+        room_name:req.body.room_name,
+        room_code:req.body.room_code
     }
     req.getConnection((err, connection)=>{
         if(err) return next(err)
@@ -54,14 +55,15 @@ exports.create = (req, res, next)=>{
 exports.update = (req, res, next) =>{
     var id = parseInt(req.params.id)
     var data = {
-        room_name:req.body.room_name
+        room_name:req.body.room_name,
+        room_code:req.body.room_code
     }
     req.getConnection((err, connection)=>{
-        connection.query("SELECT * FROM operation_room WHERE room_name = ?",[data.room_name],function(err,results){
+        connection.query("SELECT * FROM operation_room WHERE room_name = ? or room_code =?",[data.room_name, data.room_code],function(err,results){
             if(err) return next(err);
             var isUpdate = false;
             if(results.length > 0 ){
-                if(results[0].id!==id){
+                if(results[0].room_id!==id){
                     res.send({status:201,message:'ตรวจพบข้อมูลห้องปฏิบัติการนี้ในระบบ'})
                 }else{
                     isUpdate = true;

@@ -56,76 +56,33 @@ exports.registers  = (req, res, next)=>{
 exports.update = (req, res,next)=>{
     var id = parseInt(req.params.id);
     var data = req.body.members
-    var update_arr = [];
-    var insert_arr = [];
+    var newData = [];
+    var arr = [];
     var respose ={};
     req.getConnection((err, connection)=>{
-         connection.query("SELECT exam_id FROM course_exam where course_id = ? ORDER BY exam_id ASC ",id, function(err, results){
+         connection.query("DELETE FROM course_exam WHERE course_id = ? ",id, function(err, results){
             if(err) return next(err);
-            data.forEach((e,i)=>{
-                if(!e.exam_id){
-                  insert_arr.push(e)
-                  data.splice(i,1);
-                }else{
-                    results.forEach((value,key)=>{
-                        if(e.exam_id == value.exam_id){
-                            results.splice(key,1);
-                            update_arr.push(e)
-                        }
-                    })
-                }
-            })
-            // update zone
-
-            if(update_arr.length>0){
-                update_arr.forEach((e, i)=>{
-                    dataUpdate = {
-                        question:escape(e.question),
-                        answer1:escape(e.answer1),
-                        answer2:escape(e.answer2),
-                        answer3:escape(e.answer3),
-                        answer4:escape(e.answer4),
-                        answer_real:parseInt(e.answer_real)
-                    }
-                        connection.query("UPDATE course_exam SET ? WHERE exam_id = ?",[dataUpdate, e.exam_id], function(err, results){
-                            if(err){
-                                console.log(err.message)
-                                throw err;
-                            }
-
-                        })
-                   })
-            }
-            // insert module
-           if(insert_arr.length > 0){
-            insert_arr.forEach((e, i)=>{
-                insert_arr[i].question = escape(e.question)
-                insert_arr[i].answer1 = escape(e.answer1)
-                insert_arr[i].answer2 = escape(e.answer2)
-                insert_arr[i].answer3 = escape(e.answer3)
-                insert_arr[i].answer4 = escape(e.answer4)
-                insert_arr[i].answer_real = parseInt(e.answer_real)
-                insert_arr[i].course_id = id
-                insert_arr = Object.values(e)
-               })
-                connection.query("INSERT INTO course_exam  (question, answer1, answer2, answer3, answer4, answer_real, course_id) values ? ", [insert_arr], (err, results)=>{
-                    if(err) return next(err);
-                   return respose.insert = {status:200, message:`เพิ่มข้อมูลเรียบร้อยแล้ว จำนวนข้อสอบทั้งหมด ${results.affectedRows} ข้อ`, records:results.affectedRows};
-                });
-           }
-           // delete zone
-           if(results.length > 0){
-            results.forEach((e, i)=>{
-                connection.query("DELETE FROM course_exam where course_id = ?", e.exam_id, function(err, results){
-                    if (err){
-                        console.log(err);
-                        throw err;
-                    }
-                  return  respose.delete = {rowDelete:i}
-            })
+            data.forEach(function(e,i){
+                newData.push({
+                    question: escape(e.question),
+                    answer1: escape(e.answer1),
+                    answer2: escape(e.answer2),
+                    answer3:escape(e.answer3),
+                    answer4:escape(e.answer4),
+                    answer_real:parseInt(e.answer_real),
+                    course_id:id
+                })
+             
            })
-         }
-         res.send({status:200, message:"แก้ไขข้อมูลเรียบร้อยแล้ว"});
+         
+           newData.forEach(function(e,i){
+            arr[i] = Object.values(e);
+           })
+           connection.query("INSERT INTO course_exam  ( question, answer1, answer2, answer3, answer4, answer_real, course_id) values ?", [arr], (err,results)=>{
+               if(err) throw err;
+               res.send({status:200, message:"แก้ไขข้อมูลเรียบร้อยแล้ว"});
+           })
+          
         })
 
     })

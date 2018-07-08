@@ -26,7 +26,7 @@ exports.findAllByCompletePeriod = (req, res, next)=>{
         if(startDate && endDate){
             wherestr = `AND p.per_end  BETWEEN '${startDate}' AND '${endDate}' `
         }
-        var sql=`SELECT p.*, r.username, CONCAT(r.prefix,' ',r.first_name,' ',r.last_name)as fullname, r.affiliation, r.major,c.course_name FROM course_order co LEFT OUTER JOIN  period p ON co.per_id = p.per_id
+        var sql=`SELECT p.*, r.id, r.username, CONCAT(r.prefix,' ',r.first_name,' ',r.last_name)as fullname, r.affiliation, r.major,c.course_name FROM course_order co LEFT OUTER JOIN  period p ON co.per_id = p.per_id
          LEFT OUTER JOIN course c ON c.course_id = p.course_id
         LEFT OUTER JOIN  registration r on co.registration_id = r.id
         WHERE p.per_status = 3 ${wherestr} ORDER BY p.per_id DESC, p.per_end`
