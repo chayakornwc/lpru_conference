@@ -35,9 +35,9 @@ module.exports = function(app) {
      app.get('/users',requireAuth,  users.findAll)
 
     app.get(`/userTypes`, requireAuth, userTypes.findAll)
-    app.post('/userTypes', requireAuth)
-    app.put('/userTypes', requireAuth)
-    app.delte('/userTypes', requireAuths)
+    app.post('/userTypes', requireAuth, userTypes.create)
+    app.put('/userTypes/:id', requireAuth, userTypes.update)
+    app.delete('/userTypes/:id', requireAuth, userTypes.delete)
 
     app.post('/registers', registers.create) 
 
