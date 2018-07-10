@@ -155,7 +155,7 @@ const alertify = require('alertify.js');
                     })
                   
                     }else{
-
+                    alertify.error(this.props.userSave.data)
             }
             })
         )
@@ -241,7 +241,7 @@ const alertify = require('alertify.js');
                     </div>
                     </div>
                     <div className="field is-horizontal">
-                    <div class="field-label">
+                    <div className="field-label">
                         {/* action */}
                     </div>
                     <div className="field-body">
