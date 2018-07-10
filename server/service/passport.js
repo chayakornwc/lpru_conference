@@ -12,7 +12,7 @@ const localLogin = new LocalStrategy(localOptions, function (req, username, pass
     req.getConnection((err, connection) => {
         if(err) console.log('connection mysql error'); // Critical error
             if (err) throw (err) 
-            connection.query("SELECT * FROM registration WHERE username=?", [username], (err, row) => {
+            connection.query("SELECT r.*, ut.* FROM registration r LEFT JOIN userTypes ut ON r.user_group = ut.user_group  WHERE username=?", [username], (err, row) => {
                 if (err) return done(err)
                 if (!row.length) return done('ไม่พบชื่อผู้ใช้นี้ภายในระบบ', false)
                 if (row[0].password !== sha256(password)) {
@@ -32,7 +32,7 @@ const localLogin = new LocalStrategy(localOptions, function (req, username, pass
  const jwtRoute = new JwtStrategy(jwtOptions, function (req, payload, done) {
                req.getConnection((err, connection) => {
         if (err) return next(err)
-                connection.query("select * from registration where id=?", [payload.sub], (err, row) => {
+                connection.query("select r.*, ut.* from registration r LEFT JOIN userTypes ut ON r.user_group = ut.user_group WHERE id=?", [payload.sub], (err, row) => {
                 if (err) return done(err)
                     if (!row.length) return done(null, false);
                         return done(null, row[0])

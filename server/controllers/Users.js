@@ -8,6 +8,7 @@ function tokenForUser(user) {
                         {
                             sub: user.id,
                             user_group: user.user_group,
+                            permission:user.permission,
                             name:'secrete',
                             username: user.username,
                             iat: timestamp,

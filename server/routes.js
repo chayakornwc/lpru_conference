@@ -34,10 +34,10 @@ module.exports = function(app) {
      app.get('/updateToken',requireAuth, users.signin);
      app.get('/users',requireAuth,  users.findAll)
 
-    app.get(`/userTypes`, requireAuth, userTypes.findAll)
-    app.post('/userTypes', requireAuth, userTypes.create)
-    app.put('/userTypes/:id', requireAuth, userTypes.update)
-    app.delete('/userTypes/:id', requireAuth, userTypes.delete)
+    app.get(`/userTypes`, requireAuth, userTypes.findAll);
+    app.post(`/userTypes`, requireAuth, userTypes.create);
+    app.put(`/userTypes/:id`, requireAuth, userTypes.update)
+    app.delete('/userTypes/:id', requireAuth, userTypes.delete);
 
     app.post('/registers', registers.create) 
 

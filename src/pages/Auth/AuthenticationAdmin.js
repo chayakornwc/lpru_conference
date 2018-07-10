@@ -10,14 +10,14 @@ export default function (ComposedComponent) {
                 }
             componentWillMount() {
                     if (this.props.data) {
-                    if (this.props.data.user_group <= 1) {
+                    if (this.props.data.permission.include(0)) {
                         this.context.router.push('/');
                                 }
                             }
                     }
             componentWillUpdate(nextProps) {
                     if (nextProps.data) {
-                    if (nextProps.data.user_group <= 1) {
+                    if (nextProps.data.permission.include(0)) {
                         this.context.router.push('/');
                                     }
                                 }
