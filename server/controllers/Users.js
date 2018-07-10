@@ -180,7 +180,7 @@ exports.update = (req, res, next) =>{
         }
         
     req.getConnection(function(err, connection){
-        connection.query("SELECT * FROM registration WHERE username=?",[data.username], function(err, results){
+        connection.query("SELECT * FROM registration WHERE username=? OR email=?",[data.username, data.email], function(err, results){
             if (err) return next(err)
             var isUpdate = false;
             if(results.length > 0){

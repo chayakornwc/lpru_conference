@@ -8,9 +8,9 @@ const renderChooseGender = ({ input, label,  type, textarea, autoFocus, meta: { 
 
     return (
         
-        <div class="field is-narrow">
-            <div class="control">
-                <label class="radio">
+        <div className="field is-narrow">
+            <div className="control">
+                <label className="radio">
                 <input {...input} type={type}  checked={input.checked} />
                 {' '}{label}
                 </label>
