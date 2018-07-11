@@ -20,10 +20,11 @@ import Brand from './Brand';
                         <Link to="/Logout" className="navbar-item" key={6}>ลงชื่อออก</Link>
           }else{
                 return [
+                    <Link to="/signin" className="navbar-item" key={1}>ลงชื่อเข้าใช้</Link>,
                     <Link to="/pastevents" className="navbar-item" key={2}>การอบรมที่ผ่านมาแล้ว</Link>,
                     <Link to="/upcomingevents" className="navbar-item" key={3}>การอบรมเร็วๆนี้</Link>,
                     <Link to="/Register" className="navbar-item" key={7}>ลงทะเบียนสมาชิก</Link>
-                ]
+                    ]
           }
         }
         render(){
