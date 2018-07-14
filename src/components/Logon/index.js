@@ -25,9 +25,9 @@ class Logon extends Component {
                     </p>
                 </header>
                 {this.renderAlert()}
-            <label className="label">Username</label>
+            <label id="username" className="label">Username</label>
                 <p className="control has-icons-left has-icons-right">
-                    <input onChange={this.handleChang('username')} className="input" type="text" name="username" placeholder="Username" />
+                    <input aria-labelledby="username" onChange={this.handleChang('username')} className="input" type="text" name="username" placeholder="Username" />
                     <span className="icon is-small is-left">
                     <i className="fas fa-user"></i>
                     </span>
@@ -37,9 +37,9 @@ class Logon extends Component {
                </p>
                 </div>
                 <div className="field">
-                <label className="label">Password</label>
+                <label id="password" className="label">Password</label>
                 <p className="control has-icons-left">
-                    <input onChange={this.handleChang('password')} className="input" type="password" name="password" placeholder="Password" />
+                    <input id="password" aria-labelledby="password" onChange={this.handleChang('password')} className="input" type="password" name="password" placeholder="Password" />
                     <span className="icon is-small is-left">
                     <i className="fas fa-lock"></i>
                     </span>

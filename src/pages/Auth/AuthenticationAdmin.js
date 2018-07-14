@@ -9,16 +9,19 @@ export default function (ComposedComponent) {
              router: PropTypes.object
                 }
             componentWillMount() {
+                console.log(this.props.data)
                     if (this.props.data) {
+                        
                     if (this.props.data.permission.include(0)) {
                         this.context.router.push('/');
                                 }
                             }
                     }
             componentWillUpdate(nextProps) {
+                console.log(this.props.data)
                     if (nextProps.data) {
                     if (nextProps.data.permission.include(0)) {
-                        this.context.router.push('/');
+                        this.context.router.push('/'); 
                                     }
                                 }
                             }

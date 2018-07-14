@@ -41,27 +41,30 @@ moment.locale('th');
                 break;
             }
         }  
-        certificateCheck = (per_id)=>{
-         const  data = {
-                    per_id:per_id,
-                    sub:this.props.auth.sub
-                  }
-        return  axios({  method:'get',
-            url:`${BASE_URL}/examination/check/${data.per_id}/${data.sub}`,
-            headers:{authorization:localStorage.getItem('token')}}).then(resutls =>{
-            })
+        // certificateCheck = (per_id)=>{
+        //  const  data = {
+        //             per_id:per_id,
+        //             sub:this.props.auth.sub
+        //           }
+        // return  axios({  method:'get',
+        //     url:`${BASE_URL}/examination/check/${data.per_id}/${data.sub}`,
+        //     headers:{authorization:localStorage.getItem('token')}}).then(resutls =>{
+        //     })
           
-        }
-
+        // }
+    
      componentDidMount(){
-      return this.props.auth && this.props.dispatch(loadOrder(this.props.auth.sub)).then(()=>{
-      })
+      {this.props.auth && this.props.dispatch(loadOrder(this.props.auth.sub)).then(()=>{
+      })}
      }
-        
-     
+   
+    
+    
+
         
   render() {
       const {auth,orders} = this.props
+        
     return (
       <div className="container" style={{paddingTop:"1.25rem"}}>
         <div className="card">
