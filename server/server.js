@@ -37,7 +37,7 @@ moment.locale('th');
    * 
    */
 var job = new CronJob({
-    cronTime: '* * * 00 8 *',
+    cronTime: '* * * 00 * *',
     onTick: function() {
         var connection = mysql.createConnection(config.dbOptions, 'pool');
         connection.connect();
@@ -49,7 +49,7 @@ var job = new CronJob({
                 subject: '',
                 };
            results.forEach(e =>{
-              data.to = "whitecat.chayakorn@gmail.com"
+              data.to = `${e.email}`
               data.subject = `แจ้งเตือนการอบ หลักสูตร ${e.course_name} วันที่ ${moment(e.start).add(543, 'years').format('ll')} ถึง ${moment(e.start).add(543, 'years').format('ll')}`
               data.html = `<!doctype html>
               <html>

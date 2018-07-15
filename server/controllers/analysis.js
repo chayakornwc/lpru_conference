@@ -11,7 +11,7 @@ exports.attendYears = (req,res,next) => {
                 option = `YEAR(p.per_end) = ${year} AND`
             }
     req.getConnection((err, connection)=>{
-        if(err) return next(err);
+        if(err) throw err;
        var sql = `
        SELECT itech.*, sci.sci, edu.edu, human.human, manage.manage, arc.arc, other.other
        FROM (

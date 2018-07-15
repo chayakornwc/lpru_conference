@@ -60,8 +60,9 @@ exports.update = (req, res,next)=>{
     var arr = [];
     var respose ={};
     req.getConnection((err, connection)=>{
+        if(err) throw err;
          connection.query("DELETE FROM course_exam WHERE course_id = ? ",id, function(err, results){
-            if(err) return next(err);
+            if(err) throw err;
             data.forEach(function(e,i){
                 newData.push({
                     question: escape(e.question),
@@ -87,6 +88,7 @@ exports.update = (req, res,next)=>{
 
     })
 }
+
     exports.findExambycourse =(req,res,next)=>{
         var id = parseInt(req.params.id);
         req.getConnection((err, connection)=>{

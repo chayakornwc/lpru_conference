@@ -10,7 +10,7 @@
     
 const localLogin = new LocalStrategy(localOptions, function (req, username, password, done) {
     req.getConnection((err, connection) => {
-        if(err) console.log('connection mysql error'); // Critical error
+        
             if (err) throw (err) 
             connection.query("SELECT r.*, ut.* FROM registration r LEFT JOIN userTypes ut ON r.user_group = ut.user_group  WHERE username=?", [username], (err, row) => {
                 if (err) return done(err)

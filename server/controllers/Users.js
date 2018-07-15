@@ -103,7 +103,7 @@ exports.create = (req, res, next) => {
         }
         req.getConnection(function (err, connection) {
             connection.query("SELECT username FROM registration where username=?", [post.username], function (err, results) {
-                if (err) return next(err)
+                if (err)  throw err
                 if (results.length > 0) {
                         res.send({ status: 201, message: 'ตรวจพบ username นี้ในระบบ' })
                         } else  {

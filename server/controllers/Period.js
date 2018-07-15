@@ -92,14 +92,10 @@ exports.update = (req,res,next) => {
     }
     req.getConnection((err, connection) => {
         var id = parseInt(req.params.id);
-        if(err) return next(err);
+        if(err)  throw err;
         connection.query("UPDATE  period SET ? where per_id =?",[data, id],  function(err, results){
             if(err) throw (err);
-            if(results){
                 res.send(results);
-            }else{
-                res.send({status:201, message:'เกิดข้อผิดพลาดกรุณาลองใหม่อีกครั้ง'})
-            }
         })
     })
 }
@@ -122,9 +118,9 @@ exports.create  = (req,res,next) => {
         lecture:req.body.lecture,
     }
     req.getConnection((err, connection)=>{
-        if(err) return next(err)
+        if(err)  throw err;
         connection.query("INSERT INTO period set ?",data, (err, results)=>{
-            if(err) return next(err);
+            if(err) throw err;
             res.send(results);
         })
     })

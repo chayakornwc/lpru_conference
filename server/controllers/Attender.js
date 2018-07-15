@@ -28,14 +28,14 @@ exports.create = (req, res, next) =>{
         }
     
         req.getConnection((err, connection)=>{
-            if(err)return next(err);
+            if(err) throw err;
             connection.query("SELECT r.username FROM registration r LEFT JOIN course_order co ON r.id = co.registration_id WHERE r.id =? AND co.per_id =?",[registration_id, id], function (err, results){
-                if(err)return next(err);
+                if(err) throw err;
                 if(results.length >0){
                     res.send({status:201, message:'User is already exits in this period!'})
                 }else{
                     connection.query("INSERT INTO course_order SET ?", [data], (err, results)=>{
-                        if(err) return next(err);
+                        if(err)  throw err
                         res.send({message:"เพิ่มข้อมูลเรียบร้อยแล้ว"});
                     })
                 }    
@@ -47,9 +47,9 @@ exports.create = (req, res, next) =>{
 exports.delete = (req,res,next)=>{
     var id = parseInt(req.params.id);
         req.getConnection((err, connection)=>{
-            if(err) return next(err);
+            if(err) throw err;
             connection.query("DELETE FROM course_order WHERE order_id = ?", id, (err, results)=>{
-                if(err) return next(err);
+                if(err) throw err;
                 res.send(results);
             })
         })
