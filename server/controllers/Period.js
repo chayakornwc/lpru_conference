@@ -17,13 +17,13 @@ exports.findAll = (req, res, next) => {
             whereOptions = ` AND period.per_status IN (${options})`
         }
         if(startDate){
-            wherestr = ` AND period.per_start = ${startDate}`
+            wherestr = ` AND period.per_start = '${startDate}' `
         }
         if(endDate){
-            wherestr = ` AND period.per_end = ${endDate}`
+            wherestr = ` AND period.per_end = '${endDate}' `
         }
         if(startDate && endDate){
-            wherestr = `AND period.per_start = ${startDate} AND period.per_end = ${endDate}`
+            wherestr = `AND period.per_start = '${startDate}' AND period.per_end = '${endDate}' `
         }
         if(Upcoming) {
             wherestr += `AND period.per_start >= CURRENT_DATE()`

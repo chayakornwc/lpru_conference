@@ -9,7 +9,7 @@ module.exports = {
         multipleStatements: true
     },
     emailOption:{
-        API_KEY:'api',
-        DOMAIN:'test'
+        API_KEY:'key-e0a513f1a177c9f94a246200ee900cac',
+        DOMAIN:'bamboo.in.th'
     }
 }
