@@ -22,10 +22,29 @@ exports.findAllByCompletePeriod = (req, res, next)=>{
         if(err) throw err;
         var startDate = req.query.start ? moment(req.query.start, ['DD MMMM YYYY', moment.ISO_8601], 'th').add(-543,'years').format('YYYY-MM-DD') : '';
         var endDate = req.query.end ? moment(req.query.end,['DD MMMM YYYY',  moment.ISO_8601], 'th').add(-543,'years').format('YYYY-MM-DD') : '';  
+        var affiliation = req.query.affiliation ? req.body.affiliation :''
+        var course = req.query.course ? req.query.course : ''
         var wherestr = ``;
+        if(affiliation){
+            wherestr = `AND r.affiliation = ${affiliation}`
+        }
+        if(course){
+            wherestr = `AND c.course = ${course}`
+        }
         if(startDate && endDate){
             wherestr = `AND p.per_end  BETWEEN '${startDate}' AND '${endDate}' `
         }
+        if(startDate && endDate && course){
+            wherestr = `AND p.per_end  BETWEEN '${startDate}' AND '${endDate}'  AND c.course =${course}`
+        }
+        if(startDate && endDate && affiliation){
+            wherestr = `AND p.per_end  BETWEEN '${startDate}' AND '${endDate}'  AND r.affiliation = ${affiliation}`
+        }
+        if(startDate && endDate && affiliation && course){
+            wherestr = `AND p.per_end  BETWEEN '${startDate}' AND '${endDate}'  AND r.affiliation = ${affiliation} AND c.course_id = ${course}`
+        }
+        
+        
         var sql=`SELECT p.*, r.id, r.username, CONCAT(r.prefix,' ',r.first_name,' ',r.last_name)as fullname, r.affiliation, r.major,c.course_name FROM course_order co LEFT OUTER JOIN  period p ON co.per_id = p.per_id
          LEFT OUTER JOIN course c ON c.course_id = p.course_id
         LEFT OUTER JOIN  registration r on co.registration_id = r.id

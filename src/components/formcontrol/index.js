@@ -141,7 +141,7 @@ class TextFields extends React.Component {
   }).then(response =>{
     this.setState({isLoad:false});
     this.resetState();
-    alertify.success("ดำเนินการสร้างบัญชีผู้ใช้ เรียบร้อยแล้ว โปรดดำเนินการขั้นต่อไป!");
+    alertify.alert("ดำเนินการสร้างบัญชีผู้ใช้ เรียบร้อยแล้ว โปรดดำเนินการขั้นต่อไป!");
   }).catch(err =>{
     this.setState({isLoad:false});
     alertify.error("การส้างบัญชีผู้ใช้ล้มเหลว อาจจะเกิดจากการเชื่อมต่อขัดข้อง โปรดลองใหม่อีกครั้ง!");

@@ -17,8 +17,8 @@ app.use(myConnection(mysql, config.dbOptions, 'pool'))
 routes(app)
 
 var mailgun = require("mailgun-js");
-var api_key = config.emailOption.API_KEY;
-var DOMAIN = config.emailOption.DOMAIN;
+var api_key = 'key-e0a513f1a177c9f94a246200ee900cac';
+var DOMAIN = 'bamboo.in.th';
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN});
 var CronJob = require('cron').CronJob;
 var moment = require('moment');
@@ -37,8 +37,9 @@ moment.locale('th');
    * 
    */
 var job = new CronJob({
-    cronTime: '* * * 00 * *',
+    cronTime: '05 * * * * *',
     onTick: function() {
+      console.log('onTick')
         var connection = mysql.createConnection(config.dbOptions, 'pool');
         connection.connect();
          connection.query("SELECT p.*, c.course_name, concat(r.first_name,' ',r.last_name) as fullname, r.email, operation_room.room_name FROM period p LEFT OUTER JOIN course c ON p.course_id = c.course_id LEFT OUTER JOIN course_order co ON co.per_id = p.per_id  LEFT OUTER JOIN  registration r  ON r.id  = co.registration_id LEFT OUTER JOIN operation_room ON p.room_id = operation_room.room_id WHERE p.per_start = CURDATE()  +INTERVAL 1 DAY", function(err,results){
