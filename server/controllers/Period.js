@@ -119,12 +119,24 @@ exports.create  = (req,res,next) => {
     }
     req.getConnection((err, connection)=>{
         if(err)  throw err;
-        connection.query("INSERT INTO period set ?",data, (err, results)=>{
+        isInsert = false
+        connection.query(`SELECT * FROM period WHERE per_start BETWEEN ? AND ? OR per_end BETWEEN ? AND ? AND lecture LIKE ? `,[data.per_start, data.per_end, data.per_start, data.per_end, `%${data.lecture}%`], (err, results)=>{
             if(err) throw err;
-            res.send(results);
+            if(results.length >0){
+                res.status(500).send({message:`วิทยากร ${lecture} ได้มีการลงทะเบียนการอบรมแล้ว`})
+            }else{
+                isInsert = true
+            }
+            if(isInsert){
+                connection.query(`INSERT INTO period SET ?`, [data],function(err, response){
+                    if(err) throw err;
+                        res.send({response})
+                })
+            }
         })
     })
 }
+    
 exports.delete  = (req,res,next) => {
     var id = parseInt(req.params.id);
     req.getConnection((err, connection)=>{
