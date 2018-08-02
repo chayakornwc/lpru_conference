@@ -94,7 +94,7 @@ moment.locale('th');
             <div className="card">
                 <header className="card-header">
                         <p className="card-header-title">
-                         รหัสการอบรม: CCOO-{period.data && period.data.per_id} ชื่อหลักสตูร : {period.data && period.data.course_name} อบรมวันที่: {period.data && moment(period.data.per_start).add(543, 'years').format('ll')} ถึง {period.data && moment(period.data.per_end).add(543, 'years').format('ll')}
+                         รหัสการอบรม: CCOO-{period.data && period.data.per_id} ชื่อหลักสตูร : {period.data && period.data.course_name} อบรมวันที่: {period.data && moment(period.data.per_start).add(543, 'years').format('ll')} ถึง {period.data && moment(period.data.per_end).add(543, 'years').format('ll')} เวลา {period.data && period.data.per_time_start} ถึง  {period.data && period.data.per_time_end}
                     </p> 
                 </header>
   <div class="card-content">
