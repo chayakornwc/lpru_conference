@@ -18,7 +18,11 @@ export const signin = ({ username, password }) => {
                             type: 'AUTH_USER',
                             payload: jwtDecode(token)
                             })
-                            browserHistory.push('/')
+                            setTimeout(function(){ 
+                                browserHistory.push('/')
+                            }, 300);
+                               
+                           
                      }).catch(() => {
                              dispatch({ type: 'AUTH_ERROR', payload: "Login failed wrong username or password." })
                             })

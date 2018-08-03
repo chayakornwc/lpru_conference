@@ -149,13 +149,13 @@ const alertify = require('alertify.js');
        return( 
             this.props.dispatch(saveUser(values)).then(()=>{
                 if(!this.props.userSave.isRejected){
-                    alertify.success("แก้ไขข้อมูลเรียบร้อยแล้ว")
+                    alertify.alert("แก้ไขข้อมูลเรียบร้อยแล้ว")
                     this.props.dispatch(updateToken()).then(()=>{
                         this.handleInitailize();
                     })
                   
                     }else{
-                    alertify.error(this.props.userSave.data)
+                    alertify.alert(this.props.userSave.data)
             }
             })
         )

@@ -64,7 +64,7 @@ moment.locale('th');
         
   render() {
       const {auth,orders} = this.props
-        
+       
     return (
       <div className="container" style={{paddingTop:"1.25rem"}}>
         <div className="card">
@@ -114,7 +114,7 @@ moment.locale('th');
                     รายการอบรมที่เข้าร่วม
                 </header>
                 <div className="card-content">
-                {orders.isLoading && <Loader/>}
+                {orders.isLoading && !orders.isRejected && <Loader/>}
                     <table className="table is-bordered is-striped is-linked">
               
                         <thead>

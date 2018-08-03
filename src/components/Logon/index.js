@@ -12,6 +12,12 @@ class Logon extends Component {
             Login:false
         }
     }
+    _handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            this.handleSubmit();
+        }
+      }
+    
     render() {
         const {handleSubmit} = this.props;
      
@@ -27,7 +33,7 @@ class Logon extends Component {
                 {this.renderAlert()}
             <label id="username" className="label">Username</label>
                 <p className="control has-icons-left has-icons-right">
-                    <input aria-labelledby="username" onChange={this.handleChang('username')} className="input" type="text" name="username" placeholder="Username" />
+                    <input onKeyPress={this._handleKeyPress} aria-labelledby="username" onChange={this.handleChang('username')} className="input" type="text" name="username" placeholder="Username" />
                     <span className="icon is-small is-left">
                     <i className="fas fa-user"></i>
                     </span>
@@ -39,7 +45,7 @@ class Logon extends Component {
                 <div className="field">
                 <label id="password" className="label">Password</label>
                 <p className="control has-icons-left">
-                    <input id="password" aria-labelledby="password" onChange={this.handleChang('password')} className="input" type="password" name="password" placeholder="Password" />
+                    <input onKeyPress={this._handleKeyPress} id="password" aria-labelledby="password" onChange={this.handleChang('password')} className="input" type="password" name="password" placeholder="Password" />
                     <span className="icon is-small is-left">
                     <i className="fas fa-lock"></i>
                     </span>

@@ -138,7 +138,7 @@ class User extends Component {
             if (!this.props.userSave.isRejected) {
                 this.toggle()
                 this.props.dispatch(loadUsers())
-                {alertify.success('บันทึกข้อมูลเรียบร้อยแล้ว')}
+                {alertify.alert('บันทึกข้อมูลเรียบร้อยแล้ว')}
             }
         })
     }
