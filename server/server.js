@@ -17,8 +17,8 @@ app.use(myConnection(mysql, config.dbOptions, 'pool'))
 routes(app)
 
 var mailgun = require("mailgun-js");
-var api_key = 'key-e0a513f1a177c9f94a246200ee900cac';
-var DOMAIN = 'bamboo.in.th';
+var api_key = 'key-';
+var DOMAIN = 'bamboo.';
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN});
 var CronJob = require('cron').CronJob;
 var moment = require('moment');
